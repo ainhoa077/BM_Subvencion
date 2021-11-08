@@ -1,0 +1,21 @@
+{% assign codigo = params.codigoEstado %}
+{% fetchxml DataList %}    
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_estado">
+    <attribute name="crcd6_estado" />
+    <attribute name="crcd6_estadoid" />
+    <attribute name="crcd6_codigo" />
+    <attribute name="crcd6_descripcionportal" />
+    <order attribute="crcd6_estado" descending="false" />
+    <filter type="and">
+      <condition attribute="crcd6_codigo" operator="eq" value="{{ codigo | xml_escape }}" />
+    </filter>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{
+"results": [
+{% for result in DataList.results.entities %}
+"{{ result.crcd6_estadoid | escape }}"{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]}

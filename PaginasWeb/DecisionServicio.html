@@ -1,0 +1,62 @@
+<script language="javascript">
+	const ServiciosOfertados = {
+		IdeaProyecto: 522960000,
+		ProyectoPropio: 522960001,
+		NecesitoElaboracion: 522960002,
+		NecesitoTramite: 522960003,
+		Otros: 522960004,
+		NecesitoSeguimiento: 522960005
+	}
+	
+	const DecisionServicio = {
+		ConsultarServicioSolicitud: function (idSolicitud) {
+			let resultado = [];
+			$.ajax({
+					method: 'GET',
+					dataType: 'json',
+					async: false,
+					url: "/servicio-solicitud?idSolicitud=" + idSolicitud
+				}).done(function(data) {
+					resultado = data.results;
+				});
+			
+			return resultado;
+		},
+		EventosOnload: function(){
+			let idSolicitud = DecisionServicio.ObtenerParametroUrl('id');
+			DecisionServicio.ObtenerServicioSolictud(idSolicitud);
+		},
+		ObtenerServicioSolictud: function(id){
+			let respuesta = DecisionServicio.ConsultarServicioSolicitud(id);
+
+			if(respuesta.length > 0){
+				//if(respuesta[0] === ServiciosOfertados.NecesitoElaboracion || respuesta[0] === ServiciosOfertados.NecesitoTramite){
+				if(respuesta[0] === ServiciosOfertados.NecesitoSeguimiento || respuesta[0] === ServiciosOfertados.NecesitoElaboracion || respuesta[0] === ServiciosOfertados.NecesitoTramite){
+					window.location.href = "/informacion-ayuda-proyecto?id=" + id;
+				}
+				else{
+					window.location.href = "/informacion-proyecto?id=" + id;
+				}
+			}
+
+			return false;
+		},
+		ObtenerParametroUrl: function(sParam){
+			var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) 
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) 
+                {
+                    return sParameterName[1];
+                }
+            }
+		}
+		
+	};
+
+    $(document).ready(function(){
+        DecisionServicio.EventosOnload();
+    });
+</script>

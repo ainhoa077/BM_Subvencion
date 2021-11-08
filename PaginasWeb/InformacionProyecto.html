@@ -1,0 +1,62 @@
+<div class="go-to-call">
+	<button id="idLlamada" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary">
+		<a href="#" title="Ayuda">
+			<i class="glyphicon glyphicon-earphone"></i>
+			<span class="sr-only">Llámanos</span>
+		</a>
+	</button>
+</div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+	<div role="document" class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h3>
+				<button id="idLlamada" type="button" data-dismiss="modal" aria-label="Close" class="close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{% include 'Llamada telefonica' %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; text-align: left; min-height: 100px;">
+  <div class="container" style="display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column; font-size: 24px;">
+      <p><b>Solicita tu servicio personalizado (3/3) </b></p>
+    </div>
+	<div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column; font-size: 14px;">
+		<div class="alert alert-info" role="alert">
+        Por último, completa, por favor, los siguientes datos sobre el proyecto que estás desarrollando.
+		</div>
+	</div>
+  </div>
+</div>
+<div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px;">
+  <div class="container" style="display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout">{% entityform name: 'Información del proyecto' %}</div>
+  </div>
+</div>
+<script language="javascript">
+	const InformacionProyecto = {
+    EventosOnload: function (contactoId) {
+	    InformacionProyecto.ModificarLookups();
+			$(window).resize(function() {
+				InformacionProyecto.ModificarLookups();
+			});
+		},
+		ModificarLookups: function(){
+			$('button.btn.btn-default.launchentitylookup').css("padding-left",$("#crcd6_comunidadautonoma_name").width());
+			$('button.btn.btn-default.clearlookupfield').css("z-index",1);
+			$('button.btn.btn-default.launchentitylookup').attr('data-original-title', '');
+		},
+	};
+  $(document).ready(function(){
+		InformacionProyecto.EventosOnload();
+    $('#crcd6_presupuestoproyecto').before('<div class="input-group" id="divisa">'); 
+    $('#crcd6_presupuestoproyecto').after('<span id="divisaSpan" class="input-group-addon">€</span><div/>'); 
+    $('#crcd6_presupuestoproyecto').detach().appendTo('#divisa');
+    $('#divisaSpan').detach().appendTo('#divisa');
+  });
+</script>

@@ -1,0 +1,27 @@
+{% assign api = request.params['api'] %}
+{% assign peticion = request.params['peticion'] | replace: '"', '\"' %}
+{% assign atributos = request.params['atributos'] | replace: " ", "" | split: "," %}
+{% assign cacheString = request.params['cacheString'] %}
+{% fetchxml portalApiQuery %}
+<fetch>
+ <entity name="crcd6_portalapi">
+ <filter type="and">
+ <condition attribute="crcd6_api" operator="eq" value="{{api}}" />
+ <condition attribute="crcd6_peticion" operator="eq" value="{{peticion}}" />
+ <condition attribute="crcd6_api" operator="ne" value="{{cacheString}}" />
+ </filter>
+ </entity>
+</fetch>
+{% endfetchxml %}
+
+{% assign result = portalApiQuery.results.entities %}
+[
+{% for item in result %}
+ {
+ {% for atributo in atributos %}
+ 
+ "{{atributo}}":"{% if item[atributo].Value != null %}{{item[atributo].Value | string | replace: '"', '\"' | replace: '\r\n', '\\n'}}{% endif %}{% if item[atributo].Value == null %}{{item[atributo]| string | replace: '"', '\"' | replace: '\r\n', '\\n'}}{% endif %}"{% if atributo != atributos.last %},{% endif %}
+ {% endfor %}
+ }{% if item != result.last %},{% endif %}
+{% endfor %}
+]

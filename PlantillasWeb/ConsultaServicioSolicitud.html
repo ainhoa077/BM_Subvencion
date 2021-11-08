@@ -1,0 +1,20 @@
+{% assign idSolicitud = params.idSolicitud %}
+{% fetchxml DataList %}  
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_solicitudsub">
+    <attribute name="crcd6_solicitud" />
+    <attribute name="crcd6_solicitudsubid" />
+    <attribute name="crcd6_preguntainicial" />
+    <order attribute="crcd6_solicitud" descending="false" />
+    <filter type="and">
+      <condition attribute="crcd6_solicitudsubid" operator="eq" uitype="crcd6_solicitudsub" value="{{ idSolicitud | xml_escape }}" />
+    </filter>
+  </entity>
+</fetch>  
+{% endfetchxml %}
+{
+"results": [
+{% for result in DataList.results.entities %}
+{{ result.crcd6_preguntainicial.value |  }}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]}

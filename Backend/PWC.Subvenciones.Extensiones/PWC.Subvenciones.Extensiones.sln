@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cwa-Plugins", "Cwa-Plugins", "{3CE67192-E9D8-4300-87B1-79746F06E4A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWC.Subvenciones.PortalApi", "CWA-Plugins\Plugins\PWC.Subvenciones.PortalApi\PWC.Subvenciones.PortalApi.csproj", "{4E4FF76F-6D7B-485A-8485-D137645ADAA3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Debug|x64.Build.0 = Debug|Any CPU
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Release|x64.ActiveCfg = Release|x64
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E4FF76F-6D7B-485A-8485-D137645ADAA3} = {3CE67192-E9D8-4300-87B1-79746F06E4A0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49FE18F7-66B5-49C3-AD4A-0F94075FCFE0}
+	EndGlobalSection
+EndGlobal

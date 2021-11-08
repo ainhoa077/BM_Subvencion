@@ -1,0 +1,18 @@
+{% assign idSolicitud = params.idSolicitud %}
+{% fetchxml DataList %}    
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+    <entity name="crcd6_documentacionsubven">
+        <attribute name="crcd6_documentosadjuntos" />
+        <attribute name="crcd6_documentacionsubvenid" />
+        <filter type="and" >
+            <condition attribute="crcd6_solicitud" operator="eq" value="{{ idSolicitud | xml_escape }}" />
+        </filter>
+    </entity>
+</fetch>
+{% endfetchxml %}
+{
+"results": [
+{% for result in DataList.results.entities %}
+{"documentoAdjunto":{{ result.crcd6_documentosadjuntos | boolean }}, "id": "{{ result.crcd6_documentacionsubvenid | escape }}"}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]}

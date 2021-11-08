@@ -1,0 +1,210 @@
+<div class="row pwc-card">
+  <div id="processingMsg" role="alert" class="alert alert-warning" style="width: 300px; text-align: center; padding-top: 6px; padding-right: 10px; padding-bottom: 6px; padding-left: 10px; z-index: 9999; top: 0px; left: 40%; position: fixed; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px; display: none;"></div>
+  <div id="successMsg" style="display:none" role="alert" class="alert alert-success">
+    ¡Hemos recibido correctamente tu solicitud! Un asesor se pondrá en contacto contigo lo antes posible en un plazo de 24 horas
+  </div>
+  <div id="errorMsg" style="display:none"  role="alert" class="alert alert-danger">
+    Los campos motivo de llamada, nombre, teléfono y correo son obligatorios.
+  </div>
+  <div id="errorNumero" style="display:none"  role="alert" class="alert alert-danger">
+    El número de teléfono introducido es erróneo. Revisalo por favor.
+  </div>      
+  <h3>¿Necesitas que te llamemos?</h3>
+  <p class="pwc-text">
+    Te llamaremos lo antes posible dentro de nuestro horario de atención
+    al cliente: de
+    <strong>9:00 a 18:00</strong> de Lunes a Jueves y de 
+    <strong>8:00 a 15:00</strong> los Viernes.
+  </p>
+  <div class="row pwc-form-row">
+    <div class="form-group col-xs-12"><label class="pwc-text" for="motivo">Motivo de la llamada</label><select name="select" name="" id="motivo" class="form-control">
+      <option value="" selected>Selecciona ...</option>
+      <option value="522960000">Consulta sobre el estado de la solicitud</option>
+      <option value="522960001">Consulta sobre incidencias del portal</option>
+      <option value="522960002">Consulta sobre la ayuda</option>
+      <option value="522960003">Consulta técnica</option>
+      <option value="522960004">Otros</option>
+    </select></div>
+  </div>
+  <div class="row pwc-form-row">
+    <div class="form-group col-md-12 col-md-8"><label class="pwc-text" for="motivo">Nombre</label><input id="nombre" placeholder="Ingresa aquí tu nombre" class="form-control"></div>
+    <div class="form-group col-md-12 col-md-8"><label class="pwc-text" for="motivo">Teléfono</label><input id="telefono" placeholder="Ingresa aquí tu número de teléfono" class="form-control"></div>
+  </div>
+  <div class="row pwc-form-row">
+    <div class="form-group col-md-12 col-md-12"><label class="pwc-text" for="motivo">Correo electrónico</label><input type="email" id="email" placeholder="Ingresa aquí tu correo electrónico" class="form-control"></div>
+  </div>
+  <div class="row pwc-form-row">
+    <div class="form-group col-xs-12"><label class="pwc-text" for="motivo">Comentarios</label><textarea id="comentarios" placeholder="Ingresa aquí tus comentarios u observaciones" rows="4" cols="50" class="form-control"></textarea></div>
+  </div>
+  <div class="row pwc-form-row">
+    <div class="form-group col-xs-12">
+        <label id="crcd6_politicaprivacidad_label2" class="field-label">
+            <a href="~/condiciones-uso" target="_blank">He leído la política de privacidad y acepto las condiciones de uso, confidencialidad y protección de datos</a>
+        </label>
+        <div class="radio-inline">
+            <label><input type="radio" name="radioPoliticaPrivacidad" value="0">No</label>
+        </div>
+        <div class="radio-inline">
+            <label><input type="radio" name="radioPoliticaPrivacidad" value="1">Sí</label>
+        </div>
+    </div>
+</div>
+  <div class="row pwc-form-row"><div class="col-xs-12 col-md-6 motivo_text"></div>
+    <div class="col-xs-12 col-md-6"><button onclick="ValidacionTelefono()" class="pwc-btn pwc-btn--primary">Enviar</button></div>
+  </div>
+</div>
+
+<script language="javascript">
+	(function (webapi, $) {
+		function safeAjax(ajaxOptions) {
+			var deferredAjax = $.Deferred();
+			shell.getTokenDeferred().done(function (token) {
+				// Add headers for ajax
+				if (!ajaxOptions.headers) {
+					$.extend(ajaxOptions, {
+						headers: {
+							"__RequestVerificationToken": token
+						}
+					});
+				} else {
+					ajaxOptions.headers["__RequestVerificationToken"] = token;
+				}
+				$.ajax(ajaxOptions)
+					.done(function (data, textStatus, jqXHR) {
+						validateLoginSession(data, textStatus, jqXHR, deferredAjax.resolve);
+					}).fail(deferredAjax.reject); //ajax
+			}).fail(function () {
+				deferredAjax.rejectWith(this, arguments); // On token failure pass the token ajax and args
+			});
+			return deferredAjax.promise();
+		}
+		webapi.safeAjax = safeAjax;
+	})(window.webapi = window.webapi || {}, jQuery)
+	var notificationMsg = (function () {
+            var $processingMsgEl = $('#processingMsg'),
+                _msg = 'Processing...',
+                _stack = 0,
+                _endTimeout;
+            return {
+                show: function (msg) {
+                    $processingMsgEl.text(msg || _msg);
+                    if (_stack === 0) {
+                        clearTimeout(_endTimeout);
+                        $processingMsgEl.show();
+                    }
+                    _stack++;
+                },
+                hide: function () {
+                    _stack--;
+                    if (_stack <= 0) {
+                        _stack = 0;
+                        clearTimeout(_endTimeout);
+                        _endTimeout = setTimeout(function () {
+                            $processingMsgEl.hide();
+                        }, 500);
+                    }
+                }
+            }
+        })();
+
+      const FormularioMotivoLlamada = {
+          AppAjax: function(processingMsg, ajaxOptions) {
+            notificationMsg.show(processingMsg);
+            return webapi.safeAjax(ajaxOptions)
+              .fail(function(response) {
+                if (response.responseJSON) {
+                  alert( " Error: " + response.responseJSON.error.message)
+                } else {
+                  alert( " Error: Web API no disponible... ")
+                }
+              }).always(notificationMsg.hide);
+          },
+          AgregarMotivoLlamada: function() {
+              var showError = true;
+              var politicaElegida = document.getElementsByName('radioPoliticaPrivacidad');
+              let politicaAceptada = "0";
+              for (let i of politicaElegida) {
+              if (i.checked) {
+                  politicaAceptada = i.value;
+                }
+              }
+              if (($('#motivo').val() !== "" && $('#motivo').val() !== undefined) &&
+                  ($('#nombre').val() !== "" && $('#nombre').val() !== undefined) &&
+                  (politicaAceptada !== "0") &&
+                  (($('#telefono').val() !== "" && $('#telefono').val() !== undefined)
+                  || ($('#email').val() !== "" && $('#email').val() !== undefined))) {
+                     showError = false;
+             }
+			 
+			 if (!showError) {
+				var recordObj = {
+					"crcd6_motivollamada": $('#motivo').val(),
+					"crcd6_nombre": $('#nombre').val(),
+					"crcd6_telefono": $('#telefono').val(),
+          "crcd6_email": $('#email').val(),
+          "crcd6_comentarios": $('#comentarios').val()
+				};
+				  FormularioMotivoLlamada.AppAjax('Enviando información...', {
+					  type: "POST",
+					  url: "/_api/crcd6_motivollamadas",
+					  contentType: "application/json",
+					  async: false,
+					  data: JSON.stringify(recordObj),
+					  success: function (res, status, xhr) {
+						  $('#successMsg').show();
+						  $('#motivo').val('');
+						  $('#nombre').val('');
+						  $('#telefono').val('');
+              $('#email').val('');
+              $('#comentarios').val('');
+					  }
+				  });
+			}
+			else{
+			  $('#errorMsg').show();
+			}
+		},
+    EventosOnLoad: function () {
+      FormularioMotivoLlamada.EventosOnClick();
+    },
+    EventosOnClick: function () {
+      $("#telefono").change(function () {
+        ValidacionTelefono(false);
+      })
+    }   
+	};
+if (window.jQuery) {
+   (function ($) {
+		$(document).ready(function () {
+			$('#successMsg').hide();
+			$('#errorMsg').hide();
+      $('#errorNumero').hide();
+      FormularioMotivoLlamada.EventosOnLoad();
+		});
+	}(window.jQuery));
+}
+function ValidacionTelefono(seEnvia) {
+  let telefonoValido = false;
+  const regex = "^[769]{1}[0-9]{8}$";
+  let numeroTelefono = $("#telefono").val();
+  let numeroValido = numeroTelefono.match(regex);
+
+  if (numeroValido) {
+    telefonoValido = true;
+    $('#errorNumero').hide();
+    if (seEnvia) {
+      Enviar();
+    }
+  } else {
+    telefonoValido = false;
+    $('#errorNumero').show();
+  }
+  return telefonoValido;
+}
+function Enviar() {
+  $('#successMsg').hide();
+  $('#errorMsg').hide();
+  $('#errorNumero').hide();
+  FormularioMotivoLlamada.AgregarMotivoLlamada();
+}
+</script>

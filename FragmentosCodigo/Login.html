@@ -1,0 +1,9 @@
+<script>
+    $(document).ready(function() { 
+      $('#mainContent span').each(function() {
+          var text = $(this).html();
+          $(this).html(text.replace('Inicia sesión con tu cuenta', '<span style="margin-left: 10px">Inicia sesión con tu cuenta</span>')); 
+      });
+      $('.btn-default').after('<br><br>');
+    });
+</script>

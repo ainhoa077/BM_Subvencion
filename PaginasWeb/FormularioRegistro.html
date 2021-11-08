@@ -1,0 +1,546 @@
+<div class="go-to-call">
+	<button id="idLlamada" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary">
+		<a href="#" title="Ayuda">
+			<i class="glyphicon glyphicon-earphone"></i>
+			<span class="sr-only">Llámanos</span>
+		</a>
+	</button>
+</div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+	<div role="document" class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h3>
+				<button id="" type="button" data-dismiss="modal" aria-label="Close" class="close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{% include 'Llamada telefonica' %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container pwc-formulario_container" role="main">
+  <div id="mensajeAyuda" class="alert alert-info" role="alert">
+    Necesitamos que completes los datos de tu empresa.
+    <br>
+    <li style="margin-left: 10px">Para confirmar que eres cliente del banco, a continuación, te vamos a solicitar un documento que lo acredite, para que podamos validar tu usuario.</li>
+    <li style="margin-left: 10px">Recuerda que si eres un autónomo, debes completar los primeros campos con tu nombre completo y tu NIF.</li>
+    <li style="margin-left: 10px">Recuerda que si se trata de una Comunidad de Propietarios, debe ser el Presidente de la Comunidad quien debe completar los campos con su nombre completo y DNI.</li>
+  </div>
+  <div id="idExisteNIF" style="display: none;" class="alert alert-danger" role="alert">El NIF ya se encuentra registrado, intenta de nuevo.</div>
+  <div id="idExisteCIF" style="display: none;" class="alert alert-danger" role="alert">El CIF ya se encuentra registrado, intenta de nuevo.</div>
+  {% entityform name: 'Formulario registro cliente' %}
+</div>
+{% assign idContacto = user.Id %}
+<div id="modalNoEsClienteBanco" class="modal fade" tabindex="-1" role="dialog" style="display: none">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Si no eres cliente de Banco Sabadell</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+          Lo sentimos. Este servicio es exclusivo para clientes de Banco Sabadell. No
+          puedes seguir con el procedimiento si no eres cliente del banco.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="pwc-btn pwc-btn--primary" onclick="FormularioRegistro.CerrarModal('#modalNoEsClienteBanco');return false;">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="~/ValidarInformacionApoderadoEmpresa.js"></script>
+<script language="javascript">
+  const RespuestaEsAutonomo = {
+    Si: "1",
+    No: "0",
+  };
+
+  const TipoDocumento = {
+    ReciboBancario: "522960000",
+    CertificadoTitularidad: "522960001",
+    NoSoyClienteBanco: "522960002",
+  };
+  const DescripcionDocumentoCargar = {
+    DescripcionCertificadoTitularidad: "Copia del certificado de titularidad de la cuenta bancaria debidamente sellado por Banco Sabadell.",
+    DescripcionReciboBancario: "Copia de un recibo bancario del banco, con fecha de antigüedad máxima de 4 meses a contar " + 
+    "desde la fecha de registro del cliente en el portal de PwC donde aparezca el nombre completo de la empresa y el número " + 
+    "de cuenta de manera legible.",
+  };
+  const FormularioRegistro = {
+    ConsultarClienteValido: function () {
+      const idContacto = "{{ idContacto }}";
+      let resultado = [];
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        async: false,
+        url: "/cliente-valido?idContacto=" + idContacto,
+      }).done(function (data) {
+        resultado = data.results;
+      });
+      return resultado;
+    },
+    EventosOnload: function () {
+      $("#AttachFile").after('<p id="formatoValido">Los formatos validos son: <b>.doc, .docx, .pdf, .png, .jpg</b></p>');
+      FormularioRegistro.ValidacionRazonSocial();
+      FormularioRegistro.ValidacionCIF();
+      FormularioRegistro.ValidacionNombreApellidos();
+      FormularioRegistro.ValidacionNIF();
+      FormularioRegistro.OcultarCampos();
+      FormularioRegistro.RemoverTituloYMigaPan();
+      FormularioRegistro.ValidarEsAutonomo();
+      FormularioRegistro.MostrarCamposTipoDocumento();
+      FormularioRegistro.MostrarCamposAdjuntos();
+      FormularioRegistro.ValidarTipoDocumento();
+      $("#crcd6_descripciondocumentocargar").prop("disabled", true);
+      FormularioRegistro.EventosOnClick();
+      FormularioRegistro.ModificarLookups();
+      $(window).resize(function() {
+        FormularioRegistro.ModificarLookups();
+      });
+      const clienteValido = FormularioRegistro.ClienteEsValido();
+      if (clienteValido) {
+        $("#crcd6_nombre").prop("readonly", true);
+        $("#crcd6_cif").prop("readonly", true);
+        $("#crcd6_paisconstitucion_name").prop("readonly", true);
+        $(':input[type="button"]').prop("disabled", true);
+        $("#crcd6_direccionfiscal").prop("readonly", true);
+        $("#crcd6_codigopostal").prop("readonly", true);
+        $(':input[type="radio"]').prop("disabled", true);
+      }
+
+      FormularioRegistro.DatosCorrectos();
+    },
+    ModificarLookups: function(){
+      $('button.btn.btn-default.launchentitylookup').css("padding-left",$("#crcd6_paisconstitucion_name").width());
+      $('button.btn.btn-default.clearlookupfield').css("z-index",1);
+      $('button.btn.btn-default.launchentitylookup').attr('data-original-title', '');
+    },
+    EventosOnChange: function () {
+      $("#crcd6_esautonomo").change(function () {
+        valorEsAutonomo = $("#crcd6_esautonomo")
+          .find(":radio:checked")
+          .first()
+          .attr("value");
+
+        if (valorEsAutonomo === RespuestaEsAutonomo.No) {
+          FormularioRegistro.OcultarCamposAutonomo();
+          FormularioRegistro.MostrarCamposEmpresa();
+          FormularioRegistro.LimpiarCamposEmpresa();
+        } else {
+          FormularioRegistro.MostrarCamposAutonomo();
+          FormularioRegistro.OcultarCamposEmpresa();
+          FormularioRegistro.LimpiarCamposAutonomo();
+        }
+      });
+
+      $("#crcd6_tipodedocumentovalidarcliente").change(function () {
+        tipoDocumento = $("#crcd6_tipodedocumentovalidarcliente").val();
+
+        if (tipoDocumento == null || tipoDocumento == "") {
+          FormularioRegistro.OCultarCamposAdjuntos();
+          $("#crcd6_descripciondocumentocargar").parent().parent().hide();
+        } else {
+          FormularioRegistro.MostrarCamposAdjuntos();
+          
+          if(tipoDocumento === TipoDocumento.ReciboBancario){
+            FormularioRegistro.HabilitarBoton();
+            $("#crcd6_descripciondocumentocargar").parent().parent().show();
+            $("#crcd6_descripciondocumentocargar").val(DescripcionDocumentoCargar.DescripcionReciboBancario);
+          }
+
+          if(tipoDocumento === TipoDocumento.CertificadoTitularidad){
+            FormularioRegistro.HabilitarBoton();
+            $("#crcd6_descripciondocumentocargar").parent().parent().show();
+            $("#crcd6_descripciondocumentocargar").val(DescripcionDocumentoCargar.DescripcionCertificadoTitularidad);
+          }
+
+          if (tipoDocumento === TipoDocumento.NoSoyClienteBanco) {
+            FormularioRegistro.DeshabilitarBoton();
+            $("#modalNoEsClienteBanco").modal("toggle");
+            $("#modalNoEsClienteBanco").modal("show");
+            $("#modalNoEsClienteBanco").modal({
+              backdrop: "static",
+            });
+            $("#crcd6_descripciondocumentocargar").parent().parent().hide();
+          }
+        }
+      });
+    },
+    EventosOnClick: function () {
+      $("#crcd6_cif").change(function () {
+        FormularioRegistro.EliminarDivError("#errorDNI");
+        FormularioRegistro.DatosCorrectos();
+      });
+      $("#crcd6_nif").change(function () {
+        FormularioRegistro.EliminarDivError("#errorDNI");
+        FormularioRegistro.DatosCorrectos();
+      });
+    },
+    ValidarEsAutonomo: function () {
+      valorEsAutonomo = $("#crcd6_esautonomo")
+        .find(":radio:checked")
+        .first()
+        .attr("value");
+
+      if (valorEsAutonomo === RespuestaEsAutonomo.Si) {
+        FormularioRegistro.MostrarCamposAutonomo();
+        FormularioRegistro.OcultarCamposEmpresa();
+        FormularioRegistro.MostrarCamposTipoDocumento();
+        FormularioRegistro.MostrarCamposAdjuntos();
+      } else {
+        FormularioRegistro.OcultarCamposAutonomo();
+        FormularioRegistro.MostrarCamposEmpresa();
+      }
+    },
+    MostrarCamposAutonomo: function(){
+      $("#crcd6_nombresapellidos_label").parent().parent().show();
+      $("#crcd6_nombresapellidos").parent().parent().show();
+      $("#crcd6_nif_label").parent().parent().show();
+      $("#crcd6_nif").parent().parent().show();
+    },
+    LimpiarCamposAutonomo: function(){
+      $("#crcd6_nombresapellidos").val('');
+      $("#crcd6_nif").val('');
+    },
+    OcultarCamposAutonomo: function(){
+      $("#crcd6_nombresapellidos_label").parent().parent().hide();
+      $("#crcd6_nombresapellidos").parent().parent().hide();
+      $("#crcd6_nif_label").parent().parent().hide();
+      $("#crcd6_nif").parent().parent().hide();
+    },
+    MostrarCamposEmpresa: function(){
+      $("#crcd6_nombre_label").parent().parent().show();
+      $("#crcd6_nombre").parent().parent().show();
+      $("#crcd6_cif_label").parent().parent().show();
+      $("#crcd6_cif").parent().parent().show();
+    },
+    LimpiarCamposEmpresa: function(){
+      $("#crcd6_nombre").val('');
+      $("#crcd6_cif").val('');
+    },
+    OcultarCamposEmpresa: function(){
+      $("#crcd6_nombre_label").parent().parent().hide();
+      $("#crcd6_nombre").parent().parent().hide();
+      $("#crcd6_cif_label").parent().parent().hide();
+      $("#crcd6_cif").parent().parent().hide();
+    },
+    ValidarTipoDocumento: function () {
+      valortipoDocumento = $("#crcd6_tipodedocumentovalidarcliente").val();
+
+      if (valortipoDocumento == null || valortipoDocumento == "") {
+        FormularioRegistro.OCultarCamposAdjuntos();
+      } else {
+        FormularioRegistro.MostrarCamposAdjuntos();
+      }
+    },
+    OcultarCampos: function () {
+      //$("#crcd6_esclientebanco_0").prop("checked", false);
+      FormularioRegistro.OcultarTipoDocumento();
+      FormularioRegistro.OCultarCamposAdjuntos();
+    },
+    OcultarTipoDocumento: function () {
+      $("#crcd6_tipodedocumentovalidarcliente").parent().parent().hide();
+      $("#crcd6_tipodedocumentovalidarcliente_label").parent().parent().hide();
+      $("#crcd6_descripciondocumentocargar").parent().parent().hide();
+      
+    },
+    OCultarCamposAdjuntos: function () {
+      $("#AttachFileLabel").parent().parent().hide();
+      $("#notescontrol").parent().parent().hide();
+    },
+    MostrarCamposAdjuntos: function () {
+      $("#AttachFileLabel").parent().parent().show();
+      //$("#notescontrol").parent().parent().show();
+    },
+    MostrarCamposTipoDocumento: function () {
+      $("#crcd6_tipodedocumentovalidarcliente").parent().parent().show();
+      $("#crcd6_tipodedocumentovalidarcliente_label").parent().parent().show();
+    },
+    HabilitarBoton: function () {
+      $(':input[id="UpdateButton"]').prop("disabled", false);
+    },
+    DeshabilitarBoton: function () {
+      $(':input[id="UpdateButton"]').prop("disabled", true);
+    },
+    CerrarModal: function (divId) {
+        $(divId).modal("hide");
+    },
+    ClienteEsValido() {
+      let respuesta = FormularioRegistro.ConsultarClienteValido();
+      if (respuesta.length > 0) {
+        return true;
+      }
+      return false;
+    },
+    ValidarDNI: function () {
+      dniValido = false;
+      console.log("DNI: " + dniValido);
+      var validChars = "TRWAGMYFPDXBNJZSQVHLCKET";
+      var nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+      var nieRexp = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+      var cifRexp = /^[a-zA-Z]{1}[0-9]{7}[a-zA-Z0-9]{1}$/i;
+      var dniComprobar = $("#crcd6_cif").val();
+      var str = dniComprobar.toString().toUpperCase();
+
+      if (!nifRexp.test(str) && !nieRexp.test(str) && !cifRexp.test(str)) {
+        FormularioRegistro.MensajeErrorDNI();
+        return false;
+      }
+      if (cifRexp.test(str)){
+        console.log("CIF valido");
+      } else {
+        var nie = str
+        .replace(/^[X]/, "0")
+        .replace(/^[Y]/, "1")
+        .replace(/^[Z]/, "2");
+
+        var letter = str.substr(-1);
+        var charIndex = parseInt(nie.substr(0, 8)) % 23;
+
+        if (validChars.charAt(charIndex) === letter) {
+          dniValido = true;
+          return true;
+        } else {
+          dniValido = false;
+          FormularioRegistro.MensajeErrorDNI();
+          return false;
+        }
+      }
+    },
+    ValidarNIF: function () {
+      dniValido = false;
+      console.log("DNI: " + dniValido);
+      var validChars = "TRWAGMYFPDXBNJZSQVHLCKET";
+      var nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+      var nieRexp = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+      var dniComprobar = $("#crcd6_nif").val();
+      var str = dniComprobar.toString().toUpperCase();
+
+      if (!nifRexp.test(str) && !nieRexp.test(str)) {
+        FormularioRegistro.MensajeErrorDNI();
+        return false;
+      }
+
+      var nie = str
+        .replace(/^[X]/, "0")
+        .replace(/^[Y]/, "1")
+        .replace(/^[Z]/, "2");
+
+      var letter = str.substr(-1);
+      var charIndex = parseInt(nie.substr(0, 8)) % 23;
+
+      if (validChars.charAt(charIndex) === letter) {
+        dniValido = true;
+        return true;
+      } else {
+        dniValido = false;
+        FormularioRegistro.MensajeErrorDNI();
+        return false;
+      }
+    },
+    DatosCorrectos: function () {
+        let dniValido = false;
+        let nifValido = false;
+        var esAutonomo = $("#crcd6_esautonomo")
+          .find(":radio:checked")
+          .first()
+          .attr("value");
+
+        // Se comprueba que el nif esta informado antes de validarlo para evitar que se valide cuando telefono lo esta.
+        let dniValor = $("#crcd6_cif").val();
+        let nifValor = $("#crcd6_nif").val();
+        if (dniValor !== "") {
+          dniValido = FormularioRegistro.ValidarDNI();
+        }
+        if (nifValor !== "") {
+          nifValido = FormularioRegistro.ValidarNIF();
+        }
+        if ((dniValido && esAutonomo == RespuestaEsAutonomo.No) || (nifValido && esAutonomo == RespuestaEsAutonomo.Si)) {
+          FormularioRegistro.HabilitarBoton();
+        } else {
+          //FormularioRegistro.DeshabilitarBoton();
+        }
+      },
+    MensajeErrorDNI: function () {
+      let div = $("#errorDNI");
+      if (div != null && div.length === 0) {
+        $("#mensajeAyuda").after(
+          '<div id="errorDNI" class="alert alert-danger" role="alert">El CIF/NIF introducido no es correcto. Por favor, revisalo y vuelve a introducirlo.</div>'
+        );
+      }
+    },
+    EliminarDivError: function (idDiv) {
+      $(idDiv).remove();
+    },
+    RemoverTituloYMigaPan: function () {
+      $(".breadcrumb").remove();
+      $("div.page-header").remove();
+      $("div.xrm-editable-html.xrm-attribute.no-value.page-copy").remove();
+    },
+    ValidacionCampoTipoDocumento: function () {
+      if (typeof Page_Validators == "undefined") return;
+      var newValidator = document.createElement("span");
+      newValidator.style.display = "none";
+      newValidator.id = "TipoDocumentoValidator";
+      newValidator.controltovalidate = "crcd6_tipodedocumentovalidarcliente";
+      newValidator.errormessage =
+        "<a href='#crcd6_tipodedocumentovalidarcliente'>El campo tipo de documento es requerido.</a>";
+      newValidator.validationGroup = "";
+      newValidator.initialvalue = "";
+      newValidator.evaluationfunction = function () {
+        const esClienteBanco = $("#crcd6_esclientebanco")
+          .find(":radio:checked")
+          .first()
+          .attr("value");
+
+        if (esClienteBanco === RespuestaEsAutonomo.Si) {
+          var value = $("#crcd6_tipodedocumentovalidarcliente").val();
+          if (value == null || value == "") {
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          return true;
+        }
+      };
+
+      Page_Validators.push(newValidator);
+
+      $("a[href='#crcd6_tipodedocumentovalidarcliente']").on(
+        "click",
+        function () {
+          scrollToAndFocus(
+            "crcd6_tipodedocumentovalidarcliente",
+            "crcd6_tipodedocumentovalidarcliente"
+          );
+        }
+      );
+    },
+    ValidacionRazonSocial: function(){
+			if (typeof (Page_Validators) == 'undefined') return;
+			 var newValidator = document.createElement('span');
+			 newValidator.style.display = "none";
+			 newValidator.id = "RazonSocialValidador";
+			 newValidator.controltovalidate = "crcd6_nombre";
+			 newValidator.errormessage = "<a href='#crcd6_nombre'>El campo razón social es requerido.</a>";
+			 newValidator.validationGroup = ""; 
+			 newValidator.initialvalue = "";
+			 newValidator.evaluationfunction = function () {
+				var esAutonomo = $("#crcd6_esautonomo")
+          .find(":radio:checked")
+          .first()
+          .attr("value");
+				if (esAutonomo == RespuestaEsAutonomo.No){
+					var value = $("#crcd6_nombre").val();
+					if (value == null || value == "") {
+					  return false;
+					} else {
+					  return true;
+					}
+        } else {
+            return true;
+        }
+			 };
+			 
+			 Page_Validators.push(newValidator);
+		},
+    ValidacionCIF: function(){
+			if (typeof (Page_Validators) == 'undefined') return;
+			 var newValidator = document.createElement('span');
+			 newValidator.style.display = "none";
+			 newValidator.id = "CIFValidador";
+			 newValidator.controltovalidate = "crcd6_cif";
+			 newValidator.errormessage = "<a href='#crcd6_cif'>El campo CIF es requerido.</a>";
+			 newValidator.validationGroup = ""; 
+			 newValidator.initialvalue = "";
+			 newValidator.evaluationfunction = function () {
+				var esAutonomo = $("#crcd6_esautonomo")
+          .find(":radio:checked")
+          .first()
+          .attr("value");
+				if (esAutonomo == RespuestaEsAutonomo.No){
+          var value = $("#crcd6_cif").val();
+					if (value == null || value == "") {
+					  return false;
+					} else {
+					  return true;
+					}
+        } else {
+            return true;
+        }
+			 };
+			 
+			 Page_Validators.push(newValidator);
+		},
+    ValidacionNombreApellidos: function(){
+			if (typeof (Page_Validators) == 'undefined') return;
+			 var newValidator = document.createElement('span');
+			 newValidator.style.display = "none";
+			 newValidator.id = "NombreApellidosValidador";
+			 newValidator.controltovalidate = "crcd6_nombresapellidos";
+			 newValidator.errormessage = "<a href='#crcd6_nombresapellidos'>El campo Nombre y Apellidos es requerido.</a>";
+			 newValidator.validationGroup = ""; 
+			 newValidator.initialvalue = "";
+			 newValidator.evaluationfunction = function () {
+				var esAutonomo = $("#crcd6_esautonomo")
+          .find(":radio:checked")
+          .first()
+          .attr("value");
+				if (esAutonomo == RespuestaEsAutonomo.Si){
+					var value = $("#crcd6_nombresapellidos").val();
+					if (value == null || value == "") {
+					  return false;
+					} else {
+					  return true;
+					}
+        } else {
+            return true;
+        }
+			 };
+			 
+			 Page_Validators.push(newValidator);
+		},
+    ValidacionNIF: function(){
+			if (typeof (Page_Validators) == 'undefined') return;
+			 var newValidator = document.createElement('span');
+			 newValidator.style.display = "none";
+			 newValidator.id = "NIFValidador";
+			 newValidator.controltovalidate = "crcd6_nif";
+			 newValidator.errormessage = "<a href='#crcd6_nif'>El campo NIF es requerido.</a>";
+			 newValidator.validationGroup = ""; 
+			 newValidator.initialvalue = "";
+			 newValidator.evaluationfunction = function () {
+				var esAutonomo = $("#crcd6_esautonomo")
+          .find(":radio:checked")
+          .first()
+          .attr("value");
+				if (esAutonomo == RespuestaEsAutonomo.Si){
+					var value = $("#crcd6_nif").val();
+					if (value == null || value == "") {
+					  return false;
+					} else {
+					  return true;
+					}
+        } else {
+            return true;
+        }
+			 };
+			 
+			 Page_Validators.push(newValidator);
+		},
+  };
+  $(document).ready(function () {
+    FormularioRegistro.EventosOnload();
+    FormularioRegistro.EventosOnChange();
+    ValidarApoderadoEmpresa.EventosOnload("{{ idContacto }}");
+  });
+</script>

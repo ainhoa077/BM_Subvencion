@@ -1,0 +1,66 @@
+<div class="go-to-call">
+  <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary">
+    <a href="#" title="Ayuda">
+      <i class="glyphicon glyphicon-earphone"></i>
+      <span class="sr-only">Llamanos</span>
+    </a>
+  </button>
+</div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+    <div role="document" class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% include 'Llamada telefonica' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% assign idContacto = user.Id %}
+<div class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; text-align: left; min-height: 100px;">
+  <div class="container" style="display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column; font-size: 24px;">
+      <h3>Solicita tu servicio personalizado (1/3)</h3><h3>
+    </h3></div>
+    <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+      <div class="alert alert-info" role="alert">
+		Necesitamos que respondas a unas breves preguntas para poder ofrecerte el mejor servicio y un presupuesto personalizado.
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px;">
+  <div class="container" style="display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout">{% webform name: 'Solicitud presupuesto' %}</div>
+  </div>
+</div>
+<script type="text/javascript" src="~/SolicitudPresupuestacion.js"></script>
+<script language="javascript">
+  $(document).ready(function() {
+    const idContacto = '{{ idContacto }}';
+    SolicitudPresupuestacion.EventosOnload(idContacto);
+  });
+  if (window.jQuery) {
+    (function($) {
+      if (typeof(webFormClientValidate) != 'undefined') {
+        var originalValidationFunction = webFormClientValidate;
+        if (originalValidationFunction && typeof(originalValidationFunction) == "function") {
+          webFormClientValidate = function() {
+            originalValidationFunction.apply(this, arguments);
+            $('#crcd6_cliente_name').parent().parent().show();
+            $('#crcd6_cliente').parent().parent().show();
+            $('#crcd6_cliente_entityname').parent().parent().show();
+            $('#crcd6_serviciosofertados_name').parent().parent().show();
+            $('#crcd6_serviciosofertados').parent().parent().show();
+            $('#crcd6_serviciosofertados_entityname').parent().parent().show();
+            return true;
+          };
+        }
+      }
+    }(window.jQuery));
+  }
+</script>

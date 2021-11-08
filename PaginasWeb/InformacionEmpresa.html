@@ -1,0 +1,73 @@
+<div class="go-to-call">
+	<button id="idLlamada" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary">
+		<a href="#" title="Ayuda">
+			<i class="glyphicon glyphicon-earphone"></i>
+			<span class="sr-only">Llámanos</span>
+		</a>
+	</button>
+</div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+	<div role="document" class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h3>
+				<button id="idLlamada" type="button" data-dismiss="modal" aria-label="Close" class="close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{% include 'Llamada telefonica' %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px;">
+	<div class="container" style="display: flex; flex-wrap: wrap;">
+		<div class="col-md-12 columnBlockLayout" style="font-size: 24px;">
+			<h3>Solicita tu servicio personalizado (2/3)</h3>
+		</div>
+		<div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+			<div class="alert alert-info" role="alert">
+				Completa, por favor, los siguientes campos para obtener más información acerca de tu empresa. Estos datos sólo se te solicitarán una vez.
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px;">
+	<div class="container" style="display: flex; flex-wrap: wrap;">
+		<div class="col-md-12 columnBlockLayout">{% entityform name: 'Información general de la empresa' %}</div>
+		</div>
+</div>  
+
+<script>
+	const InformacionEmpresa = {
+		FormatoNumero: function(valor)
+		{
+			var number = parseFloat(valor);
+			var formato = number.toLocaleString('de-DE')
+			return formato;
+		},
+		EventosOnLoad: function() {
+			InformacionEmpresa.ModificarLookups();
+			$(window).resize(function() {
+				InformacionEmpresa.ModificarLookups();
+			});
+		},
+		ModificarLookups: function(){
+			$('button.btn.btn-default.launchentitylookup').css("padding-left",$("#crcd6_cnae_name").width());
+			$('button.btn.btn-default.clearlookupfield').css("z-index",1);
+			$('button.btn.btn-default.launchentitylookup').attr('data-original-title', '');
+		},
+		EventosOnChange: function(){
+			$("#crcd6_ingresosanuales").change(function () {
+				var numeroFormato = InformacionEmpresa.FormatoNumero($("#crcd6_ingresosanuales").val());
+				$("#crcd6_ingresosanuales").val(numeroFormato);
+			});
+		}
+	}
+	$(document).ready(function () {
+		InformacionEmpresa.EventosOnLoad();
+		InformacionEmpresa.EventosOnChange();
+	});
+</script>

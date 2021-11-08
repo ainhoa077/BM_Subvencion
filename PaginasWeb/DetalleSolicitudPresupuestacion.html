@@ -1,0 +1,647 @@
+<div class="go-to-call">
+	<button id="idLlamada" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary">
+		<a href="#" title="Ayuda">
+			<i class="glyphicon glyphicon-earphone"></i>
+			<span class="sr-only">Llámanos</span>
+		</a>
+	</button>
+</div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+	<div role="document" class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h3>
+				<button type="button" data-dismiss="modal" aria-label="Close" class="close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{% include 'Llamada telefonica' %}
+			</div>
+		</div>
+	</div>
+</div>
+{% assign idSolicitud = params.id %}
+{% fetchxml solicitudResultado %}
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_solicitudsub">
+	<attribute name="crcd6_solicitud"></attribute>
+    <attribute name="crcd6_solicitudsubid"></attribute>
+    <attribute name="crcd6_estado"></attribute>
+    <attribute name="crcd6_serviciosofertados"></attribute>
+	<attribute name="modifiedon"></attribute>
+	<attribute name="createdon"></attribute>
+	<attribute name="crcd6_nombreproyecto"></attribute>
+	<attribute name="crcd6_subvencionpresentada"></attribute>
+	<attribute name="crcd6_transferencias"></attribute>
+    <order attribute="crcd6_solicitud" descending="false"></order>
+    <filter type="and">
+      <condition attribute="crcd6_solicitudsubid" operator="eq" uitype="crcd6_solicitudsub" value="{{ idSolicitud | xml_escape }}"></condition>
+    </filter>
+    <link-entity name="crcd6_estado" from="crcd6_estadoid" to="crcd6_estado" link-type="inner" alias="estado">
+      <attribute name="crcd6_descripcionportal"></attribute>
+	  <attribute name="crcd6_codigo"></attribute>
+    </link-entity>
+    <link-entity name="crcd6_servicioofertado" from="crcd6_servicioofertadoid" to="crcd6_serviciosofertados" link-type="inner" alias="servicio">
+      <attribute name="crcd6_descripcion"></attribute>
+      <attribute name="crcd6_coste"></attribute>
+    </link-entity>
+	<link-entity name="crcd6_subvencion" from="crcd6_subvencionid" to="crcd6_subvencionpresentada" link-type="inner" alias="subvencion">
+      <attribute name="crcd6_subvencion">
+    </attribute></link-entity>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% for registroSolicitud in solicitudResultado.results.entities %}
+{% assign numeroSolicitud = registroSolicitud.crcd6_solicitud %}
+{% assign idSolicitud = registroSolicitud.crcd6_solicitudsubid %}
+{% assign fechaModificacion = registroSolicitud.modifiedon %}
+{% assign fechaCreacion = registroSolicitud.createdon %}
+{% assign nombreProyecto = registroSolicitud.crcd6_nombreproyecto %}
+{% assign nombreEstado = registroSolicitud.crcd6_estado.name  %}
+{% assign codigoEstado = registroSolicitud['estado.crcd6_codigo']  %}
+{% assign descripcion = registroSolicitud['estado.crcd6_descripcionportal'] %}
+{% assign servicio = registroSolicitud['crcd6_servicio'].label %}
+{% assign servicioOfertado = registroSolicitud.crcd6_serviciosofertados.name %}
+{% assign coste = registroSolicitud['servicio.crcd6_coste'] %}
+{% assign descripcionServicio = registroSolicitud['servicio.crcd6_descripcion'] %}
+{% assign nombreSubvencion = registroSolicitud['subvencion.crcd6_subvencion'] %}
+<!-- NUEVO -->
+{% assign esTransferencia = registroSolicitud.crcd6_transferencias %}}
+<!-- FIN NUEVO -->
+{% endfor %}
+
+{% assign estadoAceptacionPresupuesto = 3 %}
+<!-- NUEVO -->
+{% assign estadoPendientePago = 4 %}
+<!-- FIN NUEVO -->
+{% assign estadoSubidaArchivos = 5 %}
+
+{% if solicitudResultado.results.entities.size &gt;= 0 %}
+	<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+	  <div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+		<!-- <h3>Nº Solicitud: {{ numeroSolicitud }}</h3> -->
+		{% if nombreSubvencion %}
+		<div class="col-md-2 columnBlockLayout">
+			<h3 style="color: #e0301e;">Subvención:</h3>
+		</div>
+		<div class="col-md-10 columnBlockLayout">
+			<h3>{{ nombreSubvencion }}</h3>
+		</div>
+		{% endif %}
+		<div class="col-md-3 columnBlockLayout"></div>
+		<div class="col-md-6 columnBlockLayout">	
+		<br>
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#detalle">Detalle</a></li>
+				<li><a data-toggle="tab" href="#mensajes">Mensajes</a></li>
+				<li><a data-toggle="tab" href="#justificantes">Presupuesto y justificantes</a></li>
+			</ul>
+		</div>
+		<div class="col-md-3 columnBlockLayout"></div>
+	  </div>
+	</div>
+	  
+	
+	<div class="tab-content">
+		<div id="detalle" class="tab-pane fade in active">
+			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-4 columnBlockLayout">
+						<h3 style="color: #e0301e;">Detalle</h3>
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+						<p class="detalle-text"><b>Nº Solicitud</b></p>
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+						<p class="detalle-text"> {{ numeroSolicitud }} </p>
+					</div>
+					<div class="col-md-4 columnBlockLayout"></div>
+					<div class="col-md-4 columnBlockLayout">
+						<p class="detalle-text"><b>Estado</b></p>
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+						<p class="detalle-text">{{ nombreEstado }}</p>
+					</div>
+					<div class="col-md-4 columnBlockLayout"></div>
+					<div class="col-md-4 columnBlockLayout">
+						<p class="detalle-text"><b>Fecha de creación de la solicitud</b></p>
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+						<p class="detalle-text">{{ fechaCreacion | date: 'f' }}</p>
+					</div>
+					<div class="col-md-4 columnBlockLayout"></div>
+					{% if nombreProyecto %}
+					<div class="col-md-4 columnBlockLayout">
+						<p class="detalle-text"><b>Nombre del proyecto</b></p>
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+						<p class="detalle-text">{{ nombreProyecto }}</p>
+					</div>
+					<div class="col-md-4 columnBlockLayout"></div>
+					{% endif %}
+					<!--  
+					{% if nombreSubvencion %}
+					<div class="col-md-4 columnBlockLayout">
+						<p><b>Nombre de la ayuda</b></p>
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+						<p>{{ nombreSubvencion }}</p>
+					</div>
+					<div class="col-md-4 columnBlockLayout"></div>
+					{% endif %}
+					 -->
+					{% if codigoEstado &gt; 2 %}
+						{% if servicioOfertado %}
+						<div class="col-md-4 columnBlockLayout">
+							<p class="detalle-text"><b>Servicio contratado</b></p>
+						</div>
+						<div class="col-md-4 columnBlockLayout">
+							<p class="detalle-text">{{ servicioOfertado }}</p>
+						</div>
+						<div class="col-md-4 columnBlockLayout"></div>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
+						<h3 style="color: #e0301e;">Descripción</h3>
+						<p class="detalle-text">{{ descripcion }}</p>
+					</div>
+				</div>
+			</div>
+
+			{% if codigoEstado == estadoAceptacionPresupuesto %}
+			<div id="aceptacionPresupuesto" class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div id="successMsg" style="display:none" role="alert" class="alert alert-success">
+						Se ha procesado su información.
+					</div>
+					<div id="errorMsg" style="display:none" role="alert" class="alert alert-danger">
+						Error en el proceso de contratación del servicio.
+					</div>
+					<div class="col-md-12 columnBlockLayout">
+						<h3 style="color: #e0301e;">Acciones a realizar</h3>
+						<p class="detalle-text">El servicio propuesto es: <b>{{ servicioOfertado }}</b></p>
+					</div>
+					<div class="col-md-12 columnBlockLayout">
+						<p class="detalle-text">Se realizan las acciones de: <b>{{ descripcionServicio }}</b></p>
+					</div>
+					<div class="col-md-12 columnBlockLayout">
+						<p class="detalle-text">El coste del servicio es de : <b>{{ coste | round: 2 }}€</b> (IVA no incluido)</p>
+					</div>			
+					<div class="col-md-12 text-center columnBlockLayout">
+						<br>
+					</div>
+					<div class="col-md-6 text-center columnBlockLayout">
+					<button type="button" onclick="FormularioDetalleSolicitud.RechazarSolicitud()" class="btn btn-primary action create-action">Rechazar presupuesto</button>
+					</div>
+					<div class="col-md-6 text-center columnBlockLayout">
+						<button type="button" onclick="FormularioDetalleSolicitud.ContratarServicio(); return false;" class="btn btn-primary action create-action">Contratar servicio</button>
+					</div>
+					<div class="col-md-12 text-center columnBlockLayout">
+						<br>
+					</div>
+				</div>
+			</div>
+			<div id="contratacionOnline" style="display: none;" class="row sectionBlockLayout">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
+						<h3 style="color: #e0301e;">Acciones a realizar</h3>
+						<p class="detalle-text">Por favor, elige un metodo de pago de entre los indicados.</p>
+					</div>
+					<div class="col-md-12 text-center columnBlockLayout">
+						<br>
+						<br>
+					</div>
+					<div class="col-md-6 text-center columnBlockLayout">
+					<button type="button" onclick="FormularioDetalleSolicitud.AbrirPopUp('modalTransferenciaBancaria')" class="btn btn-primary action create-action">Transferencia bancaria</button>
+					</div>
+					<div class="col-md-6 text-center columnBlockLayout">
+						<button type="button" onclick="FormularioDetalleSolicitud.PagarOnline()" class="btn btn-primary action create-action">Pago TPV virtual</button>
+					</div>
+					<div class="col-md-12 text-center columnBlockLayout">
+						<br>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			<!-- NUEVO -->
+			{% if codigoEstado == estadoPendientePago %}
+			<div id="estadoPendientePago" style="display: none;" class="row sectionBlockLayout">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
+						<h3 style="color: #e0301e;">Acciones a realizar</h3>
+					</div>
+					{% if esTransferencia %}
+					<div class="col-md-12 text-center columnBlockLayout">
+						<p class="detalle-text">Por favor, no te olvides de realizar el pago en la siguiente cuenta bancaria</p>
+						<p class="detalle-text">CUENTA: ES25 0081 5136 7900 0124 5235</p>
+						<p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
+						<p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
+						<br>
+						<br>
+					</div>
+					{% endif %}
+					<div class="col-md-6 text-center columnBlockLayout">
+					<button type="button" onclick="FormularioDetalleSolicitud.AbrirPopUp('modalTransferenciaBancaria')" class="btn btn-primary action create-action">Transferencia bancaria</button>
+					</div>
+					<div class="col-md-12 text-center columnBlockLayout">
+						<br>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			<!-- FIN NUEVO -->
+			{% if codigoEstado == estadoSubidaArchivos %}
+			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
+						<h3 style="color: #e0301e;">Adjuntar documentación</h3>
+						{% entityform name: 'Formulario de solicitud adjuntar documentación' %}
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+					</div>
+					<div class="col-md-4 text-center columnBlockLayout">
+					<button type="button" onclick="FormularioDetalleSolicitud.RevisionDocumentacion()" class="btn btn-primary action create-action">Enviar a revisión</button>
+					</div>
+					<div class="col-md-4 columnBlockLayout">
+					</div>
+					<div class="col-md-12 text-center columnBlockLayout">
+						<br>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
+						<br>
+						<center>
+							<a href="/solicitud-presupuestacion" class="pwc-btn pwc-btn--primary"><span class="pwc-btn_label">Volver a mis solicitudes</span></a>
+						</center>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="mensajes" class="tab-pane fade">
+			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
+						{%  entityform name: 'Mensajería solicitudes' %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="justificantes" class="tab-pane fade">
+			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
+						{%  entityform name: 'Formulario justificantes de solicitud' %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}
+
+{% if solicitudResultado.results.entities.size == 0 %}
+	<div class="container"><br>
+		<div class="alert alert-danger" role="alert">
+			<h3 class="alert-heading">Registro no encontrado</h3>
+			<p class="detalle-text">Comunícate con el administrador.</p>
+		</div>
+		<br>
+		<center>
+		<a href="/solicitud-presupuestacion" class="pwc-btn pwc-btn--primary"><span class="pwc-btn_label">Regresar a Mis solicitudes de presupuestación</span></a>
+	</center></div>
+{% endif %}
+<div id="modalTransferenciaBancaria" class="modal fade" tabindex="-1" role="dialog" style="display:none">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Información importante!</h5>
+        </div>
+        <div class="modal-body">
+          <p class="detalle-text">CUENTA: ES25 0081 5136 7900 0124 5235</p>
+		  <p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
+		  <p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
+        </div>
+        <div class="modal-footer">
+			<button type="button" onclick="FormularioDetalleSolicitud.CerrarModal('#modalTransferenciaBancaria');return false;" class="pwc-btn pwc-btn--primary">Cancelar</button>
+          	<button type="button" onclick="FormularioDetalleSolicitud.PagarTransferencia()" class="pwc-btn pwc-btn--primary">Aceptar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div id="modalMotivoRechazo" class="modal fade" tabindex="-1" role="dialog" style="display:none">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+					<div id="errorMsgMotivoRechazo" style="display:none" role="alert" class="alert alert-danger">
+					El campo motivo de rechazo es obligatorio.
+					</div>
+					{% entityform name: 'Motivos de rechazo' %}
+				</div>
+        <div class="modal-footer">
+		  <button type="button" onclick="FormularioDetalleSolicitud.CerrarModal('#modalMotivoRechazo');return false;" class="pwc-btn pwc-btn--primary">Cancelar</button>
+		  <button type="button" onclick="FormularioDetalleSolicitud.MotivoRechazo()" class="pwc-btn pwc-btn--primary">Enviar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div id="modalDocumentosIncompletos" class="modal fade" tabindex="-1" role="dialog" style="display:none">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Documentación incompleta</h5>
+        </div>
+        <div class="modal-body">
+			<p class="detalle-text">Debes adjuntar todos los documentos solicitados.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" onclick="FormularioDetalleSolicitud.CerrarModal('#modalDocumentosIncompletos');return false;" class="pwc-btn pwc-btn--primary">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/portalApi.js"></script>
+<script language="javascript">
+	const descripcionRechazo = {
+		Descripcion522960000: "522960000",
+    	Descripcion522960001: "522960001",
+		Descripcion522960002: "522960002",
+    	Descripcion522960003: "522960003",
+	};
+	(function (webapi, $) {
+		function safeAjax(ajaxOptions) {
+			var deferredAjax = $.Deferred();
+			shell.getTokenDeferred().done(function (token) {
+				// Add headers for ajax
+				if (!ajaxOptions.headers) {
+					$.extend(ajaxOptions, {
+						headers: {
+							"__RequestVerificationToken": token
+						}
+					});
+				} else {
+					ajaxOptions.headers["__RequestVerificationToken"] = token;
+				}
+				$.ajax(ajaxOptions)
+					.done(function (data, textStatus, jqXHR) {
+						validateLoginSession(data, textStatus, jqXHR, deferredAjax.resolve);
+					}).fail(deferredAjax.reject); //ajax
+			}).fail(function () {
+				deferredAjax.rejectWith(this, arguments); // On token failure pass the token ajax and args
+			});
+			return deferredAjax.promise();
+		}
+		webapi.safeAjax = safeAjax;
+	})(window.webapi = window.webapi || {}, jQuery)
+	var notificationMsg = (function () {
+            var $processingMsgEl = $('#processingMsg'),
+                _msg = 'Processando...',
+                _stack = 0,
+                _endTimeout;
+            return {
+                show: function (msg) {
+                    $processingMsgEl.text(msg || _msg);
+                    if (_stack === 0) {
+                        clearTimeout(_endTimeout);
+                        $processingMsgEl.show();
+                    }
+                    _stack++;
+                },
+                hide: function () {
+                    _stack--;
+                    if (_stack <= 0) {
+                        _stack = 0;
+                        clearTimeout(_endTimeout);
+                        _endTimeout = setTimeout(function () {
+                            $processingMsgEl.hide();
+                        }, 500);
+                    }
+                }
+            }
+        })();
+
+      const FormularioDetalleSolicitud = {
+			AppAjax: function(processingMsg, ajaxOptions) {
+				notificationMsg.show(processingMsg);
+				return webapi.safeAjax(ajaxOptions)
+				  .fail(function(response) {
+					if (response.responseJSON) {
+					  alert( " Error: " + response.responseJSON.error.message)
+					} else {
+					  alert( " Error: Web API no disponible... ")
+					}
+				  }).always(notificationMsg.hide);
+			},
+			ConsultarEstado: function(codigo) {
+			  let resultado = [];
+			  $.ajax({
+				method: 'GET',
+				dataType: 'json',
+				async: false,
+				url: "/consultar-estado?codigoEstado=" + codigo
+			  }).done(function(data) {
+				resultado = data.results;
+			  });
+			  return resultado;
+			},
+			OcultarBotonEnviar: function() {
+				$("#UpdateButton").hide();
+			},
+			ConsultarDocumentosAdjuntos: function() {
+			  let resultado = [];
+			  $.ajax({
+				method: 'GET',
+				dataType: 'json',
+				async: false,
+				url: "/consulta-adjuntos-completos-solicitud?idsolicitud=" + FormularioDetalleSolicitud.ObtenerParametroUrl('id')
+			  }).done(function(data) {
+				resultado = data.results;
+			  });
+			  return resultado;
+			},
+			CambiarEstadoYMotivoRechazo: function(estado, motivosRechazo) {
+				const estadoContratadoId = FormularioDetalleSolicitud.ConsultarEstado(estado);
+				 
+				var recordObj = {
+					"crcd6_Estado@odata.bind": "/crcd6_estados("+ estadoContratadoId[0] +")",
+					"crcd6_motivosderechazo": motivosRechazo
+				};
+				FormularioDetalleSolicitud.AppAjax('Enviando información...', {
+					  type: "PATCH",
+					  url: "/_api/crcd6_solicitudsubs(" + FormularioDetalleSolicitud.ObtenerParametroUrl('id') + ")",
+					  contentType: "application/json",
+					  async: false,
+					  data: JSON.stringify(recordObj),
+					  success: function (res, status, xhr) {
+						  location.reload();
+					  }
+				  });
+			},
+			CambiarEstadoPago: function(estado, esTransferencia) {
+				debugger;
+				const estadoContratadoId = FormularioDetalleSolicitud.ConsultarEstado(estado);
+				 
+				var recordObj = {
+					"crcd6_Estado@odata.bind": "/crcd6_estados("+ estadoContratadoId[0] +")", 
+					"crcd6_transferencias": esTransferencia
+				};
+				FormularioDetalleSolicitud.AppAjax('Enviando información...', {
+					  type: "PATCH",
+					  url: "/_api/crcd6_solicitudsubs(" + FormularioDetalleSolicitud.ObtenerParametroUrl('id') + ")",
+					  contentType: "application/json",
+					  async: false,
+					  data: JSON.stringify(recordObj),
+					  success: function (res, status, xhr) {
+						  location.reload();
+					  }
+				  });
+			},
+			CambiarEstado: function(estado) {
+				const estadoContratadoId = FormularioDetalleSolicitud.ConsultarEstado(estado);
+				 
+				var recordObj = {
+					"crcd6_Estado@odata.bind": "/crcd6_estados("+ estadoContratadoId[0] +")"
+				};
+				FormularioDetalleSolicitud.AppAjax('Enviando información...', {
+					  type: "PATCH",
+					  url: "/_api/crcd6_solicitudsubs(" + FormularioDetalleSolicitud.ObtenerParametroUrl('id') + ")",
+					  contentType: "application/json",
+					  async: false,
+					  data: JSON.stringify(recordObj),
+					  success: function (res, status, xhr) {
+						  location.reload();
+					  }
+				  });
+			},
+			ObtenerParametroUrl: function(sParam){
+				var sPageURL = window.location.search.substring(1);
+				var sURLVariables = sPageURL.split('&');
+				for (var i = 0; i < sURLVariables.length; i++) 
+				{
+					var sParameterName = sURLVariables[i].split('=');
+					if (sParameterName[0] == sParam) 
+					{
+						return sParameterName[1];
+					}
+				}
+			},
+			EventosOnload: function(contactoId){
+				FormularioDetalleSolicitud.RegistrarEventosOnClick();
+				FormularioDetalleSolicitud.OcultarBotonEnviar();
+			},
+			RegistrarEventosOnClick: function(){
+				$('#modalTransferenciaBancaria').on('hidden.bs.modal', function (e) {
+					$('#modalTransferenciaBancaria').modal('toggle');
+					$('#modalTransferenciaBancaria').modal('show');
+					$('#modalTransferenciaBancaria').modal({
+						backdrop: 'static'
+					});
+				});
+			},
+			AbrirPopUp: function(idDiv){
+				$('#crcd6_motivosderechazo_label').hide();
+				$('#UpdateButton').parent().hide();
+				$('#' + idDiv).modal('toggle');
+				$('#' + idDiv).modal('show');
+				$('#' + idDiv).modal({
+					backdrop: 'static'
+				});
+			},
+			CerrarModal: function (divId) {
+				$(divId).modal("hide");
+			},
+			ContratarServicio: function(){
+				$('#aceptacionPresupuesto').hide();
+				$('#contratacionOnline').show();
+			},
+			PagarTransferencia: function(){
+				FormularioDetalleSolicitud.CambiarEstadoPago("4", true);
+			},
+			PagarOnline: function(){
+				const solicitudId = '{{ idSolicitud }}';
+				let resultado = PortalApi.Api("AccionGenerarUrlPagoSabadell", {
+								"solicitudid": solicitudId,
+								"Random": Math.random()
+							}, ["crcd6_respuesta"], "AccionGenerarUrlPagoSabadell");
+
+				resultado = resultado && resultado[0] && resultado[0].crcd6_respuesta ? JSON.parse(resultado[0].crcd6_respuesta) : null;
+
+				if(resultado.errorCode === 0){
+					window.location.href = resultado.challengeUrl;
+				}
+			},
+			RevisionDocumentacion: function(){
+				const documentos = FormularioDetalleSolicitud.ConsultarDocumentosAdjuntos();
+				let adjuntosCompletos = true;
+
+				if(documentos === null || documentos === undefined){
+					adjuntosCompletos = false;
+				}
+				else if(documentos !== null && documentos.length > 0){
+					for (var i = 0; i < documentos.length; i++) {
+						if(!documentos[i].documentoAdjunto){
+							adjuntosCompletos = false;
+						}
+					}
+				}
+
+				if(adjuntosCompletos){
+					FormularioDetalleSolicitud.CambiarEstado("6");
+				}
+				else{
+					$('#modalDocumentosIncompletos').modal('toggle');
+					$('#modalDocumentosIncompletos').modal('show');
+					$('#modalDocumentosIncompletos').modal({
+						backdrop: 'static'
+					});
+				}
+			},
+			MotivoRechazo: function(){
+				if ($('#crcd6_motivosderechazo').val() !== "522960004" && $('#crcd6_motivosderechazo').val() !== undefined) {
+					if ($('#crcd6_motivosderechazo').val() == "522960000") {
+						FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", descripcionRechazo.Descripcion522960000);
+						//FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", 522960000);
+					}
+					if ($('#crcd6_motivosderechazo').val() == "522960001") {
+						FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", descripcionRechazo.Descripcion522960001);
+					}
+					if ($('#crcd6_motivosderechazo').val() == "522960002") {
+						FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", descripcionRechazo.Descripcion522960002);
+					}
+					if ($('#crcd6_motivosderechazo').val() == "522960003") {
+						FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", descripcionRechazo.Descripcion522960003);
+					}
+				}
+				else{
+					$('#errorMsgMotivoRechazo').show();
+				}
+			},
+			RechazarSolicitud: function(){
+				$('#errorMsgMotivoRechazo').hide();
+				FormularioDetalleSolicitud.AbrirPopUp("modalMotivoRechazo");
+				$('#labelMotivo').after($('#crcd6_motivosderechazo'));
+			},
+		};
+if (window.jQuery) {
+   (function ($) {
+		$(document).ready(function () {
+			$('#successMsg').hide();
+			$('#errorMsg').hide();
+			FormularioDetalleSolicitud.EventosOnload();
+		});
+	}(window.jQuery));
+}
+</script>

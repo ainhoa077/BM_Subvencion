@@ -1,0 +1,22 @@
+{% assign nif = params.nif %}
+{% assign idContacto = user.Id %}
+{% fetchxml DataList %}  
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_cliente">
+    <attribute name="crcd6_cliente" />
+    <attribute name="crcd6_clienteid" />
+    <attribute name="crcd6_contactoid" />
+    <order attribute="crcd6_cliente" descending="false" />
+    <filter type="and">
+      <condition attribute="crcd6_nif" operator="eq" value="{{ nif | xml_escape }}"  />
+      <condition attribute="crcd6_contactoid" operator="ne" uitype="contact" value="{{ idContacto | xml_escape }}"  />
+    </filter>
+  </entity>
+</fetch>  
+{% endfetchxml %}
+{
+"results": [
+{% for result in DataList.results.entities %}
+"{{ result.crcd6_cliente | escape }}"{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]}

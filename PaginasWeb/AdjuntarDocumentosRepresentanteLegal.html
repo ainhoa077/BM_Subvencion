@@ -1,0 +1,127 @@
+<div class="go-to-call"><button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary"><a href="#" title="Ayuda"><i class="glyphicon glyphicon-earphone"></i><span class="sr-only">Llamanos</span></a></button></div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+  <div role="document" class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h5><button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">{% include 'Llamada telefonica' %}</div>
+    </div>
+  </div>
+</div>
+<div id="contenedorRepresentante" role="main" class="container pwc-formulario_container">
+  <div id="mensajeAyuda" role="alert" class="alert alert-info">
+    A continuación, te pediremos que adjuntes un documento que acredite que eres el representante legal de la
+    empresa o apoderado. Podrás elegir entre dos opciones.
+    En caso de tratarse de una comunidad de propietarios, el Presidente de la Comunidad deberá adjuntar el
+    certificado firmado que acredite la elección del presidente.
+  </div>
+  <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+    <h3>Adjuntar documento del representante legal o apoderado / persona física</h3><br>
+  </div>
+  <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">{% entityform name: 'Adjuntar documentos representante legal' %}</div>
+</div>
+<script language="javascript">
+  $(document).ready(function() {
+    FormularioRepresentante.EventosOnload();
+  });
+  const TipoDocumento = {
+    EscrituraApoderamiento: "522960001",
+    CertificadoElecciónPresidente: "522960002",
+    CertificadoRegistroMercantil: "522960003",
+    DNIautonomos: "522960004"    
+  };
+  const DescripcionDocumentoCargar = {
+    DescripcionEscrituraApoderamiento: "Copia de la escritura de apoderamiento donde se identifica al apoderado o representante legal vigente.",
+    DescripcionCertificadoElecciónPresidente: "Copia del certificado firmado por el secretario de la comunidad que acredite la elección del presidente.",
+    DescripcionRegistroMercantil: "Certificado expedido por el Registro Mercantil donde se acredite la representación como administrador único, solicitario o como representante de la persona jurídica.",
+    DescripcionDNIautonomos: "Copia del documento nacional de identidad."
+  };
+  const FormularioRepresentante = {
+      EventosOnload: function() {
+        FormularioRepresentante.EtiquetaFormatosValidos();
+        FormularioRepresentante.OCultarCamposAdjuntos();
+        FormularioRepresentante.ValidacionCampoTipoDocumento();
+        FormularioRepresentante.ValidarTipoDocumento();
+        $("#crcd6_descripciondocumentocargar").prop( "disabled", true);
+        $("#crcd6_descripciondocumentocargar").css("resize", "none");
+        FormularioRepresentante.EventosOnChange();
+      },
+        EtiquetaFormatosValidos: function () {
+            $("#AttachFile").after('<p id="formatoValido">Los formatos validos son: <b>.doc, .docx, .pdf, .png, .jpg</b></p>');
+        },
+    EventosOnChange: function() {
+      $("#crcd6_cotipodocumentovalidarcontacto").change(function() {
+          tipoDocumento = $("#crcd6_cotipodocumentovalidarcontacto").val();
+          if (tipoDocumento == null || tipoDocumento == "") {
+            FormularioRepresentante.OCultarCamposAdjuntos();
+            $("#crcd6_descripciondocumentocargar").val("");
+            FormularioRepresentante.DeshabilitarBoton();
+          } else {
+            FormularioRepresentante.MostrarCamposAdjuntos();
+            FormularioRepresentante.HabilitarBoton();
+          }
+          if (tipoDocumento === TipoDocumento.EscrituraApoderamiento) {
+            $("#crcd6_descripciondocumentocargar").val(DescripcionDocumentoCargar.DescripcionEscrituraApoderamiento);
+          }
+          if (tipoDocumento === TipoDocumento.CertificadoElecciónPresidente) {
+            $("#crcd6_descripciondocumentocargar").val(DescripcionDocumentoCargar.DescripcionCertificadoElecciónPresidente);
+          }
+          if (tipoDocumento === TipoDocumento.CertificadoRegistroMercantil) {
+            $("#crcd6_descripciondocumentocargar").val(DescripcionDocumentoCargar.DescripcionRegistroMercantil);
+          }
+          if (tipoDocumento === TipoDocumento.DNIautonomos) {
+            $("#crcd6_descripciondocumentocargar").val(DescripcionDocumentoCargar.DescripcionDNIautonomos);
+          }
+        });
+      },
+      ValidacionCampoTipoDocumento: function() {
+        if (typeof(Page_Validators) == 'undefined') return;
+        var newValidator = document.createElement('span');
+        newValidator.style.display = "none";
+        newValidator.id = "Ayuda1Validator";
+        newValidator.controltovalidate = "crcd6_cotipodocumentovalidarcontacto";
+        newValidator.errormessage = "<a href = '#crcd6_cotipodocumentovalidarcontacto '>El campo tipo de documento es requerido.</a>";
+        newValidator.validationGroup = " ";
+        newValidator.initialvalue = " ";
+        newValidator.evaluationfunction = function() {
+          var tipoDocumento = $("#crcd6_cotipodocumentovalidarcontacto").val();
+          if (tipoDocumento == null || tipoDocumento == " ") {
+            return false;
+          } else {
+            return true;
+          }
+        };
+        Page_Validators.push(newValidator);
+        $(" a[href ='#crcd6_cotipodocumentovalidarcontacto']").on("click", function() {
+            scrollToAndFocus('crcd6_cotipodocumentovalidarcontacto', 'crcd6_cotipodocumentovalidarcontacto');
+        });
+    },
+    CerrarModal: function(divId) {
+      $(divId).modal("hide");
+    },
+    OCultarCamposAdjuntos: function() {
+      $("#AttachFileLabel").parent().parent().hide(); 
+      $("#notescontrol").parent().parent().hide(); 
+      $("#crcd6_descripciondocumentocargar").parent().parent().hide();
+    },
+    MostrarCamposAdjuntos: function() {
+        $("#AttachFileLabel").parent().parent().show();
+        $("#crcd6_descripciondocumentocargar").parent().parent().show();
+    },
+    HabilitarBoton: function() {
+        $(':input[id= "UpdateButton"]').prop("disabled", false);
+    },
+    DeshabilitarBoton: function() {
+      $(':input[id = "UpdateButton"]').prop("disabled", true);
+    },
+    ValidarTipoDocumento: function() {
+      valortipoDocumento = $("#crcd6_cotipodocumentovalidarcontacto").val();
+            if (valortipoDocumento == null || valortipoDocumento == "") {
+              FormularioRepresentante.OCultarCamposAdjuntos();
+            } else {
+              FormularioRepresentante.MostrarCamposAdjuntos();
+            }
+          }
+      }
+</script>

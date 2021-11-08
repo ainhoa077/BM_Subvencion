@@ -1,0 +1,65 @@
+<div class="go-to-call">
+    <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary">
+        <a href="#" title="Ayuda">
+        <i class="glyphicon glyphicon-earphone"></i>
+        <span class="sr-only">Llamanos</span>
+        </a>
+    </button>
+</div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+    <div role="document" class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% include 'Llamada telefonica' %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container pwc-formulario_container" id="contenedorRepresentante" role="main">
+    <div id="mensajeAyuda" class="alert alert-info" role="alert">
+        Finalmente, te pediremos que adjuntes el certificado de UBO para verficar la titularidad real de la empresa.
+    </div>
+    <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+        <h3>Adjuntar documento de titularidad real (UBO)</h3>
+        <p>Este documento únicamente ha de proporcionarse si se trata de una empresa en la que los poderes están divididos y la persona física que es último beneficiario, 
+            tiene participación superior al 25% en la que presenta cuentas a través de entidades intermedias que controla.</p>
+        <br>
+    </div>
+    <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+        {% entityform name: 'Adjuntar documentos representante legal UBO' %} 
+    </div>
+</div>
+<script language="javascript">
+    $(document).ready(function(){
+        FormularioRepresentante.EventosOnload();
+        FormularioRepresentante.CambiarTextoBoton();
+    });
+    const DescripcionDocumentoCargar = {
+        DescripcionUBO: "Este documento únicamente ha de proporcionarse si se trata de una empresa en la que los poderes están divididos y la persona física que es último beneficiario, tiene participación superior al 25% en la que presenta cuentas a través de entidades intermedias que controla."
+    };
+    const FormularioRepresentante = {
+        EventosOnload: function(){
+            FormularioRepresentante.EtiquetaFormatosValidos();       
+            FormularioRepresentante.OCultarCamposAdjuntos();
+            $("#h2").parent().hide();
+        },
+        CambiarTextoBoton: function() {
+            $("#UpdateButton").val("Siguiente");
+        },
+        EtiquetaFormatosValidos: function(){
+            $("#AttachFile").after('<p id="formatoValido">Los formatos validos son: <b>.doc, .docx, .pdf, .png, .jpg</b></p>');
+        },
+        CerrarModal: function (divId) {
+            $(divId).modal("hide");
+        },
+        OCultarCamposAdjuntos: function () {
+            $("#notescontrol").parent().parent().hide();
+            $("#crcd6_cotipodocumentovalidarcontacto").parent().parent().hide();
+        },
+    }
+</script>

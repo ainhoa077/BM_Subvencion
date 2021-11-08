@@ -1,0 +1,459 @@
+<div id="mainContent" class="wrapper-body" role="main">
+  {% include 'Page Copy' %}
+</div>
+{% assign idContacto = user.Id %}
+<div
+  id="modalFormularioRepresentante"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  style="display: none"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">¡Bienvenido!</h5>
+      </div>
+      <div class="modal-body">
+        <p class="offers__subtitle">
+          Te acompañaremos en todo el proceso de registro y solicitud de tus ayudas.
+          Para empezar, necesitamos que nos facilites tus datos como representante 
+          de tu empresa. 
+          Haz clic en el botón inferior para rellenarlos.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="window.location.href='/profile/'"
+          class="pwc-btn pwc-btn--primary"
+        >
+          Formulario de representante
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  id="modalFormularioAlta"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  style="display: none"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          ¡Has completado el primer paso!
+        </h5>
+      </div>
+      <div class="modal-body">
+        <p class="offers__subtitle">
+          A continuación, necesitamos que nos facilites los datos de tu empresa.
+          Es necesario para que nuestros asesores puedan ofrecerte el mejor servicio 
+          posible. 
+          Haz clic en el botón inferior para rellenarlos.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="window.location.href='/Formulario-registro'"
+          class="pwc-btn pwc-btn--primary"
+        >
+          Alta de la empresa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  id="modalAdjuntoDocumentosRepresentante"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  style="display: none"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">¡Ya casi está!</h5>
+      </div>
+      <div class="modal-body">
+        <p class="offers__subtitle">
+          Por ultimo, necesitamos que nos facilites un documento para verificar 
+          que eres el representante legal de la empresa.
+          Haz clic en el botón inferior para adjuntarlo.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="window.location.href='/adjuntar-documentos-representante/'"
+          class="pwc-btn pwc-btn--primary"
+        >
+          Adjuntar documentos de representante legal
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+<div
+  id="modalSolicitudesPrimeraVez"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  style="display: none"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">¡Muchas gracias!</h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          ¡Ya puedes solicitar ayudas a través de nuestro portal!
+          Para realizar la contratación de los servicios, debes acceder al
+          área "Mis solicitudes". Puedes hacer clic en el botón inferior para
+          acceder rápidamente.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="ValidarInformacionEmpresa.SolicitudPrimeraVez('{{ idContacto }}');"
+          class="pwc-btn pwc-btn--primary"
+        >
+          Ir a Mis Solicitudes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+<div class="go-to-top" style="display: block">
+  <a href="#" title="Subir">
+    <i class="glyphicon glyphicon-chevron-up"></i>
+    <span class="sr-only">Subir</span>
+  </a>
+</div>
+<script language="javascript">
+  (function (webapi, $) {
+    function safeAjax(ajaxOptions) {
+      var deferredAjax = $.Deferred();
+      shell
+        .getTokenDeferred()
+        .done(function (token) {
+          // Add headers for ajax
+          if (!ajaxOptions.headers) {
+            $.extend(ajaxOptions, {
+              headers: {
+                __RequestVerificationToken: token,
+              },
+            });
+          } else {
+            ajaxOptions.headers["__RequestVerificationToken"] = token;
+          }
+          $.ajax(ajaxOptions)
+            .done(function (data, textStatus, jqXHR) {
+              validateLoginSession(
+                data,
+                textStatus,
+                jqXHR,
+                deferredAjax.resolve
+              );
+            })
+            .fail(deferredAjax.reject); //ajax
+        })
+        .fail(function () {
+          deferredAjax.rejectWith(this, arguments); // On token failure pass the token ajax and args
+        });
+      return deferredAjax.promise();
+    }
+    webapi.safeAjax = safeAjax;
+  })((window.webapi = window.webapi || {}), jQuery);
+  var notificationMsg = (function () {
+    var $processingMsgEl = $("#processingMsg"),
+      _msg = "Processing...",
+      _stack = 0,
+      _endTimeout;
+    return {
+      show: function (msg) {
+        $processingMsgEl.text(msg || _msg);
+        if (_stack === 0) {
+          clearTimeout(_endTimeout);
+          $processingMsgEl.show();
+        }
+        _stack++;
+      },
+      hide: function () {
+        _stack--;
+        if (_stack <= 0) {
+          _stack = 0;
+          clearTimeout(_endTimeout);
+          _endTimeout = setTimeout(function () {
+            $processingMsgEl.hide();
+          }, 500);
+        }
+      },
+    };
+  })();
+  const ValidarInformacionEmpresa = {
+    AppAjax: function (processingMsg, ajaxOptions) {
+      notificationMsg.show(processingMsg);
+      return webapi
+        .safeAjax(ajaxOptions)
+        .fail(function (response) {
+          if (response.responseJSON) {
+            alert(" Error: " + response.responseJSON.error.message);
+          } else {
+            alert(" Error: Web API no disponible... ");
+          }
+        })
+        .always(notificationMsg.hide);
+    },
+    ConsultarRegistroCompleto: function (contactoId) {
+      const idContacto = contactoId;
+      let resultado = [];
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        async: false,
+        url: "/registro-completo?idContacto=" + idContacto,
+      }).done(function (data) {
+        resultado = data.results;
+      });
+
+      return resultado;
+    },
+    ConsultarClienteValido: function (contactoId) {
+      let resultado = [];
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        async: false,
+        url: "/cliente-valido?idContacto=" + contactoId,
+      }).done(function (data) {
+        resultado = data.results;
+      });
+      return resultado;
+    },
+    ConsultarApoderadoCompleto: function (contactoId) {
+      const idContacto = contactoId;
+      let resultado = [];
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        async: false,
+        url: "/info-apoderado-completo?idContacto=" + idContacto,
+      }).done(function (data) {
+        resultado = data.results;
+      });
+
+      return resultado;
+    },
+    ConsultarDocumentosAdjuntosRepresentante: function (contactoId) {
+      const idContacto = contactoId;
+      let resultado = [];
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        async: false,
+        url: "/consulta-adjunto-documentos-representante?idContacto=" + idContacto,
+      }).done(function (data) {
+        resultado = data.results;
+      });
+
+      return resultado;
+    },
+    ConsultarVisualizacionPrimeraVez: function (contactoId) {
+      const idContacto = contactoId;
+      let resultado = [];
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        async: false,
+        url: "/solicitud-primera-vez?idContacto=" + idContacto,
+      }).done(function (data) {
+        resultado = data.results;
+      });
+
+      return resultado;
+    },
+    ConsultaClienteAutenticado: function (contactoId) {
+      const idContacto = contactoId;
+      let resultado = [];
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        async: false,
+        url: "/consulta-cliente-usuario?idContacto=" + idContacto,
+      }).done(function (data) {
+        resultado = data.results;
+      });
+
+      return resultado;
+    },
+    SolicitudPrimeraVez: function (contactoId) {
+      let recordObj = {
+        crcd6_mostrarnotificacionsolicitudes: true,
+      };
+      const clienteId = ValidarInformacionEmpresa.ObtenerClienteId(contactoId);
+      ValidarInformacionEmpresa.AppAjax("Enviando información...", {
+        type: "PATCH",
+        url: "/_api/crcd6_clientes(" + clienteId + ")",
+        contentType: "application/json",
+        async: false,
+        data: JSON.stringify(recordObj),
+        success: function (res, status, xhr) {
+          window.location.href = "/solicitud-presupuestacion";
+        },
+      });
+    },
+    EventosOnload: function (contactoId) {
+      ValidarInformacionEmpresa.RegistrarEventosOnClick();
+
+      if (contactoId !== undefined && contactoId !== "") {
+        const apoderadoCompleto =
+          ValidarInformacionEmpresa.ApoderadoEsCompleto(contactoId);
+
+        if (!apoderadoCompleto && !window.location.href.includes("profile")) {
+          $("#modalFormularioRepresentante").modal("toggle");
+          $("#modalFormularioRepresentante").modal("show");
+          $("#modalFormularioRepresentante").modal({
+            backdrop: "static",
+          });
+        } else if (
+          !ValidarInformacionEmpresa.RegistroEsCompleto(contactoId) &&
+          !window.location.href.includes("Formulario-registro")
+        ) {
+          $("#modalFormularioAlta").modal("toggle");
+          $("#modalFormularioAlta").modal("show");
+          $("#modalFormularioAlta").modal({
+            backdrop: "static",
+          });
+        } else if (
+          !ValidarInformacionEmpresa.DocumentosAdjuntosRepresentante(contactoId) &&
+          !window.location.href.includes("adjuntar-documentos-representante")
+        ) {
+          $("#modalAdjuntoDocumentosRepresentante").modal("toggle");
+          $("#modalAdjuntoDocumentosRepresentante").modal("show");
+          $("#modalAdjuntoDocumentosRepresentante").modal({
+            backdrop: "static",
+          });
+        }
+        else if (
+          ValidarInformacionEmpresa.VisualizacionPrimeraVez(contactoId) &&
+          !window.location.href.includes("Formulario-registro")
+        ) {
+          $("#modalSolicitudesPrimeraVez").modal("toggle");
+          $("#modalSolicitudesPrimeraVez").modal("show");
+          $("#modalSolicitudesPrimeraVez").modal({
+            backdrop: "static",
+          });
+        } else if (!window.location.href.includes("Formulario-registro")) {
+          const clienteEsValido =
+            ValidarInformacionEmpresa.ClienteEsValido(contactoId);
+
+          if (!clienteEsValido) {
+            $("#modalusuarioValido").modal("toggle");
+            $("#modalusuarioValido").modal("show");
+            $("#modalusuarioValido").modal({
+              backdrop: "static",
+            });
+          }
+        }
+      }
+    },
+    RegistrarEventosOnClick: function () {
+      $("#modalFormularioAlta").on("hidden.bs.modal", function (e) {
+        $("#modalFormularioAlta").modal("toggle");
+        $("#modalFormularioAlta").modal("show");
+        $("#modalFormularioAlta").modal({
+          backdrop: "static",
+        });
+      });
+      $("#modalusuarioValido").on("hidden.bs.modal", function (e) {
+        $("#modalusuarioValido").modal("toggle");
+        $("#modalusuarioValido").modal("show");
+        $("#modalusuarioValido").modal({
+          backdrop: "static",
+        });
+      });
+      $("#modalFormularioRepresentante").on("hidden.bs.modal", function (e) {
+        $("#modalFormularioRepresentante").modal("toggle");
+        $("#modalFormularioRepresentante").modal("show");
+        $("#modalFormularioRepresentante").modal({
+          backdrop: "static",
+        });
+      });
+      $("#modalAdjuntoDocumentosRepresentante").on("hidden.bs.modal", function (e) {
+        $("#modalAdjuntoDocumentosRepresentante").modal("toggle");
+        $("#modalAdjuntoDocumentosRepresentante").modal("show");
+        $("#modalAdjuntoDocumentosRepresentante").modal({
+          backdrop: "static",
+        });
+      });
+    },
+    ApoderadoEsCompleto(contactoId) {
+      let respuesta =
+        ValidarInformacionEmpresa.ConsultarApoderadoCompleto(contactoId);
+
+      if (respuesta.length > 0) {
+        return true;
+      }
+      return false;
+    },
+    DocumentosAdjuntosRepresentante(contactoId) {
+      let respuesta =
+        ValidarInformacionEmpresa.ConsultarDocumentosAdjuntosRepresentante(contactoId);
+
+      if (respuesta.length > 0) {
+        return true;
+      }
+      return false;
+    },
+    ClienteEsValido: function (contactoId) {
+      let respuesta =
+        ValidarInformacionEmpresa.ConsultarClienteValido(contactoId);
+      if (respuesta.length > 0) {
+        return true;
+      }
+      return false;
+    },
+    RegistroEsCompleto(contactoId) {
+      let respuesta =
+        ValidarInformacionEmpresa.ConsultarRegistroCompleto(contactoId);
+
+      if (respuesta.length > 0) {
+        return false;
+      }
+      return true;
+    },
+    ObtenerClienteId(contactoId) {
+      let respuesta =
+        ValidarInformacionEmpresa.ConsultaClienteAutenticado(contactoId);
+
+      if (respuesta.length > 0) {
+        return respuesta[0].id;
+      }
+      return 0;
+    },
+    VisualizacionPrimeraVez(contactoId) {
+      let respuesta =
+        ValidarInformacionEmpresa.ConsultarVisualizacionPrimeraVez(contactoId);
+
+      if (respuesta.length > 0) {
+        return false;
+      }
+
+      return true;
+    },
+  };
+
+  $(document).ready(function () {
+    ValidarInformacionEmpresa.EventosOnload("{{ idContacto }}");
+  });
+</script>

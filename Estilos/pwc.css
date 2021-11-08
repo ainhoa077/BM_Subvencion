@@ -1,0 +1,1915 @@
+/*   COLORS   */
+/*   SHADOWS */
+/*   FONTS   */
+/*   MEDIA QUERY   */
+/*   SIZE SCREEN   */
+/***   Texts   ***/
+/***    Prefixes    ***/
+/***    Flex    ***/
+/***   Buttons   ***/
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+html {
+  font-size: 14px;
+  line-height: 1.15;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  height: 100%; }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
+select {
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+
+body {
+  font-size: 16px;
+  min-height: 100%;
+  margin: 0;
+  font-family: "Helvetica Neue"; }
+
+main {
+  display: block; }
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible; }
+
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em; }
+
+a {
+  background-color: transparent; }
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline; }
+
+b,
+strong {
+  font-weight: bolder; }
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em; }
+
+small {
+  font-size: 80%; }
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sub {
+  bottom: -0.25em; }
+
+sup {
+  top: -0.5em; }
+
+img {
+  border-style: none; }
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0; }
+
+button,
+input {
+  overflow: visible; }
+
+button,
+select {
+  text-transform: none; }
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; }
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0; }
+
+button,
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: none; }
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em; }
+
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal; }
+
+progress {
+  vertical-align: baseline; }
+
+textarea {
+  overflow: auto; }
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0; }
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px; }
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit; }
+
+details {
+  display: block; }
+
+summary {
+  display: list-item; }
+
+template {
+  display: none; }
+
+[hidden] {
+  display: none; }
+
+input,
+button {
+  border: none; }
+
+table {
+  border-collapse: collapse; }
+
+/******  MONTSERRAT  ******/
+@font-face {
+  font-family: 'ITCCharter';
+  src: URL('ITCCharterCom-Regular.ttf') format('truetype');
+}
+.pwc-subtitle {
+  font-family: "Helvetica Neue";
+  font-size: 20px;
+  color: #04223a;
+  display: inline-block;
+  margin: 10px 0;
+  line-height: 1em;
+  position: relative;
+  margin-bottom: 24px;
+  padding-left: 10px; }
+  .pwc-subtitle::after {
+    content: "";
+    width: 3px;
+    height: 1.2em;
+    background-color: #e0301e;
+    position: absolute;
+    top: 0;
+    left: 0; }
+
+.pwc-title {
+  font-family: "ITCCharter";
+  font-size: 30px;
+  color: #222222;
+  line-height: 1.2em;
+  margin: 20px 0; }
+
+.pwc-text {
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+  color: #7d7d7d; 
+  font-weight: normal;
+}
+
+.pwc-content_subtitle {
+  display: flex;
+  flex-direction: "row";
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; }
+  .pwc-content_subtitle span {
+    border-radius: 50%;
+    border: 1px solid #777575;
+    padding: 8px;
+    box-sizing: content-box;
+    color: #253137; }
+
+.pwc-link {
+  color: #7d7d7d;
+  text-decoration: underline;
+  font-family: "Sen-Regular";
+  cursor: pointer; }
+  .pwc-link:hover {
+    color: #df3726; }
+
+.pwc-text--center {
+  text-align: center; }
+
+.pwc-info {
+  display: flex;
+  margin: 15px 0; }
+  .pwc-info_text {
+    display: flex;
+    flex-direction: column; }
+  .pwc-info_img {
+    display: flex;
+    height: auto; }
+
+@media (max-width: 576px) {
+  .d-sm-none {
+    display: none; } }
+.pwc-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 6px;
+  margin: 10px 0;
+  -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  box-shadow: 0px 5px 26px -3px #e0e0e0;
+  padding: 20px;
+  background-color: #fff; }
+  .pwc-card_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; }
+
+.pwc-card--services .pwc-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin: 10px;
+  border: 1px solid transparent; }
+  .pwc-card--services .pwc-card .glyphicon {
+    font-size: 1.5em;
+    color: #e0301e;
+    margin-bottom: 20px; }
+  .pwc-card--services .pwc-card p {
+    color: #5b5b5b;
+    font-family: "Helvetica Neue";
+    text-align: center;
+    font-size: 12px; }
+  .pwc-card--services .pwc-card:hover {
+    border: 1px solid #e0301e; }
+
+.pwc-btn {
+  font-family: "Helvetica Neue";
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  border: 2px solid #f8fafc;
+  color: #777575;
+  background-color: transparent;
+  transition: 0.2s;
+  line-height: 1;
+  font-size: 22px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-sizing: border-box; }
+  .pwc-btn.only-icon {
+    border-radius: 50%;
+    padding: 0 12px; }
+    .pwc-btn.only-icon span {
+      margin: 0; }
+
+a.pwc-btn,
+button.pwc-btn,
+input.pwc-btn {
+  font-family: "Helvetica Neue";
+  padding: 0 20px;
+  text-decoration: none; }
+
+.pwc-btn--primary {
+  background-color: #e0301e;
+  border-color: #e0301e;
+  color: #fff; }
+
+.pwc-btn--primary:hover {
+  background-color: #df3726;
+  border-color: #df3726;
+  color: #fff; }
+
+.pwc-btn--secondary {
+  background-color: transparent;
+  border-color: #e0301e;
+  color: #e0301e; }
+
+.pwc-btn--secondary:hover {
+  background-color: #e0301e;
+  border-color: #e0301e;
+  color: #fff; }
+
+.pwc-btn--white {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff; }
+
+.pwc-btn--white:hover {
+  background-color: #e0301e;
+  border-color: #e0301e;
+  color: #fff; }
+
+.btn-primary.disabled:hover,
+.btn-primary.disabled:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled]:hover,
+.btn-primary[disabled]:focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary:hover,
+fieldset[disabled] .btn-primary:focus,
+fieldset[disabled] .btn-primary.focus {
+  background-color: #ff5947;
+  border-color: #ff9286; }
+
+.form-control {
+  border: 1px solid #777575;
+  height: 40px; 
+  padding-left: 12px !important;
+  font-size: 18px !important;
+  font-family: "Helvetica Neue"; 
+}
+  .form-control:focus {
+    border-color: #7d7d7d; }
+
+.form-group label {
+  color: #7d7d7d;
+  font-family: "Helvetica Neue"; }
+
+form .pwc-icon {
+  position: relative; }
+  form .pwc-icon .form-control {
+    height: 40px !important;
+    width: 100%; }
+  form .pwc-icon span {
+    color: #7d7d7d;
+    font-size: 1.2em;
+    position: absolute;
+    top: 44%;
+    right: 6%;
+    display: inline-block;
+    -webkit-transform: translateY(45%);
+    -moz-transform: translateY(45%);
+    -ms-transform: translateY(45%);
+    -o-transform: translateY(45%);
+    transform: translateY(45%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 2; }
+
+.pwc-form-row {
+  display: flex;
+  width: 100%; }
+
+.pwc-form-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%; }
+
+header .pwc-logo {
+  width: 60px; }
+header .pwc-navbar a {
+  color: #7d7d7d; }
+  header .pwc-navbar a:hover {
+    color: #e0301e;
+    text-decoration: none;
+    background-color: transparent !important; }
+    header .pwc-navbar a:hover::after {
+      content: "";
+      width: 60px;
+      height: 3px;
+      background-color: #e0301e;
+      position: absolute;
+      bottom: 4px;
+      left: 8px; }
+header .pwc-header {
+  display: flex;
+  align-items: center; }
+
+.navbar-toggle {
+  position: relative;
+  float: right;
+  margin-right: 15px;
+  padding: 9px 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background-color: transparent;
+  background-image: none;
+  background-color: #e0301e;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+.navbar-collapse.collapse {
+  display: flex !important;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%; }
+
+.nav.navbar-nav {
+  display: flex;
+  flex-wrap: nowrap; }
+
+@media (max-width: 1000px) {
+  .navbar-header {
+    float: none; }
+
+  .navbar-left,
+  .navbar-right {
+    float: none !important; }
+
+  .navbar-toggle {
+    display: block; }
+
+  .navbar-collapse {
+    border-top: 1px solid transparent;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+
+  .navbar-fixed-top {
+    top: 0;
+    border-width: 0 0 1px; }
+
+  .navbar-collapse.collapse {
+    display: none !important; }
+
+  .navbar-nav {
+    float: none !important;
+    margin-top: 7.5px; }
+
+  .navbar-nav > li {
+    float: none; }
+
+  .navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+  .collapse.in {
+    display: block !important; } }
+.pwc-banner {
+  display: flex; }
+  .pwc-banner_img {
+    display: flex;
+    width: 100%;
+    position: relative; }
+    .pwc-banner_img img {
+      width: 100%;
+      min-height: 200px; }
+  .pwc-banner_text {
+    position: absolute;
+    width: 65%;
+    top: 35%;
+    left: 5%; }
+    .pwc-banner_text .pwc-title {
+      color: #04223a;
+      margin-bottom: 10px; }
+
+@media (max-width: 1000px) {
+  .pwc-banner_text {
+    top: 0; } }
+/* carousel */
+/*---------------------------------------------------------------------------------*/
+#carousel {
+  margin: 0px; }
+
+.carousel {
+  width: 100%;
+  height: 570px !important; }
+  .carousel .glyphicon-chevron-left:before {
+    background-image: url(../images/glyphicon-chevron-left.svg);
+    background-repeat: no-repeat;
+    background-position: left center;
+    content: "";
+    display: block;
+    height: 200%;
+    width: 200%; }
+  .carousel .glyphicon-chevron-right:before {
+    background-image: url(../images/glyphicon-chevron-right.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    content: "";
+    display: block;
+    height: 200%;
+    width: 200%; }
+
+.carousel-fade .carousel-inner .item {
+  -webkit-transition-property: opacity;
+  transition-property: opacity; }
+
+.carousel-fade .carousel-inner .item,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  opacity: 0; }
+
+.carousel-fade .carousel-inner .active,
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+  opacity: 1; }
+
+.carousel-fade .carousel-inner .next,
+.carousel-fade .carousel-inner .prev,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  left: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+
+.carousel-fade .carousel-control {
+  z-index: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.carousel-fade .carousel-control .glyphicon {
+  font-size: 6rem; }
+
+.carousel,
+.carousel-inner,
+.carousel-inner .item {
+  height: 100%; }
+
+.stopfade {
+  opacity: 0.5; }
+
+.slide-content {
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: 100%; }
+
+.slide-content video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  -webkit-transition: 1s opacity;
+  transition: 1s opacity; }
+
+.slide-content video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none; }
+
+.door {
+  font-family: "Roboto Condensed", sans-serif;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 1; }
+
+.door .title {
+  font-size: 14rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  line-height: 13rem; }
+
+.door .description {
+  border-top: 1px solid #fff;
+  margin-top: 15px;
+  font-size: 4rem; }
+
+.pwc-carousel .item {
+  position: relative; }
+  .pwc-carousel .item img {
+    height: 100%; }
+.pwc-carousel_gradient {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background: linear-gradient(to left, rgba(136, 136, 136, 0), rgba(136, 136, 136, 0.5)); }
+.pwc-carousel_button {
+  display: flex;
+  justify-content: start;
+  margin: 20px 0; }
+.pwc-carousel .carousel-caption .pwc-title {
+  color: #fff;
+  margin-bottom: 0; }
+.pwc-carousel .carousel-caption .pwc-text {
+  color: #fff;
+  margin: 10px 0 10px 0;
+  text-align: start; }
+
+@media screen and (min-width: 768px) {
+  .pwc-carousel .carousel-caption {
+    left: 20%;
+    right: 20%;
+    margin-bottom: 10%;
+    width: 340px; } }
+h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+  text-align: left;
+  margin: 0 0 10px 0;
+  margin-bottom: 10px; }
+
+.panel-default > .panel-heading {
+  color: #333;
+  background-color: #fff !important;
+  border-color: #e4e5e7;
+  padding: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.panel-default > .panel-heading a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none; }
+
+.panel-default > .panel-heading a:after {
+  content: "";
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: "Glyphicons Halflings";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  float: right;
+  transition: transform 0.25s linear;
+  -webkit-transition: -webkit-transform 0.25s linear;
+  color: #e0301e; }
+
+.panel-default > .panel-heading a[aria-expanded="true"] {
+  background-color: #e0301e;
+  color: #fff; 
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+}
+  .panel-default > .panel-heading a[aria-expanded="true"]:after {
+    color: #fff; }
+
+.panel-default > .panel-heading a[aria-expanded="true"]:after {
+  content: "\2212";
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg); }
+
+.panel-default > .panel-heading a[aria-expanded="false"]:after {
+  content: "\002b";
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.accordion-option {
+  width: 100%;
+  float: left;
+  clear: both;
+  margin: 15px 0; }
+
+.accordion-option .title {
+  font-size: 20px;
+  font-weight: bold;
+  float: left;
+  padding: 0;
+  margin: 0; }
+
+.accordion-option .toggle-accordion {
+  float: right;
+  font-size: 16px;
+  color: #6a6c6f; }
+
+.accordion-option .toggle-accordion:before {
+  content: "Expandir todo"; }
+
+.accordion-option .toggle-accordion.active:before {
+  content: "Colapsar todo"; }
+
+.panel-group .panel {
+  margin-bottom: 0;
+  border-radius: 4px;
+  border-top: 1px solid #e0301e; }
+
+.pwc-service {
+  display: flex;
+  flex-direction: column; }
+  .pwc-service .row {
+    display: flex;
+    align-items: center; }
+  .pwc-service_img {
+    display: flex;
+    position: relative;
+    max-height: 400px; }
+    .pwc-service_img .pwc-service_photo {
+      position: absolute;
+      top: 47px;
+      z-index: 99;
+      clip-path: circle(49.2% at 50% 50%);
+      left: 13%;
+      height: 74%;
+      width: 60%; }
+  .pwc-service_bg {
+    z-index: 9; }
+  .pwc-service_text h3 {
+    color: #04223a;
+    position: relative;
+    font-size: 32px; }
+    .pwc-service_text h3::after {
+      content: "";
+      width: 60px;
+      height: 3px;
+      background-color: #e0301e;
+      position: absolute;
+      bottom: -6px;
+      left: 2px; }
+  .pwc-service_text p {
+    font-size: 22px;
+    color: #253137; }
+  .pwc-service .gray {
+    background-color: #f8fafc;
+    padding-bottom: 25px; }
+    .pwc-service .gray .pwc-service_img {
+      justify-content: end; }
+      .pwc-service .gray .pwc-service_img .pwc-service_photo {
+        left: 41%; }
+  .pwc-service .white {
+    background-color: #fff; 
+    padding-bottom: 25px;}
+    .pwc-service .white .pwc-service_img {
+      justify-content: start; }
+
+@media (max-width: 767px) {
+  .pwc-service_img {
+    display: none; }
+
+  .pwc-service_text {
+    width: 100%; } }
+.pwc-panel {
+  display: flex;
+  margin: 20px 0; }
+  .pwc-panel_items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+  .pwc-panel_item {
+    border: 1px solid #eff2fb;
+    -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    box-shadow: 0px 5px 26px -3px #e0e0e0;
+    background-color: #fff;
+    color: #04223a;
+    padding: 10px 0;
+    margin: 6px 0;
+    border-left: 4px solid #e0301e; }
+    .pwc-panel_item:hover {
+      background-color: #e0301e; }
+      .pwc-panel_item:hover a {
+        color: #fff; }
+        .pwc-panel_item:hover a:focus {
+          outline: none;
+          color: #fff; }
+    .pwc-panel_item a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      padding: 10px 20px; }
+      .pwc-panel_item a:focus {
+        outline: none;
+        color: #fff; }
+    .pwc-panel_item.active {
+      background-color: #e0301e;
+      color: #fff; }
+  .pwc-panel_values {
+    display: flex;
+    position: relative;
+    height: 300px;
+    -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    box-shadow: 0px 5px 26px -3px #e0e0e0;
+    background-color: #fff;
+    overflow-x: auto; }
+    .pwc-panel_values .pwc-new {
+      margin: 0; }
+      .pwc-panel_values .pwc-new_container {
+        display: flex;
+        flex-direction: column; }
+        .pwc-panel_values .pwc-new_container span {
+          color: #e0301e;
+          font-size: 26px;
+          margin-bottom: 10px; }
+  .pwc-panel_info {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 0 16%;
+    justify-content: center;
+    align-items: center;
+    text-align: center; }
+    .pwc-panel_info.pwc-info {
+      display: none; }
+      .pwc-panel_info.pwc-info.selected {
+        display: flex; }
+    .pwc-panel_info .pwc-text {
+      font-family: "Helvetica Neue";
+      font-size: 20px;
+      color: #04223a;
+      font-size: 22px; }
+    .pwc-panel_info.pwc--none {
+      display: none; }
+
+.pwc-toggle span:not(glyphicon) {
+  margin-right: 20px; }
+
+@media (max-width: 767px) {
+  .pwc-panel {
+    display: flex;
+    flex-direction: column; }
+    .pwc-panel_items {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      flex-wrap: wrap; }
+      .pwc-panel_items .pwc-panel_item {
+        width: 50%; } }
+.pwc-news {
+  display: flex;
+  flex-direction: column; }
+
+.pwc-news {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0; }
+  .pwc-news_items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; }
+  .pwc-news_item {
+    border: 1px solid #eff2fb;
+    color: #04223a;
+    padding: 10px;
+    margin: 6px 0;
+    border-bottom: 4px solid transparent; }
+    .pwc-news_item:hover {
+      color: #e0301e;
+      border-bottom: 4px solid #e0301e; }
+      .pwc-news_item:hover a {
+        color: inherit; }
+        .pwc-news_item:hover a:focus {
+          outline: none; }
+        .pwc-news_item:hover a:hover {
+          text-decoration: none; }
+    .pwc-news_item a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      padding: 4px 10px;
+      font-size: 18px;
+     }
+    .pwc-news_item.active {
+      color: #e0301e;
+      border-bottom: 4px solid #e0301e; }
+  .pwc-news_values {
+    display: flex;
+    position: relative;
+    height: 360px;
+    overflow-x: auto; }
+    .pwc-news_values .pwc-new {
+      margin: 0; }
+      .pwc-news_values .pwc-new_container {
+        display: flex;
+        flex-direction: column; }
+        .pwc-news_values .pwc-new_container span {
+          color: #e0301e;
+          font-size: 26px;
+          margin-bottom: 10px; }
+  .pwc-news_info {
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    justify-content: space-between;
+    align-items: center;
+    text-align: justify;
+    flex-wrap: wrap; }
+    .pwc-news_info.pwc-new {
+      display: none; }
+      .pwc-news_info.pwc-new.selected {
+        display: flex; }
+    .pwc-news_info .pwc-text {
+      font-family: "Helvetica Neue";
+      font-size: 20px;
+      color: #04223a;
+      font-size: 22px; }
+  .pwc-news_container {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+    box-shadow: 0px 5px 26px -3px #e0e0e0;
+    padding-bottom: 20px; }
+    .pwc-news_container img {
+      width: 100%;
+      height: 150px; }
+    .pwc-news_container p.pwc-text {
+      font-family: "Helvetica Neue";
+      font-size: 18px;
+      margin: 20px 0;
+      color: #5b5b5b; }
+    .pwc-news_container a {
+      font-size: 18px;
+      color: #e0301e; }
+
+.pwc-toggle span:not(glyphicon) {
+  margin-right: 20px; }
+
+/* The emerging W3C standard
+   that is currently Firefox-only */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #8d9aa6 #d5d5d5; }
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 12px; }
+
+*::-webkit-scrollbar-track {
+  background: #d5d5d5; }
+
+*::-webkit-scrollbar-thumb {
+  background-color: #8d9aa6;
+  border-radius: 20px;
+  border: 3px solid #d5d5d5; }
+
+#content_form .well {
+  background-color: #fff;
+  border: 0;
+  border-top: 4px solid #e0301e;
+  -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  box-shadow: 0px 5px 26px -3px #e0e0e0;
+  font-family: "Helvetica Neue";
+  font-size: 16px;
+  color: #04223a; }
+  #content_form .well img {
+    border-radius: 50px; }
+#content_form .form-horizontal {
+  border-top: 4px solid #e0301e;
+  -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  box-shadow: 0px 5px 26px -3px #e0e0e0;
+  padding-top: 20px; }
+  #content_form .form-horizontal fieldset {
+    border: 0; }
+#content_form #mainContent fieldset {
+  padding: 20px;
+  -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  box-shadow: 0px 5px 26px -3px #e0e0e0;
+  background-color: #fff;
+  display: block;
+  border: 0; }
+  #content_form #mainContent fieldset legend span.xrm-attribute-value {
+    display: flex;
+    padding-top: 0px;
+    font-family: "Helvetica Neue";
+    color: #04223a;
+    font-size: 22px; }
+  #content_form #mainContent fieldset legend .crmEntityFormView {
+    border: 0; }
+#content_form #mainContent .tab-column fieldset {
+  border: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none; }
+#content_form #mainContent .form-control {
+  border: 1px solid #828282;
+  border-radius: 5px; }
+#content_form #mainContent input::placeholder {
+  color: #d1d1d1;
+  font-style: italic; }
+#content_form .crmEntityFormView .cell .field-label {
+  color: #7d7d7d;
+  font-family: "Helvetica Neue";
+  font-weight: 100; }
+#content_form .actions {
+  display: flex;
+  justify-content: flex-end; }
+  #content_form .actions .btn-primary {
+    border-radius: 20px;
+    padding: 8px 20px; }
+
+.container .btn .fa {
+  color: #e0301e; }
+
+.alert {
+  padding: 10px;
+  margin-bottom: 21px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  font-family: "Helvetica Neue"; }
+  .alert.alert-info {
+    background-color: #bce8f1;
+    border-color: transparent;
+    color: #31708f; }
+    .alert.alert-info .fa {
+      color: #31708f;
+      margin-right: 10px; }
+      .alert.alert-info .fa:before {
+        color: #fff; }
+
+.page-header h1 {
+  font-size: 26px;
+  color: #04223a;
+  font-family: "Helvetica Neue"; }
+
+.panel.panel-default.nav-profile {
+  border-color: #e0301e !important; }
+  .panel.panel-default.nav-profile > .panel-heading .panel-title {
+    background-color: #e0301e !important;
+    padding: 5px 20px !important; }
+    .panel.panel-default.nav-profile > .panel-heading .panel-title span {
+      color: #fff; }
+      .panel.panel-default.nav-profile > .panel-heading .panel-title span.fa {
+        color: #fff; }
+
+.crmEntityFormView,
+.entitylist,
+.modal-content,
+.popover-content {
+  background-color: #ffffff;
+  color: #000000;
+  border: 0 !important; }
+
+.crmEntityFormView .cell .field-label {
+  float: left;
+  display: inline;
+  color: #7d7d7d !important;
+  font-family: "Helvetica Neue" !important;
+  font-weight: 100 !important; }
+
+.crmEntityFormView .cell input[type="text"],
+.crmEntityFormView .cell select,
+.crmEntityFormView .cell textarea {
+  float: left;
+  width: 100%;
+  border: 1px solid #828282 !important;
+  border-radius: 5px; }
+
+.input-group-btn:last-child > .btn.clearlookupfield {
+  position: absolute;
+  right: 51px;
+  top: 2px;
+  border-radius: 50%;
+  background-color: transparent;
+  padding: 4px 8px;
+  border: 0; }
+
+.input-group-btn:last-child > .btn.launchentitylookup {
+  position: absolute;
+  right: 14px;
+  border-radius: 50%;
+  background-color: transparent;
+  padding: 4px 8px;
+  top: 2px;
+  border: 0; }
+
+.control .input-group .form-control.lookup {
+  width: 100%; }
+
+.input-group {
+  width: 100%; }
+
+.input#UpdateButton {
+  border-radius: 20px;
+  padding: 8px 20px;
+  background-color: #e0301e; }
+
+.crmEntityFormView .tab-title {
+  border: 0 !important; }
+
+.sectionBlockLayout .container {
+  box-shadow: 0px 5px 26px -3px #e0e0e0 !important;
+  padding-top: 30px;
+  border-top: 6px solid #e0301e; }
+
+.crmEntityFormView .cell input[type="text"],
+.crmEntityFormView .cell select,
+.crmEntityFormView .cell textarea {
+  color: #515151; }
+
+.captcha-cell input {
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  height: 30px;
+  margin-right: 10px; }
+
+.crmEntityFormView .actions .btn:first-child {
+  margin-right: 5px;
+  border-radius: 50px;
+  height: 36px;
+  padding: 0 20px; }
+
+#ctl00_ContentContainer_EntityFormControl_fd68d6a229f1eb11bacb0022489c57a5_EntityFormControl_fd68d6a229f1eb11bacb0022489c57a5_EntityFormView_captcha_CaptchaLinkButton {
+  font-size: 14px;
+  text-decoration: underline; }
+
+#ctl00_ContentContainer_EntityFormControl_fd68d6a229f1eb11bacb0022489c57a5_EntityFormControl_fd68d6a229f1eb11bacb0022489c57a5_EntityFormView_captcha_CaptchaAudioCodeUP {
+  font-size: 14px;
+  text-decoration: underline; }
+
+#crcd6_esclientebanco {
+  display: flex;
+  align-items: center; }
+
+.xrm-attribute-value-encoded.xrm-attribute-value {
+  font-size: 14px; }
+
+.xrm-attribute-value {
+  font-size: 14px; }
+
+h4 .xrm-attribute-value {
+  font-size: 20px; }
+h4 .xrm-attribute-value-encoded.xrm-attribute-value {
+  font-size: 20px; }
+
+.btn {
+  border-radius: 50px !important; }
+
+.login-heading-section {
+  color: unset;
+  font-size: 20px;
+  border: 0 !important; }
+
+.fieldset {
+  -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  box-shadow: 0px 5px 26px -3px #e0e0e0; }
+
+.crmEntityFormView .cell.boolean-radio-cell input[type="radio"] {
+  vertical-align: 0;
+  width: 20px;
+  height: 18px; }
+
+h2.tab-title {
+  font-size: 20px;
+  margin-left: 20px; }
+
+.pwc-formulario_container {
+  -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  box-shadow: 0px 5px 26px -3px #e0e0e0;
+  padding-top: 30px;
+  border-top: 6px solid #e0301e; }
+
+.form-horizontal {
+  -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  box-shadow: 0px 5px 26px -3px #e0e0e0;
+  padding-top: 30px;
+  border-top: 6px solid #e0301e;
+  padding-top: 20px; }
+  .form-horizontal fieldset {
+    border: 0; }
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+  z-index: 2;
+  color: #e0301e;
+  background-color: #fff;
+  border-color: #e0301e; }
+
+.well {
+  background-color: #fff;
+  border: 0;
+  border-top: 4px solid #e0301e;
+  -webkit-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -moz-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
+  box-shadow: 0px 5px 26px -3px #e0e0e0;
+  font-family: "Helvetica Neue";
+  font-size: 16px;
+  color: #04223a; }
+  .well img {
+    border-radius: 50px; }
+
+.form-group input {
+  border-radius: 5px; }
+
+.go-to-top a {
+  color: #fff;
+  font-family: ImqIcons;
+  border: 1px solid #e0301e;
+  border-radius: 50%;
+  background: #e0301e;
+  transition: all 0.5s;
+  box-sizing: border-box;
+  height: 44px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  right: 132px;
+  bottom: 36px; }
+  .go-to-top a .glyphicon {
+    top: -2px;
+    margin: 0;
+    padding: 0; }
+  .go-to-top a:hover {
+    color: #fff;
+    text-decoration: none; }
+
+.go-to-call  {
+  color: #fff;
+  font-family: ImqIcons;
+  border: 1px solid #e0301e;
+  border-radius: 50%;
+  background: #e0301e;
+  transition: all 0.5s;
+  box-sizing: border-box;
+  height: 40px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  right: 132px;
+  z-index: 9999;}
+  
+  .go-to-call a .glyphicon {
+    color: white;
+    top: 3px;
+    margin: 0;
+    padding: 0; }
+  .go-to-call a:hover {
+    color: #fff;
+    text-decoration: none; }
+
+
+#ContentContainer_MainContent_MainContent_SecureRegister label.control-label.required {
+  word-break: break-word;
+  margin: 0;
+  padding-top: 0;
+  display: flex;
+  align-items: center;
+  height: 40px; }
+
+table.pwc-table {
+  border-collapse: collapse;
+  box-shadow: 0 5px 10px #e1e5ee;
+  background-color: white;
+  text-align: left;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 20px; }
+  table.pwc-table thead {
+    box-shadow: 0 5px 10px #e1e5ee; }
+  table.pwc-table th {
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 18px !important;
+    font-weight: 900;
+    color: #e0301e;
+    font-family: "Helvetica Neue";
+    font-size: 14px; }
+    table.pwc-table th.pwc-text--center {
+      text-align: center; }
+  table.pwc-table td {
+    padding: 1rem 2rem; }
+  table.pwc-table tr:nth-child(even) {
+    background-color: #fbf4f4; }
+
+.flex-column {
+  display: flex;
+  flex-direction: row;
+  width: 100%; }
+
+.flex-justify-end {
+  display: flex;
+  justify-content: end; }
+
+body {
+  background-color: #f3f3f3; }
+
+.navbar-nav > li > .dropdown-menu {
+  margin-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  padding-bottom: 15px; }
+
+.navbar-nav > li > a {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  line-height: 20px; }
+
+.navbar-toggle:focus {
+  outline: 0; }
+
+.navbar-toggle .icon-bar {
+  display: block;
+  background-color: #fff;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px; }
+
+.navbar-toggle .icon-bar + .icon-bar {
+  margin-top: 4px; }
+
+.btn-primary {
+  color: #ffffff !important;
+}
+
+.wrapper-body{
+  padding-bottom: 100px !important;
+}
+
+.clearfix.cell.picklist-cell .info label { 
+  position: relative;
+  width: 100%;
+}
+
+.clearfix.cell.picklist-cell select {
+  padding-right: 35px !important;
+}
+
+.clearfix.cell.picklist-cell .info label::before {
+  content: '\25bc';
+  display: block;
+  position: absolute;
+  color: #e0301e;
+  bottom: -40px;
+  right: 10px;
+  z-index: 2;
+}
+
+.main-page header {
+  display: flex;
+  align-items: flex-end;
+  min-height: 60vh;
+  background-image: url("header.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.header__banner {
+  background-color: #e0301e;
+  color: white;
+  padding: 2.5em 1.5em;
+  margin-bottom: 2em;
+  max-width: 60%;
+}
+.header__principal-text {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 0.6em;
+  font-family: "ITCCharter";
+}
+.header__secondary-text {
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+}
+.offers {
+  background-color: #7D7D7D;
+  color: white;
+  margin-bottom: -15px;
+  padding: 3.5em 2em;
+  min-height: 535px !important;
+  height: auto !important;
+}
+.offers__container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2em;
+}
+.offers__option {
+  max-width: 260px;
+  padding: 2em;
+}
+.offers__img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100px;
+  color: #ffffff;
+}
+.offers__title, .offers__text{
+  font-family: "ITCCharter";
+  font-size: 30px;
+  margin-top: 2em;
+}
+.offers__title {
+  margin-top: 1em;
+  font-weight: bold;
+}
+.offers__subtitle_servicios {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+  color: #ffffff;
+}
+.offers__subtitle {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+.offers__bodytitle {
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+  min-height: 3em;
+}
+.text-break {
+  word-break:break-all;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  padding: 2em;
+}
+.home-button-custom {
+  background-color: #e0301e;
+  color: white;
+  font-size: 30px;
+  width: max-content;
+  text-align: center;
+  padding: 0.4em 1.5em 0.6em;
+  margin: 0 auto;
+  font-weight: bold;
+}
+.home-button-custom:hover {
+  background-color: #c22a1a;
+}
+
+@media (max-width:500px) {
+  .main-page header {
+      min-height: 80vh;
+  }
+  .offers {
+      margin-bottom: 0px;
+  }
+  .offers__img {
+      max-width: 50px;
+      margin: 0;
+  }
+  .offers .offers__text {
+      margin-top: 0 !important;
+      font-size: 1.7em;
+      text-align: left;
+      padding-left: 20px;
+  }
+  .container.main-page{
+      padding: 0;
+  }
+  .header__banner {
+      max-width: 90%;
+  }
+  .offers__option {
+      min-width: 100%;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      margin-bottom: 50px;
+  }
+  .offers__title {
+      margin-top: 1em;
+      margin-bottom: 2em;
+  }
+  .home-button-custom {
+      font-size: 22px;
+  }
+}
+
+.solutions-title {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  margin-top: 2em;
+  font-size: 32px;
+}
+.glyphicon-ok {
+  margin-right: 5px;
+  color: #e0301e;
+}
+.solutions-subtitle { 
+  font-size: 22px;
+  margin: 20px 0 30px;
+}
+
+.main-services-title {
+
+  margin: 1.5em 0;
+}
+
+.help-options {
+  padding: 0 15px;
+}
+.help-options__list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.help-options__list .help-options__element {
+  flex-grow: 1;
+}
+.help-options__option {
+  padding: 10px 20px !important;
+}
+.help-options__element > p {
+  font-size: 22px;
+}
+.help-options__element ul {
+  list-style-type: none;
+  padding: 0px;
+  color: #000000;
+}
+
+.help-options__tittle-cont {
+  background-color: red;
+  padding: 3px;
+  clip-path: polygon(95% 0, 100% 50%, 95% 100%, 0 100%, 0 0);
+  margin-bottom: 20px;
+}
+
+.help-options__tittle {
+  background-color: white;
+  font-size: 22px;
+  padding: 0.3em 2.5em;
+  clip-path: polygon(95.3% 0, 99.7% 50%, 95.3% 100%, 0 100%, 0 0);
+}
+.position-relative {
+  position: relative !important;
+}
+.main-services__container--gutter:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  width: 5px;
+  height: 100%;
+  background: white;
+}
+.main-services__container {
+  display: flex;
+  background: #7D7D7D;
+  min-height: 250px !important;
+}
+.main-services__element {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.3em;
+}
+.main-services__element-title {
+  font-size: 22px;
+  color: #ffffff;
+}
+.main-services__element img {
+  max-width: 100px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  padding: 2em;
+}
+.services-button-custom {
+  background-color: #e0301e;
+  color: white;
+  font-size: 1.3em;
+  width: max-content;
+  text-align: center;
+  padding: 0.4em 1.5em 0.4em;
+  margin: 0 auto;
+}
+.services-button-custom:hover {
+  background-color: #c22a1a;
+}
+@media (max-width:500px) {
+  .main-services__container {
+      flex-wrap: wrap;
+  }
+}
+
+@media (max-width:700px) {
+  .help-options__tittle {
+      font-size: 3vw;
+  }
+  .custom-help {
+      display: none;
+  }
+  .main-services__container {
+      margin: 20px;
+  }
+  .main-services__container--gutter:after {
+      display: none;
+  }
+}
+@media (max-width:990px) {
+  .custom-help {
+      display: none;
+  }
+  .main-services__container {
+      margin: 20px;
+  }
+}
+
+h3, .h3 {
+  font-family: "ITCCharter" !important;
+  font-size: 30px !important;
+  font-weight: bold;
+}
+
+h2, .h2 {
+  font-family: "ITCCharter" !important;
+  font-size: 30px !important;
+  font-weight: bold;
+}
+
+.faqs_text {
+  font-family: "Helvetica Neue";
+  font-size: 18px;
+  text-align: justify;
+}
+
+.faqs_text-table {
+  font-family: "Helvetica Neue";
+  font-size: 18px;
+  color: #7d7d7d; }
+
+.faqs_text-table--center {
+  text-align: center; 
+  font-family: "Helvetica Neue";
+  font-size: 18px;
+}
+
+.motivo_text {
+  font-family: "Helvetica Neue";
+  font-size: 18px;
+}
+
+.modal-title {
+  font-family: "ITCCharter";
+  font-size: 30px;
+}
+
+.btn-primary {
+  font-family: "Helvetica Neue";
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  border: 2px solid #f8fafc;
+  color: #777575;
+  background-color: transparent;
+  transition: 0.2s;
+  line-height: 1;
+  font-size: 22px;
+}
+
+.btn-primary.action {
+  font-family: "Helvetica Neue";
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-bottom: 5px;
+  border: 2px solid #f8fafc;
+  color: #777575;
+  background-color: #e0301e;
+  transition: 0.2s;
+  line-height: 1;
+  font-size: 22px;
+}
+
+.btn-callme-primary {
+  font-family: "Helvetica Neue";
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  color: #777575;
+  background-color: transparent;
+  transition: 0.2s;
+  line-height: 1;
+}
+
+.alert-info {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+
+.field-label {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+
+.nav-tabs>li>a {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+
+.detalle-text {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+
+.table>thead>tr>th {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+
+.table>tbody>tr>td {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+
+.weblink-name {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+
+.xrm-attribute-value-encoded {
+  font-family: "Helvetica Neue";
+  font-size: 18px !important;
+}
+
+.pwc-sobre-nosotros {
+  border:#C75366 solid 5px;
+  border-radius: 50%;
+}
+
+.pwc-sobre-nosotros-titulo {
+  color:#C75366;
+  font-family: "ITCCharter";
+  font-size: 30px;
+}
+
+.pwc-sobre-nosotros-texto {
+  color:#C75366;
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+}
+
+.pwc-nuestro-objetivo {
+  border:#B87D46 solid 5px;
+  border-radius: 50%;
+}
+
+.pwc-nuestro-objetivo-titulo {
+  color:#B87D46;
+  font-family: "ITCCharter";
+  font-size: 30px;
+}
+
+.pwc-nuestro-objetivo-texto {
+  color:#B87D46;
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+}
+
+.pwc-que-ofrecemos {
+  border:#A32020 solid 5px;
+  border-radius: 50%;
+}
+
+.pwc-que-ofrecemos-titulo {
+  color:#A32020;
+  font-family: "ITCCharter";
+  font-size: 30px;
+}
+
+.pwc-que-ofrecemos-texto {
+  color:#A32020;
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+}
+
+.pwc-nuestros-profesionales {
+  border:#DC6900 solid 5px;
+  border-radius: 50%;
+}
+
+.pwc-nuestros-profesionales-titulo {
+  color:#DC6900;
+  font-family: "ITCCharter";
+  font-size: 30px;
+}
+
+.pwc-nuestros-profesionales-texto {
+  color:#DC6900;
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+}
+
+.pwc-servicios-personalizados {
+  border:#BF8800 solid 5px;
+  border-radius: 50%;
+}
+
+.pwc-servicios-personalizados-titulo {
+  color:#BF8800;
+  font-family: "ITCChartere";
+  font-size: 30px;
+}
+
+.pwc-servicios-personalizados-texto {
+  color:#BF8800;
+  font-family: "Helvetica Neue";
+  font-size: 22px;
+}
+
+.pwc-navbar-default {
+  background-color: #7d7d7d;
+  border-color: #eee;
+}
+
+/*# sourceMappingURL=pwc.css.map */

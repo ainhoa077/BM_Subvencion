@@ -1,0 +1,121 @@
+<div class="go-to-call">
+	<button id="idLlamada" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary">
+		<a href="#" title="Ayuda">
+			<i class="glyphicon glyphicon-earphone"></i>
+			<span class="sr-only">Llámanos</span>
+		</a>
+	</button>
+</div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+	<div role="document" class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h3>
+				<button type="button" data-dismiss="modal" aria-label="Close" class="close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{% include 'Llamada telefonica' %}
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <p></p> -->
+<div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px; font-size: 24px;">
+  <div class="container" style="display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout">
+      <p><b>Solicitud presupuestación: paso 3/3</b></p>
+    </div>
+	<div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column; font-size: 14px;">
+		<div class="alert alert-info" role="alert">
+			  Selecciona la ayuda que quieres solicitar.
+		</div>
+	</div>
+  </div>
+</div>
+<div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px;">
+  <div class="container" style="display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout">{% entityform name: 'información de la ayuda / proyecto ' %}</div>
+  </div>
+</div>
+<script language="javascript">
+	const FormularioAyudaSolicitud = {
+		EventosOnload: function(contactoId){
+			FormularioAyudaSolicitud.OcultarCampoAyuda();
+			FormularioAyudaSolicitud.LimpiarCampoAyuda();
+			FormularioAyudaSolicitud.EventosOnChange();
+			FormularioAyudaSolicitud.ModificarLookups();
+			$(window).resize(function() {
+				FormularioAyudaSolicitud.ModificarLookups();
+			});
+		},
+		ModificarLookups: function(){
+			$('button.btn.btn-default.launchentitylookup').css("padding-left",$("#crcd6_comunidadautonoma_name").width());
+			$('button.btn.btn-default.clearlookupfield').css("z-index",1);
+			$('button.btn.btn-default.launchentitylookup').attr('data-original-title', '');
+		},
+		ValidacionCampoAyuda: function(){
+			if (typeof (Page_Validators) == 'undefined') return;
+			 var newValidator = document.createElement('span');
+			 newValidator.style.display = "none";
+			 newValidator.id = "Ayuda1Validator";
+			 newValidator.controltovalidate = "crcd6_subvencionpresentada";
+			 newValidator.errormessage = "<a href='#crcd6_subvencionpresentada'>El campo ayuda del usuario es requerido.</a>";
+			 newValidator.validationGroup = ""; 
+			 newValidator.initialvalue = "";
+			 newValidator.evaluationfunction = function () {
+				var ayuda = $("#crcd6_subvencionpresentada").val();
+				if (ayuda == "Otros"){
+					var value = $("#crcd6_ayudaotros").val();
+					if (value == null || value == "") {
+					return false;
+					} else {
+					   return true;
+					}
+				}
+				else{
+					return true;
+				}
+			 };
+			 
+			 Page_Validators.push(newValidator);
+
+			 $("a[href='#crcd6_subvencionpresentada']").on("click", function () { scrollToAndFocus('crcd6_ayudaotros','crcd6_ayudaotros'); });
+		},
+		OcultarCampoAyuda: function(){
+			$('#crcd6_ayudaotros_label').parent().parent().hide();
+			$('#crcd6_ayudaotros').parent().parent().hide();
+		},
+		LimpiarCampoAyuda: function(){
+			$("#crcd6_subvencionpresentada").val("");
+			$("#crcd6_subvencionpresentada_name").val("");
+		},
+		MostrarCampoAyuda: function(){
+			$('#crcd6_ayudaotros_label').parent().parent().show();
+			$('#crcd6_ayudaotros').parent().parent().show();
+		},
+		EventosOnChange: function(){
+			$("#crcd6_subvencionpresentada").change(function () {
+				var ayuda = $("#crcd6_subvencionpresentada_name").val();
+				
+				if (ayuda == "Otros"){
+					FormularioAyudaSolicitud.ValidacionCampoAyuda();
+					FormularioAyudaSolicitud.MostrarCampoAyuda();
+				}
+				else{
+					FormularioAyudaSolicitud.OcultarCampoAyuda();
+				}
+			});
+		}
+	}
+	
+	if (window.jQuery) {
+	   (function ($) {
+			$(document).ready(function () {
+				FormularioAyudaSolicitud.EventosOnload();
+			});
+		}(window.jQuery));
+	}
+	
+</script>

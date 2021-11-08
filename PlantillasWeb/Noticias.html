@@ -1,0 +1,218 @@
+{% fetchxml noticiasRelevantesResultado %}
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_noticiasrelevantes">
+    <attribute name="crcd6_noticiasrelevantesid"></attribute>
+    <attribute name="crcd6_titulo"></attribute>
+    <attribute name="createdon"></attribute>
+    <attribute name="crcd6_resumen"></attribute>
+    <attribute name="crcd6_imagen"></attribute>
+    <attribute name="crcd6_enlace"></attribute>
+    <attribute name="crcd6_categoria"></attribute>
+    <order attribute="crcd6_titulo" descending="false"></order>
+    <filter type="and">
+      <condition attribute="crcd6_categoria" operator="eq" value="522960000"></condition>
+    </filter>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% fetchxml noticiasDigitalizacionResultado %}
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_noticiasrelevantes">
+    <attribute name="crcd6_noticiasrelevantesid"></attribute>
+    <attribute name="crcd6_titulo"></attribute>
+    <attribute name="createdon"></attribute>
+    <attribute name="crcd6_resumen"></attribute>
+    <attribute name="crcd6_imagen"></attribute>
+    <attribute name="crcd6_enlace"></attribute>
+    <attribute name="crcd6_categoria"></attribute>
+    <order attribute="crcd6_titulo" descending="false"></order>
+    <filter type="and">
+      <condition attribute="crcd6_categoria" operator="eq" value="522960001"></condition>
+    </filter>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% fetchxml noticiasEnergeticaResultado %}
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_noticiasrelevantes">
+    <attribute name="crcd6_noticiasrelevantesid"></attribute>
+    <attribute name="crcd6_titulo"></attribute>
+    <attribute name="createdon"></attribute>
+    <attribute name="crcd6_resumen"></attribute>
+    <attribute name="crcd6_imagen"></attribute>
+    <attribute name="crcd6_enlace"></attribute>
+    <attribute name="crcd6_categoria"></attribute>
+    <order attribute="crcd6_titulo" descending="false"></order>
+    <filter type="and">
+      <condition attribute="crcd6_categoria" operator="eq" value="522960002"></condition>
+    </filter>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% fetchxml noticiasAmbitoResultado %}
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_noticiasrelevantes">
+    <attribute name="crcd6_noticiasrelevantesid"></attribute>
+    <attribute name="crcd6_titulo"></attribute>
+    <attribute name="createdon"></attribute>
+    <attribute name="crcd6_resumen"></attribute>
+    <attribute name="crcd6_imagen"></attribute>
+    <attribute name="crcd6_enlace"></attribute>
+    <attribute name="crcd6_categoria"></attribute>
+    <order attribute="crcd6_titulo" descending="false"></order>
+    <filter type="and">
+      <condition attribute="crcd6_categoria" operator="eq" value="522960003"></condition>
+    </filter>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% fetchxml noticiasInternacionalizacionResultado %}
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_noticiasrelevantes">
+    <attribute name="crcd6_noticiasrelevantesid"></attribute>
+    <attribute name="crcd6_titulo"></attribute>
+    <attribute name="createdon"></attribute>
+    <attribute name="crcd6_resumen"></attribute>
+    <attribute name="crcd6_imagen"></attribute>
+    <attribute name="crcd6_enlace"></attribute>
+    <attribute name="crcd6_categoria"></attribute>
+    <order attribute="crcd6_titulo" descending="false"></order>
+    <filter type="and">
+      <condition attribute="crcd6_categoria" operator="eq" value="522960004"></condition>
+    </filter>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% assign resultNoticiasRelevantes = noticiasRelevantesResultado.results.entities %}
+{% assign resultNoticiasDigitalizacion = noticiasDigitalizacionResultado.results.entities %}
+{% assign resultNoticiasEnergetica = noticiasEnergeticaResultado.results.entities %}
+{% assign resultNoticiasAmbito = noticiasAmbitoResultado.results.entities %}
+{% assign resultNoticiasInternacionalizacion = noticiasInternacionalizacionResultado.results.entities %}
+<div class="container">
+      <div class="pwc-news">
+        <div class="pwc-news_items row">
+          <div class="pwc-news_item active" id="toggle-new--1">
+            <a class="pwc-toggle-new">
+              <span>Noticias relevantes</span>
+            </a>
+          </div>
+          <div class="pwc-news_item" id="toggle-new--2">
+            <a class="pwc-toggle-new">
+              <span>Digitalización</span>
+            </a>
+          </div>
+          <div class="pwc-news_item" id="toggle-new--3">
+            <a class="pwc-toggle-new">
+              <span>Eficiencia energética</span>
+            </a>
+          </div>
+          <div class="pwc-news_item" id="toggle-new--4">
+            <a class="pwc-toggle-new">
+              <span>Ámbito laboral</span>
+            </a>
+          </div>
+		  <div class="pwc-news_item" id="toggle-new--5">
+            <a class="pwc-toggle-new">
+              <span>Internacionalización</span>
+            </a>
+          </div>
+        </div>
+        <div class="pwc-news_values row">
+          <div class="pwc-news_info pwc-new pwc-news--1 selected">
+            {% for item in resultNoticiasRelevantes %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+                <img src="~/{{item.crcd6_imagen}}" alt="">
+                <div>
+                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  </p>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                </div>
+              </div>
+            {% endfor %}
+            {% if resultNoticiasRelevantes.size == 1 %}
+              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+            {% endif %}
+            {% if resultNoticiasRelevantes.size == 2 %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+            {% endif %}
+          </div>
+          <div class="pwc-news_info pwc-new pwc-news--2">
+            {% for item in resultNoticiasDigitalizacion %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+                <img src="~/{{item.crcd6_imagen}}" alt="">
+                <div>
+                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  </p>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                </div>
+              </div>
+            {% endfor %}
+            {% if resultNoticiasDigitalizacion.size == 1 %}
+              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+            {% endif %}
+            {% if resultNoticiasDigitalizacion.size == 2 %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+            {% endif %}
+          </div>
+          <div class="pwc-news_info pwc-new pwc-news--3">
+            {% for item in resultNoticiasEnergetica %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+                <img src="~/{{item.crcd6_imagen}}" alt="">
+                <div>
+                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  </p>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                </div>
+              </div>
+            {% endfor %}
+            {% if resultNoticiasEnergetica.size == 1 %}
+              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+            {% endif %}
+            {% if resultNoticiasEnergetica.size == 2 %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+            {% endif %}
+          </div>
+          <div class="pwc-news_info pwc-new pwc-news--4">
+            {% for item in resultNoticiasAmbito %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+                <img src="~/{{item.crcd6_imagen}}" alt="">
+                <div>
+                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  </p>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                </div>
+              </div>
+            {% endfor %}
+            {% if resultNoticiasAmbito.size == 1 %}
+              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+            {% endif %}
+            {% if resultNoticiasAmbito.size == 2 %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+            {% endif %}
+          </div>
+		      <div class="pwc-news_info pwc-new pwc-news--5">
+            {% for item in resultNoticiasInternacionalizacion %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+                <img src="~/{{item.crcd6_imagen}}" alt="">
+                <div>
+                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  </p>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                </div>
+              </div>
+            {% endfor %}
+            {% if resultNoticiasInternacionalizacion.size == 1 %}
+              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+            {% endif %}
+            {% if resultNoticiasInternacionalizacion.size == 2 %}
+              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- START PLUGINS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="~/bootstrap.min.js"></script>
+	<script type="text/javascript" src="~/pwc.js"></script>

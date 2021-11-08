@@ -1,0 +1,129 @@
+<div class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; text-align: left; min-height: 100px;">
+    <div class="container" style="display: flex; flex-wrap: wrap;">
+      <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+        <div class="jumbotron" style="font-size: 18px; background-color: white;">
+          <h3 style="text-align: center;">¡Tu pago ha sido realizado con éxito!</h3>
+          <p class="offers__subtitle">Te informamos de que la operación ha sido exitosa, nuestros asesores se pondrán en contacto contigo para comunicarte los siguientes pasos. Recuerda que puedes consultar el estado de tu solicitud a través del módulo de “Mis solicitudes”.</p><br>
+          <p class="offers__subtitle" id="orden" style="display: none;">Tu referencia de pago es: {Order}, recibirás un correo con la confirmación de la operación.</p>
+          <p class="offers__subtitle" style="text-align: center;"><button onclick="window.location.href='/solicitud-presupuestacion'" class="pwc-btn pwc-btn--primary"><span class="pwc-btn_label">Regresar a mis solicitudes</span></button></p>
+        </div>
+      </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/portalApi.js"></script>
+<script language="javascript">
+(function (webapi, $) {
+    function safeAjax(ajaxOptions) {
+        var deferredAjax = $.Deferred();
+        shell.getTokenDeferred().done(function (token) {
+            // Add headers for ajax
+            if (!ajaxOptions.headers) {
+                $.extend(ajaxOptions, {
+                    headers: {
+                        "__RequestVerificationToken": token
+                    }
+                });
+            } else {
+                ajaxOptions.headers["__RequestVerificationToken"] = token;
+            }
+            $.ajax(ajaxOptions)
+                .done(function (data, textStatus, jqXHR) {
+                    validateLoginSession(data, textStatus, jqXHR, deferredAjax.resolve);
+                }).fail(deferredAjax.reject); //ajax
+        }).fail(function () {
+            deferredAjax.rejectWith(this, arguments); // On token failure pass the token ajax and args
+        });
+        return deferredAjax.promise();
+    }
+    webapi.safeAjax = safeAjax;
+    })(window.webapi = window.webapi || {}, jQuery)
+    var notificationMsg = (function () {
+        var $processingMsgEl = $('#processingMsg'),
+            _msg = 'Processando...',
+            _stack = 0,
+            _endTimeout;
+        return {
+            show: function (msg) {
+                $processingMsgEl.text(msg || _msg);
+                if (_stack === 0) {
+                    clearTimeout(_endTimeout);
+                    $processingMsgEl.show();
+                }
+                _stack++;
+            },
+            hide: function () {
+                _stack--;
+                if (_stack <= 0) {
+                    _stack = 0;
+                    clearTimeout(_endTimeout);
+                    _endTimeout = setTimeout(function () {
+                        $processingMsgEl.hide();
+                    }, 500);
+                }
+            }
+        }
+    })();
+const PagoExitoso = {
+    ValidarPago: function(transaccionPagoId){
+        let resultado = PortalApi.Api("AccionConsultarPagoSabadell", {
+								"transaccionPagoId": transaccionPagoId,
+                                "transaccionExitosa": true,
+								"Random": Math.random()
+							}, ["crcd6_respuesta"], "AccionConsultarPagoSabadell");
+
+        resultado = resultado && resultado[0] && resultado[0].crcd6_respuesta ? JSON.parse(resultado[0].crcd6_respuesta) : null;
+        var text = $("#orden").text();
+        $("#orden").text(text.replace('{Order}', resultado.payment.order));
+        $('#orden').show(); 
+        PagoExitoso.RefrescarCache();          
+    },
+    AppAjax: function(processingMsg, ajaxOptions) {
+        notificationMsg.show(processingMsg);
+        return webapi.safeAjax(ajaxOptions)
+            .fail(function(response) {
+            if (response.responseJSON) {
+                alert( " Error: " + response.responseJSON.error.message)
+            } else {
+                alert( " Error: Web API no disponible... ")
+            }
+            }).always(notificationMsg.hide);
+    },
+    RefrescarCache: function() {
+        var recordObj = {
+            "crcd6_refrescarcache": "'" + Math.random() + "'" 
+        };
+        PagoExitoso.AppAjax('Enviando información...', {
+                type: "PATCH",
+                url: "/_api/crcd6_solicitudsubs(" + PagoExitoso.ObtenerParametroUrl('solicitudId') + ")",
+                contentType: "application/json",
+                async: false,
+                data: JSON.stringify(recordObj),
+                success: function (res, status, xhr) {
+                }
+            });
+    },
+    EventosOnload: function(){
+        const transaccionPagoId = PagoExitoso.ObtenerParametroUrl('transaccionId');
+        PagoExitoso.ValidarPago(transaccionPagoId);
+    },
+    ObtenerParametroUrl: function(sParam){
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) 
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) 
+            {
+                return sParameterName[1];
+            }
+        }
+    },
+}
+if (window.jQuery) {
+    (function ($) {
+         $(document).ready(function () {
+            PagoExitoso.EventosOnload();
+         });
+     }(window.jQuery));
+}
+</script>

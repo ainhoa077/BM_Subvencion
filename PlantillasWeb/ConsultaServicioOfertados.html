@@ -1,0 +1,18 @@
+{% fetchxml DataList %}    
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_servicioofertado">
+    <attribute name="crcd6_servicioofertado" />
+    <attribute name="crcd6_servicioofertadoid" />
+    <attribute name="crcd6_descripcion" />
+    <attribute name="crcd6_coste" />
+    <attribute name="crcd6_codigo" />
+    <order attribute="crcd6_servicioofertado" descending="false" />
+  </entity>
+</fetch>
+{% endfetchxml %}
+{
+"results": [
+{% for result in DataList.results.entities %}
+{"codigo":"{{ result.crcd6_codigo | escape }}", "id": "{{ result.crcd6_servicioofertadoid | escape }}", "nombre": "{{ result.crcd6_servicioofertado | escape }}"}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]}

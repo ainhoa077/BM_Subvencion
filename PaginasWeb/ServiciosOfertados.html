@@ -1,0 +1,101 @@
+{% if user.Id %}
+<div class="go-to-call">
+	<button id="idLlamada" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-callme-primary">
+		<a href="#" title="Ayuda">
+			<i class="glyphicon glyphicon-earphone"></i>
+			<span class="sr-only">Llámanos</span>
+		</a>
+	</button>
+</div>
+<div id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" class="modal fade">
+	<div role="document" class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 id="exampleModalCenterTitle" class="modal-title">¿Necesitas ayuda?</h3>
+				<button id="idLlamada" type="button" data-dismiss="modal" aria-label="Close" class="close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{% include 'Llamada telefonica' %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<div class="container main-page">
+  <h3 class="solutions-title text-center">Contamos con múltiples soluciones disponibles</h3>
+  <p class="solutions-subtitle text-center">Cuéntanos qué necesitas y te recomendaremos el servicio que mejor se adapte a tus necesidades</p>
+  <div class="help-options row">
+    <div class="help-options__option col-md-6">
+      <div class="help-options__tittle-cont">
+        <div class="help-options__tittle">Si no sabes qué ayuda puedes solicitar</div>
+      </div>
+      <div class="help-options__list row">
+        <div class="help-options__element col-md-4">
+          <p>Asesoramiento</p>
+          <ul>
+            <li><span class="glyphicon glyphicon-ok"></span> Entendemos tus necesidades y proyectos</li>
+            <li><span class="glyphicon glyphicon-ok"></span> Identificamos posibles ayudas aplicables</li>
+            <li><span class="glyphicon glyphicon-ok"></span> Generamos un informe de asesoramiento</li>
+          </ul>
+        </div>
+        <div class="help-options__element custom-help col-md-3">
+        </div>
+      </div>
+    </div>
+    <div class="help-options__option col-md-6">
+      <div class="help-options__tittle-cont">
+        <div class="help-options__tittle">Si ya conoces qué ayuda puedes solicitar</div>
+      </div>
+      <div class="help-options__list row">
+        <div class="help-options__element col-md-3">
+          <p>Tramitación</p>
+          <ul>
+            <li><span class="glyphicon glyphicon-ok"></span> Identificamos los requisitos de la ayuda y documentación requerida</li>
+            <li><span class="glyphicon glyphicon-ok"></span> Recopilamos la documentación</li>
+            <li><span class="glyphicon glyphicon-ok"></span> Presentamos telemáticamente tu solicitud</li>
+            <li><span class="glyphicon glyphicon-ok"></span> Documentamos la Memoria Técnica de tu proyecto</li>
+          </ul>
+        </div>
+        <div class="help-options__element col-md-3">
+          <p>Seguimiento</p>
+          <ul>
+            <li><span class="glyphicon glyphicon-ok"></span> Realizamos el seguimiento de la solicitud de tu ayuda</li>
+            <li><span class="glyphicon glyphicon-ok"></span> Gestionamos las subsanaciones requeridas por la Administración Pública</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-services">
+    <h3>Todos nuestros servicios cuentan con ventajas exclusivas</h3>
+    <div class="row position-relative">
+      <div class="main-services__container main-services__container--gutter col-md-7">
+        <div class="main-services__element"><img src="~/area_privada.png" alt="">
+          <p class="main-services__element-title">Área privada</p>
+          <p class="offers__subtitle_servicios">Todas tus solicitudes en tu Área personal</p>
+        </div>
+        <div class="main-services__element"><img src="~/seguimiento_online.png" alt="">
+          <p class="main-services__element-title">Seguimiento online</p>
+          <p class="offers__subtitle_servicios">Conoce cuándo cambia de estado tu solicitud </p>
+        </div>
+        <div class="main-services__element"><img src="~/equipo_multidisciplinar.png" alt="">
+          <p class="main-services__element-title">Asesor personal</p>
+          <p class="offers__subtitle_servicios">Contacta con tu asesor cómo y cuándo quieras</p>
+        </div>
+      </div>
+      <div class="main-services__container col-md-5">
+        <div class="main-services__element"><img src="~/paga_con_tarjeta.png" alt="">
+          <p class="main-services__element-title">Paga con tarjeta</p>
+          <p class="offers__subtitle_servicios">De manera rápida e instantánea</p>
+        </div>
+        <div class="main-services__element"><img src="~/o_transferencia.png" alt="">
+          <p class="main-services__element-title">O transferencia</p>
+          <p class="offers__subtitle_servicios">Lo que sea más cómodo para ti</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button-container"><button onclick="window.location.href='/creacion-solicitud-presupuestacion/'" type="button" class="pwc-btn pwc-btn--primary">Empezar ya</button></div>
+</div>
