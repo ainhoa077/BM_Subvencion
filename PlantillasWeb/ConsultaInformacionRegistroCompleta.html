@@ -8,7 +8,7 @@
     <order attribute="crcd6_cliente" descending="false" />
     <filter type="and">
       <condition attribute="crcd6_contactoid" operator="eq" uitype="contact" value="{{ idContacto | xml_escape }}"  />
-      <condition attribute="crcd6_paisconstitucion" operator="null" />
+      <condition attribute="cr908_usuariorevisado" operator="eq" value="false" />
     </filter>
   </entity>
 </fetch>

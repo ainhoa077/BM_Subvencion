@@ -28,7 +28,7 @@ const SolicitudPresupuestacion = {
 		ServicioOfertadosConfigurados = SolicitudPresupuestacion.ConsultarServiciosOfertados();
 		SolicitudPresupuestacion.OcultarCampos();
 		SolicitudPresupuestacion.DeseleccionarCampos();
-		$("#crcd6_preguntainicial").find('option*').removeAttr("selected");
+		$("#cr908_preguntaprincipal").find('option*').removeAttr("selected");
 		SolicitudPresupuestacion.EventosOnChange();
 		SolicitudPresupuestacion.MapearClienteSolicitud(idContacto);
 	},
@@ -72,7 +72,7 @@ const SolicitudPresupuestacion = {
 		$("#crcd6_previosegundapregunta_1").prop('checked', false);
 	},
 	EventosOnChange: function(){
-		$("#crcd6_preguntainicial").change(function () {
+		$("#cr908_preguntaprincipal").change(function () {
 			$(':input[id="NextButton"]').prop('disabled', true);
 			SolicitudPresupuestacion.ResetearServicioOfertado();
 			SolicitudPresupuestacion.OcultarCampos();
@@ -137,7 +137,7 @@ const SolicitudPresupuestacion = {
 		});
 	},
 	ValidarSeguimiento: function(){
-		var preguntaInicial = $("#crcd6_preguntainicial").val();
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
 		if(preguntaInicial === PreguntaInicial.NecesitoSeguimiento){
 			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.SeguimientoJustificacion);
@@ -145,7 +145,7 @@ const SolicitudPresupuestacion = {
 		}
 	},
 	ValidacionIdeaProyecto: function(){
-		var preguntaInicial = $("#crcd6_preguntainicial").val();
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
 		if(preguntaInicial === PreguntaInicial.IdeaProyecto){
 			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
@@ -153,7 +153,7 @@ const SolicitudPresupuestacion = {
 		}
 	},
 	ValidacionProyectoPropio: function(){
-		var preguntaInicial = $("#crcd6_preguntainicial").val();
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
 		
 		if(preguntaInicial === PreguntaInicial.ProyectoPropio){
@@ -162,7 +162,7 @@ const SolicitudPresupuestacion = {
 		}
 	},
 	ValidacionNecesitoElaboracionOTramite: function(){
-		var preguntaInicial = $("#crcd6_preguntainicial").val();
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
 		if((preguntaInicial === PreguntaInicial.NecesitoElaboracion)
 			|| (preguntaInicial === PreguntaInicial.NecesitoTramite)){
@@ -173,7 +173,7 @@ const SolicitudPresupuestacion = {
 		}
 	},
 	ValidacionOtros: function(){
-		var preguntaInicial = $("#crcd6_preguntainicial").val();
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
 		if(preguntaInicial === PreguntaInicial.Otros){
 			$('#crcd6_previotercerapregunta').parent().parent().show();

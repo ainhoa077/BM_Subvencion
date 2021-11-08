@@ -4,7 +4,7 @@
   <entity name="crcd6_solicitudsub">
     <attribute name="crcd6_solicitud" />
     <attribute name="crcd6_solicitudsubid" />
-    <attribute name="crcd6_preguntainicial" />
+    <attribute name="cr908_preguntaprincipal" />
     <order attribute="crcd6_solicitud" descending="false" />
     <filter type="and">
       <condition attribute="crcd6_solicitudsubid" operator="eq" uitype="crcd6_solicitudsub" value="{{ idSolicitud | xml_escape }}" />
@@ -15,6 +15,6 @@
 {
 "results": [
 {% for result in DataList.results.entities %}
-{{ result.crcd6_preguntainicial.value |  }}{% unless forloop.last %},{% endunless %}
+{{ result.cr908_preguntaprincipal.value |  }}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]}
