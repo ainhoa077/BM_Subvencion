@@ -4,7 +4,8 @@ const PreguntaInicial = {
 	NecesitoElaboracion: "522960002",
 	NecesitoTramite: "522960003",
 	Otros: "522960004",
-	NecesitoSeguimiento: "522960005"
+	NecesitoSeguimiento: "522960005",
+	NecesitoElegibilidad: "522960006"
 }
 
 const ServiciosOfertados = {
@@ -13,7 +14,8 @@ const ServiciosOfertados = {
 	ServicioPremiumComplejo: "522960003",
 	TramitacionAyudas: "522960000",
 	ServicioAsesoramientoSimple: "522960004",
-	ServicioAsesoramientoPremium: "522960005"
+	ServicioAsesoramientoPremium: "522960005",
+	ServicioElegibilidad: "522960006"
 }
 
 const RespuestaPregunta = {
@@ -82,6 +84,7 @@ const SolicitudPresupuestacion = {
 			SolicitudPresupuestacion.ValidacionNecesitoElaboracionOTramite();
 			SolicitudPresupuestacion.ValidacionOtros();
 			SolicitudPresupuestacion.ValidarSeguimiento();
+			SolicitudPresupuestacion.ValidacionElegibilidad();
 		});
 		
 		$("#crcd6_previoprimerapregunta").change(function () {
@@ -158,6 +161,15 @@ const SolicitudPresupuestacion = {
 		
 		if(preguntaInicial === PreguntaInicial.ProyectoPropio){
 			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			$(':input[id="NextButton"]').prop('disabled', false);
+		}
+	},
+	ValidacionElegibilidad: function(){
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
+		
+		
+		if(preguntaInicial === PreguntaInicial.NecesitoElegibilidad){
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioElegibilidad);
 			$(':input[id="NextButton"]').prop('disabled', false);
 		}
 	},
