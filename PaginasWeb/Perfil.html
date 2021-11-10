@@ -58,35 +58,15 @@
   const FormularioRepresentante = {
     EventosOnload: function () {
       FormularioRepresentante.CambiarEtiquetaBoton();
-      FormularioRepresentante.OcultarColumnaEstado();
       FormularioRepresentante.DeshabilitarBoton();
-      FormularioRepresentante.DeshabilitarCampo('#emailaddress1');
       FormularioRepresentante.MensajeAyuda();
       FormularioRepresentante.RemoverSeccion();
       FormularioRepresentante.AsignarNombreCompletoCesionDatos();
       FormularioRepresentante.ConvertirPoliticasPrivacidadAEnlace();
       FormularioRepresentante.EventosOnClick();
-      FormularioRepresentante.ModificarLookups();
-      $(window).resize(function() {
-        FormularioRepresentante.ModificarLookups();
-      });
-    },
-    ModificarLookups: function(){
-      $('button.btn.btn-default.launchentitylookup').css("padding-left",$("#crcd6_paisid_name").width());
-      $('button.btn.btn-default.clearlookupfield').css("z-index",1);
-      $('button.btn.btn-default.launchentitylookup').attr('data-original-title', '');
     },
     CambiarEtiquetaBoton: function(){
         $("#ContentContainer_MainContent_MainContent_ContentBottom_SubmitButton").attr('value', 'Siguiente');
-    },
-    CambiarEtiquetaBoton: function(){
-        $("#ContentContainer_MainContent_MainContent_ContentBottom_SubmitButton").attr('value', 'Siguiente');
-    },
-    OcultarColumnaEstado: function(){
-        setTimeout(function(){ 
-            $('#crcd6_paisid_lookupmodal table tr th:nth-child(3),#crcd6_paisid_lookupmodal table tr td:nth-child(3)').hide();
-            $('#crcd6_nacionalidad_lookupmodal table tr th:nth-child(3),#crcd6_nacionalidad_lookupmodal table tr td:nth-child(3)').hide();
-        }, 6000);
     },
     RemoverSeccion: function () {
         $('.tab clearfix').remove();
@@ -95,18 +75,7 @@
     EventosOnClick: function () {
       $("#crcd6_politicaprivacidad").change(function () {
         FormularioRepresentante.DatosCorrectos();
-      }),
-        $("#telephone1").change(function () {
-          FormularioRepresentante.EliminarDivError("#errorTelefono");
-          FormularioRepresentante.DatosCorrectos();
-        }),
-        $("#crcd6_nif").change(function () {
-          FormularioRepresentante.EliminarDivError("#errorDNI");
-          FormularioRepresentante.DatosCorrectos();
-        }),
-        $("#crcd6_autorizarcesiondatos").change(function () {
-          FormularioRepresentante.DatosCorrectos();
-        });
+      });
     },
     ValidacionPoliticaPrivacidad: function () {
       politicaValida = false;
@@ -150,95 +119,22 @@
     },
     ConvertirPoliticasPrivacidadAEnlace: function () {
       $("#crcd6_politicaprivacidad_label").wrapInner(
-        '<a href="~/declaracion-privacidad" target="_blank"></a>'
+        '<a href="~/condiciones-uso" target="_blank"></a>'
       );
     },
     AsignarNombreCompletoCesionDatos: function () {
-      $("#crcd6_autorizarcesindatosautonomo_label").text("Soy profesional liberal/autónomo y autorizo a PwC a la cesión de mis datos personales a Banco Sabadell, S.A. con CIF A08000143 con el fin de que pueda realizar acciones comerciales de productos o servicios financieros vinculados a la obtención de las subvenciones de fondos públicos.").val();
+      $("#crcd6_autorizarcesindatosautonomo_label").text("Soy profesional liberal/autónomo y autorizo a PwC a la cesión de mis datos personales a Banca March, S.A. con CIF A07004021 con el fin de que pueda realizar acciones comerciales de productos o servicios financieros vinculados a la obtención de las subvenciones de fondos públicos.").val();
       $("#crcd6_politicaprivacidad_label").text("He leído la política de privacidad y acepto las condiciones de uso, confidencialidad y protección de datos");
-      $("#crcd6_autorizarcesiondatos_label").text("Soy profesional y autorizo a PwC la cesión de mis datos personales a Banco Sabadell con CIF A08000143, con el fin de que el Banco pueda realizar un seguimiento de mi solicitud realizada a través de esta plataforma en relación con las subvenciones de fondos públicos.").val();
-    },
-    ValidacionTelefono: function () {
-      let telefonoValido = false;
-      const regex = "^[769]{1}[0-9]{8}$";
-      let numeroTelefono = $("#telephone1").val();
-      let numeroValido = numeroTelefono.match(regex);
-
-      if (numeroValido) {
-        telefonoValido = true;
-      } else {
-        telefonoValido = false;
-        FormularioRepresentante.MensajeErrorTelefono();
-      }
-      return telefonoValido;
-    },
-    ValidarDNI: function () {
-      dniValido = false;
-      var validChars = "TRWAGMYFPDXBNJZSQVHLCKET";
-      var nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
-      var nieRexp = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
-      var dniComprobar = $("#crcd6_nif").val();
-      var str = dniComprobar.toString().toUpperCase();
-
-      if (!nifRexp.test(str) && !nieRexp.test(str)) {
-        FormularioRepresentante.MensajeErrorDNI();
-        return false;
-      }
-
-      var nie = str
-        .replace(/^[X]/, "0")
-        .replace(/^[Y]/, "1")
-        .replace(/^[Z]/, "2");
-
-      var letter = str.substr(-1);
-      var charIndex = parseInt(nie.substr(0, 8)) % 23;
-
-      if (validChars.charAt(charIndex) === letter) {
-        dniValido = true;
-        return true;
-      } else {
-        dniValido = false;
-        FormularioRepresentante.MensajeErrorDNI();
-        return false;
-      }
+      $("#crcd6_autorizarcesiondatos_label").text("Soy profesional y autorizo a PwC la cesión de mis datos personales a Banca March, S.A. con CIF A07004021, con el fin de que el Banco pueda realizar un seguimiento de mi solicitud realizada a través de esta plataforma en relación con las subvenciones de fondos públicos.").val();
     },
     DatosCorrectos: function () {
       let politicaValida = FormularioRepresentante.ValidacionPoliticaPrivacidad();
       let cesionValida = FormularioRepresentante.ValidacionCesionDatos();
 
-      let telefonoValido = false;
-      let dniValido = false;  
-      
-      let telefonoNumero = $("#telephone1").val();
-      let dniNumero = $("#crcd6_nif").val();
-      //Control de telefono sin que aparezca el error de DNI
-      if (telefonoNumero !== ""){
-        telefonoValido=FormularioRepresentante.ValidacionTelefono();
-      }
-      //Control de DNI sin que aparezca el error de Telefono
-      if (dniNumero !== "") {
-        dniValido=FormularioRepresentante.ValidarDNI();
-      }
-      if (politicaValida && telefonoValido && dniValido) {
+      if (politicaValida) {
         FormularioRepresentante.HabilitarBoton();
       } else {
         FormularioRepresentante.DeshabilitarBoton();
-      }
-    },
-    MensajeErrorDNI: function () {
-      let div = $("#errorDNI");
-      if (div != null && div.length === 0) {
-        $("#mensajeAyuda").after(
-          '<div id="errorDNI" class="alert alert-danger" role="alert">El NIF introducido no es correcto. Por favor, revisalo y vuelve a introducirlo.</div>'
-        );
-      }
-    },
-    MensajeErrorTelefono: function () {
-      let div = $("#errorTelefono");
-      if (div != null && div.length === 0) {
-        $("#mensajeAyuda").after(
-          '<div id="errorTelefono" class="alert alert-danger" role="alert">El numero de teléfono introducido no es correcto. Por favor, revisalo y vuelve a introducirlo.</div>'
-        );
       }
     },
     EliminarDivError: function (idDiv) {
