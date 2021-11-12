@@ -5,7 +5,11 @@
     <attribute name="crcd6_solicitud" />
     <attribute name="crcd6_solicitudsubid" />
     <attribute name="cr908_preguntaprincipal" />
+    <attribute name="crcd6_serviciosofertados" />
     <order attribute="crcd6_solicitud" descending="false" />
+    <link-entity name="crcd6_servicioofertado" alias="aa" link-type="inner" to="crcd6_serviciosofertados" from="crcd6_servicioofertadoid">
+        <attribute name="crcd6_codigo"/>
+    </link-entity>
     <filter type="and">
       <condition attribute="crcd6_solicitudsubid" operator="eq" uitype="crcd6_solicitudsub" value="{{ idSolicitud | xml_escape }}" />
     </filter>
@@ -15,6 +19,6 @@
 {
 "results": [
 {% for result in DataList.results.entities %}
-{{ result.cr908_preguntaprincipal.value |  }}{% unless forloop.last %},{% endunless %}
+{{ result['aa.crcd6_codigo'] |  }}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]}

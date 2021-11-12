@@ -35,6 +35,11 @@ const SolicitudPresupuestacion = {
 		SolicitudPresupuestacion.MapearClienteSolicitud(idContacto);
 	},
 	OcultarCampos: function(){
+		$('#cr908_previoquintapregunta_label').text("¿Necesitas ayuda para conocer la elegibilidad de tu empresa y proyecto para una ayuda identificada?");
+		$('#cr908_previoquintapregunta_label').parent().parent().hide();
+		$('#cr908_previoquintapregunta').parent().parent().hide();
+		$('#cr908_previoquintapregunta_0').parent().parent().hide();
+		$('#cr908_previoquintapregunta_1').parent().parent().hide();
 		$('#crcd6_previotercerapregunta_label').parent().parent().hide();
 		$('#crcd6_previotercerapregunta').parent().parent().hide();
 		$('#crcd6_previotercerapregunta_0').parent().parent().hide();
@@ -68,10 +73,12 @@ const SolicitudPresupuestacion = {
 		$("#crcd6_previocuartapregunta_0").prop('checked', false);
 		$("#crcd6_previoprimerapregunta_0").prop('checked', false);
 		$("#crcd6_previosegundapregunta_0").prop('checked', false);
+		$("#cr908_previoquintapregunta_0").prop('checked', false);
 		$("#crcd6_previotercerapregunta_1").prop('checked', false);
 		$("#crcd6_previocuartapregunta_1").prop('checked', false);
 		$("#crcd6_previoprimerapregunta_1").prop('checked', false);
 		$("#crcd6_previosegundapregunta_1").prop('checked', false);
+		$("#cr908_previoquintapregunta_1").prop('checked', false);
 	},
 	EventosOnChange: function(){
 		$("#cr908_preguntaprincipal").change(function () {
@@ -110,6 +117,8 @@ const SolicitudPresupuestacion = {
 			$("#crcd6_previoprimerapregunta_0").prop('checked', false);
 			$("#crcd6_previocuartapregunta_0").prop('checked', false);
 			$("#crcd6_previocuartapregunta_1").prop('checked', false);
+			$("#cr908_previoquintapregunta_0").prop('checked', false);
+			$("#cr908_previoquintapregunta_1").prop('checked', false);
 			$('#crcd6_previosegundapregunta_label').parent().parent().hide();
 			$('#crcd6_previosegundapregunta').parent().parent().hide();
 			$('#crcd6_previosegundapregunta_0').parent().parent().hide();
@@ -122,6 +131,10 @@ const SolicitudPresupuestacion = {
 			$('#crcd6_previocuartapregunta').parent().parent().hide();
 			$('#crcd6_previocuartapregunta_0').parent().parent().hide();
 			$('#crcd6_previocuartapregunta_1').parent().parent().hide();
+			$('#cr908_previoquintapregunta_label').parent().parent().hide();
+			$('#cr908_previoquintapregunta').parent().parent().hide();
+			$('#cr908_previoquintapregunta_0').parent().parent().hide();
+			$('#cr908_previoquintapregunta_1').parent().parent().hide();
 			SolicitudPresupuestacion.IdentificadaAyuda();
 		});
 		
@@ -136,7 +149,35 @@ const SolicitudPresupuestacion = {
 			$('#crcd6_previosegundapregunta').parent().parent().hide();
 			$('#crcd6_previosegundapregunta_0').parent().parent().hide();
 			$('#crcd6_previosegundapregunta_1').parent().parent().hide();
+			$('#crcd6_previoprimerapregunta_label').parent().parent().hide();
+			$('#crcd6_previoprimerapregunta').parent().parent().hide();
+			$('#crcd6_previoprimerapregunta_0').parent().parent().hide();
+			$('#crcd6_previoprimerapregunta_1').parent().parent().hide();
 			SolicitudPresupuestacion.ConocesProyecto();
+		});
+		//REVISAR POR NO ENTENDER
+		$("#cr908_previoquintapregunta").change(function () {
+			$(':input[id="NextButton"]').prop('disabled', true);
+			SolicitudPresupuestacion.ResetearServicioOfertado();
+			$("#crcd6_previosegundapregunta_1").prop('checked', false);
+			$("#crcd6_previosegundapregunta_0").prop('checked', false);
+			$("#crcd6_previoprimerapregunta_1").prop('checked', false);
+			$("#crcd6_previoprimerapregunta_0").prop('checked', false);
+			$("#crcd6_previocuartapregunta_1").prop('checked', false);
+			$("#crcd6_previocuartapregunta_0").prop('checked', false);
+			$('#crcd6_previosegundapregunta_label').parent().parent().hide();
+			$('#crcd6_previosegundapregunta').parent().parent().hide();
+			$('#crcd6_previosegundapregunta_0').parent().parent().hide();
+			$('#crcd6_previosegundapregunta_1').parent().parent().hide();
+			$('#crcd6_previoprimerapregunta_label').parent().parent().hide();
+			$('#crcd6_previoprimerapregunta').parent().parent().hide();
+			$('#crcd6_previoprimerapregunta_0').parent().parent().hide();
+			$('#crcd6_previoprimerapregunta_1').parent().parent().hide();
+			$('#crcd6_previocuartapregunta_label').parent().parent().hide();
+			$('#crcd6_previocuartapregunta').parent().parent().hide();
+			$('#crcd6_previocuartapregunta_0').parent().parent().hide();
+			$('#crcd6_previocuartapregunta_1').parent().parent().hide();
+			SolicitudPresupuestacion.QuieroElegibilidad();
 		});
 	},
 	ValidarSeguimiento: function(){
@@ -231,18 +272,18 @@ const SolicitudPresupuestacion = {
 		
 		if(valorIdentificadaAyuda === RespuestaPregunta.Si){
 			$(':input[id="NextButton"]').prop('disabled', true);
-			$('#crcd6_previocuartapregunta').parent().parent().show();
-			$('#crcd6_previocuartapregunta_0').parent().parent().show();
-			$('#crcd6_previocuartapregunta_1').parent().parent().show();
-			$('#crcd6_previocuartapregunta_label').parent().parent().show();
+			$('#cr908_previoquintapregunta').parent().parent().show();
+			$('#cr908_previoquintapregunta_0').parent().parent().show();
+			$('#cr908_previoquintapregunta_1').parent().parent().show();
+			$('#cr908_previoquintapregunta_label').parent().parent().show();
 		}
 		else{
 			$(':input[id="NextButton"]').prop('disabled', false);
 			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
-			$('#crcd6_previocuartapregunta').parent().parent().hide();
-			$('#crcd6_previocuartapregunta_0').parent().parent().hide();
-			$('#crcd6_previocuartapregunta_1').parent().parent().hide();
-			$('#crcd6_previocuartapregunta_label').parent().parent().hide();
+			$('#cr908_previoquintapregunta').parent().parent().hide();
+			$('#cr908_previoquintapregunta_0').parent().parent().hide();
+			$('#cr908_previoquintapregunta_1').parent().parent().hide();
+			$('#cr908_previoquintapregunta_label').parent().parent().hide();
 		}
 	},
 	ConocesProyecto: function(){
@@ -262,8 +303,32 @@ const SolicitudPresupuestacion = {
 			$('#crcd6_previoprimerapregunta_0').parent().parent().hide();
 			$('#crcd6_previoprimerapregunta_1').parent().parent().hide();
 			$('#crcd6_previoprimerapregunta_label').parent().parent().hide();
+			$('#crcd6_descripcionproyecto_label').parent().parent().show();
+			$('#crcd6_descripcionproyecto').parent().parent().show();
 		}
 	},
+	//Nuevo
+	QuieroElegibilidad: function(){
+		valorQuieroElegibilidad = $("#cr908_previoquintapregunta").find(":radio:checked").first().attr('value');
+		
+		if(valorQuieroElegibilidad === RespuestaPregunta.Si){
+			$(':input[id="NextButton"]').prop('disabled', false);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioElegibilidad);
+			$('#crcd6_previocuartapregunta').parent().parent().hide();
+			$('#crcd6_previocuartapregunta_0').parent().parent().hide();
+			$('#crcd6_previocuartapregunta_1').parent().parent().hide();
+			$('#crcd6_previocuartapregunta_label').parent().parent().hide();
+		}
+		else{
+			$(':input[id="NextButton"]').prop('disabled', true);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			$('#crcd6_previocuartapregunta').parent().parent().show();
+			$('#crcd6_previocuartapregunta_0').parent().parent().show();
+			$('#crcd6_previocuartapregunta_1').parent().parent().show();
+			$('#crcd6_previocuartapregunta_label').parent().parent().show();
+		}
+	},
+	//Fin nuevo
 	MapearClienteSolicitud(idContacto){
         let respuesta = SolicitudPresupuestacion.ConsultarClientePorContacto(idContacto);
 
@@ -278,6 +343,7 @@ const SolicitudPresupuestacion = {
 		$("#crcd6_serviciosofertados").val(servicioDeducido.id);
 		$("#crcd6_serviciosofertados_name").val(servicioDeducido.nombre);
 		$("#crcd6_serviciosofertados_entityname").val("crcd6_servicioofertado");
+		console.log("Has elegido: " + servicioDeducido.nombre);
 	},
 	ResetearServicioOfertado: function(){
 		$("#crcd6_serviciosofertados").val('');

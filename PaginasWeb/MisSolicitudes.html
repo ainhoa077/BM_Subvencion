@@ -31,6 +31,27 @@
     </div>
   </div>
 </div>
+<div id="documentoRepresentante" class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; text-align: center; min-height: 150px;">
+  <div class="container" style="display: flex; flex-wrap: wrap; border-top:none;">
+    <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+      <h5 class="modal-title">¡Ya casi está!</h5>
+    </div>
+    <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+      <p class="offers__subtitle">
+        Por ultimo, necesitamos que nos facilites un documento para verificar 
+        que eres el representante legal de la empresa.
+        Haz clic en el botón inferior para adjuntarlo.
+      </p>
+    </div>
+    <div class="col-md-2 columnBlockLayout"></div>
+    <div class="col-md-8 columnBlockLayout" style="display: flex; flex-direction: column; margin-bottom: 20px;">
+      <button type="button" onclick="window.location.href='/adjuntar-documentos-representante/'" class="pwc-btn pwc-btn--primary">
+        Adjuntar documentos de representante legal
+      </button>
+    </div>
+    <div class="col-md-2 columnBlockLayout"></div>
+  </div>
+</div>
 {% if solicitudesResultado.results.entities.size &gt; 0 %}
 <div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px;">
   <div class="container" style="display: flex; flex-wrap: wrap; border-top:none;">
@@ -76,13 +97,40 @@
     $(".breadcrumb").remove();
     $("div.page-header").remove();
     $("div.xrm-editable-html.xrm-attribute.no-value.page-copy").remove();
+    MisSolicitudes.MostrarDocumentosRepresentante("{{ idUser }}");
     $(".entitylist.entity-grid").on("loaded", function () {
       MisSolicitudes.EventosOnload();
     });
   });
   const MisSolicitudes = {
-    EventosOnload: function () {
+    EventosOnload: function (contactoId) {
       MisSolicitudes.OcultarColumnaEstado();
+    },
+    MostrarDocumentosRepresentante: function(contactoId) {
+      let respuesta =
+        MisSolicitudes.ConsultarDocumentosAdjuntosRepresentante(contactoId);
+
+      if (respuesta.length > 0) {
+        $("#documentoRepresentante").hide();
+        return true;
+      } else {
+        $("#documentoRepresentante").show();
+        return false;
+      }
+    },
+    ConsultarDocumentosAdjuntosRepresentante: function (contactoId) {
+      const idContacto = contactoId;
+      let resultado = [];
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        async: false,
+        url: "/consulta-adjunto-documentos-representante?idContacto=" + idContacto,
+      }).done(function (data) {
+        resultado = data.results;
+      });
+
+      return resultado;
     },
     OcultarColumnaEstado: function() {
       let lineas = document.getElementsByTagName("table")[0].rows;
