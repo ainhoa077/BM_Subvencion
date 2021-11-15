@@ -12,12 +12,12 @@
 <div id="contenedorRepresentante" role="main" class="container pwc-formulario_container">
   <div id="mensajeAyuda" role="alert" class="alert alert-info">
     A continuación, te pediremos que adjuntes un documento que acredite que eres el representante legal de la
-    empresa o apoderado. Podrás elegir entre dos opciones.
+    empresa o apoderado vigente. Podrás elegir entre dos opciones.
     En caso de tratarse de una comunidad de propietarios, el Presidente de la Comunidad deberá adjuntar el
     certificado firmado que acredite la elección del presidente.
   </div>
   <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
-    <h3>Adjuntar documento del representante legal o apoderado / persona física</h3><br>
+    <h3>Adjuntar documento del representante legal o apoderado vigente / persona física</h3><br>
   </div>
   <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">{% entityform name: 'Adjuntar documentos representante legal' %}</div>
 </div>
@@ -35,7 +35,7 @@
     DescripcionEscrituraApoderamiento: "Copia de la escritura de apoderamiento donde se identifica al apoderado o representante legal vigente.",
     DescripcionCertificadoElecciónPresidente: "Copia del certificado firmado por el secretario de la comunidad que acredite la elección del presidente.",
     DescripcionRegistroMercantil: "Certificado expedido por el Registro Mercantil donde se acredite la representación como administrador único, solicitario o como representante de la persona jurídica.",
-    DescripcionDNIautonomos: "Copia del documento nacional de identidad."
+    DescripcionDNIautonomos: "Copia del documento nacional de identidad. Se debe adjuntar el DNI por ambas caras en un mismo documento y de manera legible."
   };
   const FormularioRepresentante = {
       EventosOnload: function() {
