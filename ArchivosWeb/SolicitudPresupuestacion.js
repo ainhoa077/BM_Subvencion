@@ -35,6 +35,9 @@ const SolicitudPresupuestacion = {
 		SolicitudPresupuestacion.MapearClienteSolicitud(idContacto);
 	},
 	OcultarCampos: function(){
+		$('#crcd6_descripcionproyecto').val('');
+		$('#crcd6_descripcionproyecto_label').hide();
+		$('#crcd6_descripcionproyecto').hide();
 		$('#cr908_previoquintapregunta_label').text("¿Necesitas ayuda para conocer la elegibilidad de tu empresa y proyecto para una ayuda identificada?");
 		$('#cr908_previoquintapregunta_label').parent().parent().hide();
 		$('#cr908_previoquintapregunta').parent().parent().hide();
@@ -284,6 +287,9 @@ const SolicitudPresupuestacion = {
 			$('#cr908_previoquintapregunta_0').parent().parent().hide();
 			$('#cr908_previoquintapregunta_1').parent().parent().hide();
 			$('#cr908_previoquintapregunta_label').parent().parent().hide();
+			$('#crcd6_descripcionproyecto').val('');
+			$('#crcd6_descripcionproyecto_label').hide();
+			$('#crcd6_descripcionproyecto').hide();
 		}
 	},
 	ConocesProyecto: function(){
@@ -303,8 +309,6 @@ const SolicitudPresupuestacion = {
 			$('#crcd6_previoprimerapregunta_0').parent().parent().hide();
 			$('#crcd6_previoprimerapregunta_1').parent().parent().hide();
 			$('#crcd6_previoprimerapregunta_label').parent().parent().hide();
-			$('#crcd6_descripcionproyecto_label').parent().parent().show();
-			$('#crcd6_descripcionproyecto').parent().parent().show();
 		}
 	},
 	//Nuevo
@@ -314,6 +318,9 @@ const SolicitudPresupuestacion = {
 		if(valorQuieroElegibilidad === RespuestaPregunta.Si){
 			$(':input[id="NextButton"]').prop('disabled', false);
 			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioElegibilidad);
+			$('#crcd6_descripcionproyecto').val('');
+			$('#crcd6_descripcionproyecto_label').hide();
+			$('#crcd6_descripcionproyecto').hide();
 			$('#crcd6_previocuartapregunta').parent().parent().hide();
 			$('#crcd6_previocuartapregunta_0').parent().parent().hide();
 			$('#crcd6_previocuartapregunta_1').parent().parent().hide();
@@ -322,6 +329,9 @@ const SolicitudPresupuestacion = {
 		else{
 			$(':input[id="NextButton"]').prop('disabled', true);
 			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			$('#crcd6_descripcionproyecto_label').text("Indicanos por que motivo quieres solicitar la ayuda").val();
+			$('#crcd6_descripcionproyecto_label').show();
+			$('#crcd6_descripcionproyecto').show();
 			$('#crcd6_previocuartapregunta').parent().parent().show();
 			$('#crcd6_previocuartapregunta_0').parent().parent().show();
 			$('#crcd6_previocuartapregunta_1').parent().parent().show();
@@ -343,7 +353,6 @@ const SolicitudPresupuestacion = {
 		$("#crcd6_serviciosofertados").val(servicioDeducido.id);
 		$("#crcd6_serviciosofertados_name").val(servicioDeducido.nombre);
 		$("#crcd6_serviciosofertados_entityname").val("crcd6_servicioofertado");
-		console.log("Has elegido: " + servicioDeducido.nombre);
 	},
 	ResetearServicioOfertado: function(){
 		$("#crcd6_serviciosofertados").val('');
