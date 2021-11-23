@@ -248,7 +248,7 @@
 						<p class="detalle-text">CUENTA: ES25 0081 5136 7900 0124 5235</p>
 						<p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
 						<p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
-						<p class="detalle-text">IMPORTE (con IVA): {{importePresupuestado | round: 2 }}€</p>
+						<p class="detalle-text">IMPORTE (con impuesto incluído): {{importePresupuestado | round: 2 }}€</p>
 						<br>
 						<br>
 					</div>
@@ -337,7 +337,7 @@
           <p class="detalle-text">CUENTA: ES25 0081 5136 7900 0124 5235</p>
 		  <p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
 		  <p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
-		  <p class="detalle-text">IMPORTE (con IVA): {{importePresupuestado | round: 2 }}€</p>
+		  <p class="detalle-text">IMPORTE (con impuesto incluído): {{importePresupuestado | round: 2 }}€</p>
         </div>
         <div class="modal-footer">
 			<button type="button" onclick="FormularioDetalleSolicitud.CerrarModal('#modalTransferenciaBancaria');return false;" class="pwc-btn pwc-btn--primary">Cancelar</button>
