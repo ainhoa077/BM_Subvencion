@@ -225,7 +225,7 @@
 					<button type="button" onclick="FormularioDetalleSolicitud.AbrirPopUp('modalTransferenciaBancaria')" class="btn btn-primary action create-action">Transferencia bancaria</button>
 					</div>
 					<div class="col-md-6 text-center columnBlockLayout">
-						<button type="button" onclick="FormularioDetalleSolicitud.PagarOnline()" class="btn btn-primary action create-action">Pago TPV virtual</button>
+						{% include 'redsys' %}
 					</div>
 					<div class="col-md-12 text-center columnBlockLayout">
 						<br>
@@ -541,6 +541,7 @@
 			EventosOnload: function(contactoId){
 				FormularioDetalleSolicitud.RegistrarEventosOnClick();
 				FormularioDetalleSolicitud.OcultarBotonEnviar();
+				FormularioDetalleSolicitud.PagarOnline();
 			},
 			RegistrarEventosOnClick: function(){
 				$('#modalTransferenciaBancaria').on('hidden.bs.modal', function (e) {
@@ -571,16 +572,24 @@
 				FormularioDetalleSolicitud.CambiarEstadoPago("4", true);
 			},
 			PagarOnline: function(){
+				debugger;
 				const solicitudId = '{{ idSolicitud }}';
-				let resultado = PortalApi.Api("AccionGenerarUrlPagoSabadell", {
-								"solicitudid": solicitudId,
-								"Random": Math.random()
-							}, ["crcd6_respuesta"], "AccionGenerarUrlPagoSabadell");
+				const codigoEstado = '{{ codigoEstado }}';
+				const estadoAceptacionPresupuesto = '{{ estadoAceptacionPresupuesto }}';
 
-				resultado = resultado && resultado[0] && resultado[0].crcd6_respuesta ? JSON.parse(resultado[0].crcd6_respuesta) : null;
+				if(codigoEstado === estadoAceptacionPresupuesto){
+					let resultado = PortalApi.Api("AccionGenerarUrlPago", {
+									"solicitudid": solicitudId,
+									"Random": Math.random()
+								}, ["crcd6_respuesta"], "AccionGenerarUrlPago");
 
-				if(resultado.errorCode === 0){
-					window.location.href = resultado.challengeUrl;
+					resultado = resultado && resultado[0] && resultado[0].crcd6_respuesta ? JSON.parse(resultado[0].crcd6_respuesta) : null;
+
+					if(resultado.errorCode === 0){
+						$('#Ds_MerchantParameters').val(resultado.Parametros);
+						$('#Ds_Signature').val(resultado.Firma);
+						$("#idPago").attr('action', resultado.UrlPago);
+					}
 				}
 			},
 			RevisionDocumentacion: function(){

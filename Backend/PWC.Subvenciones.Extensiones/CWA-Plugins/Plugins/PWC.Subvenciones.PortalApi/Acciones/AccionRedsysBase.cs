@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 
 namespace PWC.Subvenciones.PortalApi.Acciones
 {
-    public class AccionPaycometBase
+    public class AccionRedsysBase
     {
         public IOrganizationService Service { get; set; }
         public IPluginExecutionContext ContextoEjecucion { get; set; }
 
-        public AccionPaycometBase(IOrganizationService service, IPluginExecutionContext contextoEjecucion)
+        public AccionRedsysBase(IOrganizationService service, IPluginExecutionContext contextoEjecucion)
         {
             Service = service;
             ContextoEjecucion = contextoEjecucion;
         }
 
-        public EntityCollection ObtenerParametrosPycomet()
+        public EntityCollection ObtenerParametrosRedsys()
         {
             QueryExpression parametrosPaycomet = new QueryExpression("adx_sitesetting");
             parametrosPaycomet.NoLock = true;
             parametrosPaycomet.ColumnSet = new ColumnSet("adx_name", "adx_value");
-            parametrosPaycomet.Criteria.AddCondition("adx_name", ConditionOperator.Like, "%PAYCOMET%");
+            parametrosPaycomet.Criteria.AddCondition("adx_name", ConditionOperator.Like, "%REDSYS%");
             return Service.RetrieveMultiple(parametrosPaycomet);
         }
 

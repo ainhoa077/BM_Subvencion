@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using Newtonsoft.Json;
 using PWC.Subvenciones.PortalApi.Modelos;
 using PWC.Subvenciones.PortalApi.Utilidades;
 using System;
@@ -7,10 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JsonSerializer = PWC.Subvenciones.PortalApi.Utilidades.JsonSerializer;
 
 namespace PWC.Subvenciones.PortalApi.Acciones
 {
-    public class AccionConsultarPago: AccionPaycometBase
+    public class AccionConsultarPago: AccionRedsysBase
     {
         private const string ESTAOPENDIENTEPAGO = "4";
         public AccionConsultarPago(IOrganizationService service, IPluginExecutionContext contextoEjecucion) : base(service, contextoEjecucion)
@@ -19,23 +21,19 @@ namespace PWC.Subvenciones.PortalApi.Acciones
 
         public string Ejecutar(string parametros)
         {
-            ParametroEntradaConsultaPagoPaycomet parametroEntradaConsultaPagoPaycomet = JsonSerializer.Deserialize<ParametroEntradaConsultaPagoPaycomet>(parametros);
+            ParametroEntradaConsultaPago parametroEntradaConsultaPago = JsonSerializer.Deserialize<ParametroEntradaConsultaPago>(parametros);
 
-            if (!string.IsNullOrEmpty(parametroEntradaConsultaPagoPaycomet.transaccionPagoId))
+            if (!string.IsNullOrEmpty(parametroEntradaConsultaPago.transaccionPagoId))
             {
-                Entity transaccionPago = ObtenerTransaccionPago(parametroEntradaConsultaPagoPaycomet.transaccionPagoId);
-                EntityCollection parametrosPaycomet = ObtenerParametrosPycomet();
-                string tokenApi = BuscarParametro(parametrosPaycomet, "PAYCOMET-API-TOKEN");
-                string terminal = BuscarParametro(parametrosPaycomet, "PAYCOMET-TERMINAL");
-                string url = BuscarParametro(parametrosPaycomet, "PAYCOMET-URL-CONSULTA");
-                return ConsumoApiConsultaPayComent(url, tokenApi, terminal, transaccionPago, parametroEntradaConsultaPagoPaycomet.transaccionExitosa);
+                Entity transaccionPago = ObtenerTransaccionPago(parametroEntradaConsultaPago.transaccionPagoId);
+                return ConsumoApiConsultaRedsys(transaccionPago, parametroEntradaConsultaPago.transaccionExitosa);
             }
             else
             {
-                ParametrosSalidaGenerarUrlPagoSabadell parametrosSalidaGenerarUrlPagoSabadell = new ParametrosSalidaGenerarUrlPagoSabadell();
+                ParametrosSalidaGenerarUrlPago parametrosSalidaGenerarUrlPagoSabadell = new ParametrosSalidaGenerarUrlPago();
                 parametrosSalidaGenerarUrlPagoSabadell.errorCode = 1;
                 parametrosSalidaGenerarUrlPagoSabadell.messageError = "Request inválido";
-                return JsonSerializer.Serialize<ParametrosSalidaGenerarUrlPagoSabadell>(parametrosSalidaGenerarUrlPagoSabadell);
+                return JsonSerializer.Serialize<ParametrosSalidaGenerarUrlPago>(parametrosSalidaGenerarUrlPagoSabadell);
             }
         }
 
@@ -56,25 +54,23 @@ namespace PWC.Subvenciones.PortalApi.Acciones
             return entidadTransaccionPago;
         }
 
-        private string ConsumoApiConsultaPayComent(string url, string tokenApi, string terminal, Entity transaccionPago, bool transaccionExitosa)
+        private string ConsumoApiConsultaRedsys(Entity transaccionPago, bool transaccionExitosa)
         {
             if (transaccionPago != null)
             {
-                ConsultaPagoPaycomet peticion = new ConsultaPagoPaycomet();
-                peticion.payment = new ConsultaPago();
-                peticion.payment.terminal = terminal;
-                string parametroEntrada = JsonSerializer.Serialize<ConsultaPagoPaycomet>(peticion).Replace(@"\", "");
-                string respuesta = ConsumoAPI.EjecutarAPI(url.Replace("{order}", transaccionPago.Attributes["crcd6_nombre"].ToString()), tokenApi, parametroEntrada).Replace(@"\", "");
-                ParametrosSalidaConsultaPago respuestaConsultaPago = JsonSerializer.Deserialize<ParametrosSalidaConsultaPago>(respuesta);
+                ParametrosSalidaConsultaPago respuestaConsultaPago = new ParametrosSalidaConsultaPago();
+                respuestaConsultaPago.errorCode = 0;
+                respuestaConsultaPago.payment = new ConsultaPagoDetalle();
+                respuestaConsultaPago.payment.order = transaccionPago.Attributes["crcd6_nombre"].ToString();
                 ActualizacionUrlPagoTransaccionPago(transaccionPago, respuestaConsultaPago, transaccionExitosa);
-                return respuesta;
+                return JsonConvert.SerializeObject(respuestaConsultaPago, Formatting.None);
             }
             else
             {
-                ParametrosSalidaGenerarUrlPagoSabadell parametrosSalidaGenerarUrlPagoSabadell = new ParametrosSalidaGenerarUrlPagoSabadell();
+                ParametrosSalidaGenerarUrlPago parametrosSalidaGenerarUrlPagoSabadell = new ParametrosSalidaGenerarUrlPago();
                 parametrosSalidaGenerarUrlPagoSabadell.errorCode = 2;
                 parametrosSalidaGenerarUrlPagoSabadell.messageError = "El id de transacción de pago no es válido";
-                return JsonSerializer.Serialize<ParametrosSalidaGenerarUrlPagoSabadell>(parametrosSalidaGenerarUrlPagoSabadell);
+                return JsonSerializer.Serialize<ParametrosSalidaGenerarUrlPago>(parametrosSalidaGenerarUrlPagoSabadell);
             }
         }
 

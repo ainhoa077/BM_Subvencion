@@ -24,8 +24,8 @@ namespace PWC.Subvenciones.Extensiones.Controlador
 
             Api = new Dictionary<string, Func<string, string>>()
             {
-                { "AccionGenerarUrlPagoSabadell", new AccionGenerarUrlPago(service, contextoEjecucion).Ejecutar },
-                { "AccionConsultarPagoSabadell", new AccionConsultarPago(service, contextoEjecucion).Ejecutar },
+                { "AccionGenerarUrlPago", new AccionGenerarUrlPago(service, contextoEjecucion).Ejecutar },
+                { "AccionConsultarPago", new AccionConsultarPago(service, contextoEjecucion).Ejecutar },
             };
         }
         public void EjecutarControlador()

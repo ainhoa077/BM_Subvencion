@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace PWC.Subvenciones.PortalApi.Modelos
 {
-    public class ParametrosSalidaGenerarUrlPagoSabadell
+    public class ParametrosSalidaGenerarUrlPago
     {
-        public string challengeUrl { get; set; }
+        public string Parametros { get; set; }
+        public string Firma { get; set; }
+        public string UrlPago { get; set; }
         public int errorCode { get; set; }
         public string messageError { get; set; }
     }

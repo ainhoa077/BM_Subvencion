@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PWC.Subvenciones.PortalApi.Modelos
 {
     [DataContract]
-    public class ParametroEntradaConsultaPagoPaycomet
+    public class ParametroEntradaConsultaPago
     {
         public string transaccionPagoId { get; set; }
         public bool transaccionExitosa { get; set; }

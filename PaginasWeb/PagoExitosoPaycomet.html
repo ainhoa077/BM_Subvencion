@@ -65,11 +65,11 @@
     })();
 const PagoExitoso = {
     ValidarPago: function(transaccionPagoId){
-        let resultado = PortalApi.Api("AccionConsultarPagoSabadell", {
+        let resultado = PortalApi.Api("AccionConsultarPago", {
 								"transaccionPagoId": transaccionPagoId,
                                 "transaccionExitosa": true,
 								"Random": Math.random()
-							}, ["crcd6_respuesta"], "AccionConsultarPagoSabadell");
+							}, ["crcd6_respuesta"], "AccionConsultarPago");
 
         resultado = resultado && resultado[0] && resultado[0].crcd6_respuesta ? JSON.parse(resultado[0].crcd6_respuesta) : null;
         var text = $("#orden").text();
