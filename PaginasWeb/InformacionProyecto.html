@@ -51,9 +51,17 @@
 			$('button.btn.btn-default.clearlookupfield').css("z-index",1);
 			$('button.btn.btn-default.launchentitylookup').attr('data-original-title', '');
 		},
+		EventosOnChange: function(){
+			$( "#crcd6_presupuestoproyecto" ).keypress(function( e ) {
+				var charCode = (e.which) ? e.which : event.keyCode    
+				if (String.fromCharCode(charCode).match(/[^0-9]/g))    
+					return false;   
+			});
+		}
 	};
   $(document).ready(function(){
-		InformacionProyecto.EventosOnload();
+	InformacionProyecto.EventosOnload();
+	InformacionProyecto.EventosOnChange();
     $('#crcd6_presupuestoproyecto').before('<div class="input-group" id="divisa">'); 
     $('#crcd6_presupuestoproyecto').after('<span id="divisaSpan" class="input-group-addon">€</span><div/>'); 
     $('#crcd6_presupuestoproyecto').detach().appendTo('#divisa');

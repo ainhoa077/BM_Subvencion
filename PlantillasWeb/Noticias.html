@@ -120,92 +120,92 @@
         <div class="pwc-news_values row">
           <div class="pwc-news_info pwc-new pwc-news--1 selected">
             {% for item in resultNoticiasRelevantes %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;" >
                 <img src="~/{{item.crcd6_imagen}}" alt="">
                 <div>
-                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  <p class="pwc-text" style="height: 80px; text-align:left;">{{item.crcd6_titulo}}
                   </p>
-                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">Leer más</a>
                 </div>
               </div>
             {% endfor %}
             {% if resultNoticiasRelevantes.size == 1 %}
-              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-8" style="height: 300px; width: 350px;"></div>
             {% endif %}
             {% if resultNoticiasRelevantes.size == 2 %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;"></div>
             {% endif %}
           </div>
           <div class="pwc-news_info pwc-new pwc-news--2">
             {% for item in resultNoticiasDigitalizacion %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;">
                 <img src="~/{{item.crcd6_imagen}}" alt="">
                 <div>
-                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  <p class="pwc-text" style="height: 80px; text-align:left;">{{item.crcd6_titulo}}
                   </p>
-                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">Leer más</a>
                 </div>
               </div>
             {% endfor %}
             {% if resultNoticiasDigitalizacion.size == 1 %}
-              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-8" style="height: 300px; width: 350px;"></div>
             {% endif %}
             {% if resultNoticiasDigitalizacion.size == 2 %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;"></div>
             {% endif %}
           </div>
           <div class="pwc-news_info pwc-new pwc-news--3">
             {% for item in resultNoticiasEnergetica %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;">
                 <img src="~/{{item.crcd6_imagen}}" alt="">
                 <div>
-                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  <p class="pwc-text" style="height: 80px; text-align:left;">{{item.crcd6_titulo}}
                   </p>
-                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">Leer más</a>
                 </div>
               </div>
             {% endfor %}
             {% if resultNoticiasEnergetica.size == 1 %}
-              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-8" style="height: 300px; width: 350px;"></div>
             {% endif %}
             {% if resultNoticiasEnergetica.size == 2 %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;"></div>
             {% endif %}
           </div>
           <div class="pwc-news_info pwc-new pwc-news--4">
             {% for item in resultNoticiasAmbito %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;">
                 <img src="~/{{item.crcd6_imagen}}" alt="">
                 <div>
-                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  <p class="pwc-text" style="height: 80px; text-align:left;">{{item.crcd6_titulo}}
                   </p>
-                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">Leer más</a>
                 </div>
               </div>
             {% endfor %}
             {% if resultNoticiasAmbito.size == 1 %}
-              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-8" style="height: 300px; width: 350px;"></div>
             {% endif %}
             {% if resultNoticiasAmbito.size == 2 %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;"></div>
             {% endif %}
           </div>
 		      <div class="pwc-news_info pwc-new pwc-news--5">
             {% for item in resultNoticiasInternacionalizacion %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;">
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;">
                 <img src="~/{{item.crcd6_imagen}}" alt="">
                 <div>
-                  <p class="pwc-text" style="height: 80px;">{{item.crcd6_titulo}}
+                  <p class="pwc-text" style="height: 80px; text-align:left;">{{item.crcd6_titulo}}
                   </p>
-                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">leer más</a>
+                  <a href="{{item.crcd6_enlace}}" target="_blank" style="height: 20px;">Leer más</a>
                 </div>
               </div>
             {% endfor %}
             {% if resultNoticiasInternacionalizacion.size == 1 %}
-              <div class="pwc-news_container col-sm-8" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-8" style="height: 300px; width: 350px;"></div>
             {% endif %}
             {% if resultNoticiasInternacionalizacion.size == 2 %}
-              <div class="pwc-news_container col-sm-4" style="height: 300px;"></div>
+              <div class="pwc-news_container col-sm-4" style="height: 300px; width: 350px;"></div>
             {% endif %}
           </div>
         </div>

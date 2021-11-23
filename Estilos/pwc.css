@@ -1619,7 +1619,7 @@ body {
 
 .help-options__tittle {
   background-color: white;
-  font-size: 18px;
+  font-size: 20px;
   padding: 0.3em 2.5em;
   clip-path: polygon(95.3% 0, 99.7% 50%, 95.3% 100%, 0 100%, 0 0);
 }
@@ -1823,86 +1823,91 @@ h2, .h2 {
 }
 
 .pwc-sobre-nosotros {
-  border:#C75366 solid 5px;
-  border-radius: 50%;
+ filter: brightness(1.1);
+ mix-blend-mode: multiply;
+ width: 100%;
 }
 
 .pwc-sobre-nosotros-titulo {
-  color:#C75366;
+  color:#000000;
   font-family: "ITCCharter";
   font-size: 30px;
 }
 
 .pwc-sobre-nosotros-texto {
-  color:#C75366;
+  color:#000000;
   font-family: "Helvetica Neue";
   font-size: 22px;
 }
 
 .pwc-nuestro-objetivo {
-  border:#B87D46 solid 5px;
-  border-radius: 50%;
+ filter: brightness(1.1);
+ mix-blend-mode: multiply;
+ width: 100%;
 }
 
 .pwc-nuestro-objetivo-titulo {
-  color:#B87D46;
+  color:#000000;
   font-family: "ITCCharter";
   font-size: 30px;
 }
 
 .pwc-nuestro-objetivo-texto {
-  color:#B87D46;
+  color:#000000;
   font-family: "Helvetica Neue";
   font-size: 22px;
 }
 
 .pwc-que-ofrecemos {
-  border:#A32020 solid 5px;
-  border-radius: 50%;
+ filter: brightness(1.1);
+ mix-blend-mode: multiply;
+ width: 100%;
 }
 
 .pwc-que-ofrecemos-titulo {
-  color:#A32020;
+  color:#000000;
   font-family: "ITCCharter";
   font-size: 30px;
 }
 
 .pwc-que-ofrecemos-texto {
-  color:#A32020;
+  color:#000000;
   font-family: "Helvetica Neue";
   font-size: 22px;
 }
 
 .pwc-nuestros-profesionales {
-  border:#DC6900 solid 5px;
-  border-radius: 50%;
+  filter: brightness(1.1);
+  mix-blend-mode: multiply;
+  width: 100%;
 }
 
 .pwc-nuestros-profesionales-titulo {
-  color:#DC6900;
+  color:#000000;
   font-family: "ITCCharter";
   font-size: 30px;
 }
 
 .pwc-nuestros-profesionales-texto {
-  color:#DC6900;
+  color:#000000;
   font-family: "Helvetica Neue";
   font-size: 22px;
 }
 
 .pwc-servicios-personalizados {
-  border:#BF8800 solid 5px;
-  border-radius: 50%;
+  filter: brightness(1.1);
+  mix-blend-mode: multiply;
+  width: 100%;
 }
 
 .pwc-servicios-personalizados-titulo {
-  color:#BF8800;
+  color:#000000;
   font-family: "ITCChartere";
   font-size: 30px;
 }
 
 .pwc-servicios-personalizados-texto {
-  color:#BF8800;
+  color:#000000;
   font-family: "Helvetica Neue";
   font-size: 22px;
 }
@@ -1912,4 +1917,13 @@ h2, .h2 {
   border-color: #eee;
 }
 
+.alert-secundary {
+  color: #383d41;
+  background-color: #e2e3e5;
+  border-color: #d6d8db;
+}
+
+.login-heading-section ~ .form-group {
+  padding: 0 20px 0;
+}
 /*# sourceMappingURL=pwc.css.map */

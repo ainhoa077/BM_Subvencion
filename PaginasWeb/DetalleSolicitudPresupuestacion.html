@@ -34,6 +34,7 @@
 	<attribute name="crcd6_nombreproyecto"></attribute>
 	<attribute name="crcd6_subvencionpresentada"></attribute>
 	<attribute name="crcd6_transferencias"></attribute>
+	<attribute name="crcd6_importepresupuestado"></attribute>
     <order attribute="crcd6_solicitud" descending="false"></order>
     <filter type="and">
       <condition attribute="crcd6_solicitudsubid" operator="eq" uitype="crcd6_solicitudsub" value="{{ idSolicitud | xml_escape }}"></condition>
@@ -66,6 +67,7 @@
 {% assign coste = registroSolicitud['servicio.crcd6_coste'] %}
 {% assign descripcionServicio = registroSolicitud['servicio.crcd6_descripcion'] %}
 {% assign nombreSubvencion = registroSolicitud['subvencion.crcd6_subvencion'] %}
+{% assign importePresupuestado = registroSolicitud.crcd6_importepresupuestado %}
 <!-- NUEVO -->
 {% assign esTransferencia = registroSolicitud.crcd6_transferencias %}}
 <!-- FIN NUEVO -->
@@ -246,6 +248,7 @@
 						<p class="detalle-text">CUENTA: ES25 0081 5136 7900 0124 5235</p>
 						<p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
 						<p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
+						<p class="detalle-text">IMPORTE (con impuesto incluído): {{importePresupuestado | round: 2 }}€</p>
 						<br>
 						<br>
 					</div>
@@ -334,6 +337,7 @@
           <p class="detalle-text">CUENTA: ES25 0081 5136 7900 0124 5235</p>
 		  <p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
 		  <p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
+		  <p class="detalle-text">IMPORTE (con impuesto incluído): {{importePresupuestado | round: 2 }}€</p>
         </div>
         <div class="modal-footer">
 			<button type="button" onclick="FormularioDetalleSolicitud.CerrarModal('#modalTransferenciaBancaria');return false;" class="pwc-btn pwc-btn--primary">Cancelar</button>
