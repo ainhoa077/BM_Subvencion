@@ -32,10 +32,10 @@
 
 			if(respuesta.length > 0){
 				if(respuesta[0] === ServiciosOfertados.NecesitoElegibilidad || respuesta[0] === ServiciosOfertados.SeguimientoJustificacion || respuesta[0] === ServiciosOfertados.ServicioPremiunBasico || respuesta[0] === ServiciosOfertados.ServicioPremiumComplejo || respuesta[0] === ServiciosOfertados.TramitacionAyudas){
-					window.location.href = "/informacion-ayuda-proyecto?id=" + id;
+					window.location.href = "/informacion-ayuda-proyecto?id=" + id + "&esFormularioProyecto=false";
 				}
 				else{
-					window.location.href = "/informacion-proyecto?id=" + id;
+					window.location.href = "/informacion-proyecto?id=" + id + "&esFormularioProyecto=true";
 				}
 			}
 
