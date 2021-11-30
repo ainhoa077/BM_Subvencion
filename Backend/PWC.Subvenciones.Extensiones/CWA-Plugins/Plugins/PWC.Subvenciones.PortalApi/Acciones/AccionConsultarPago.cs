@@ -109,22 +109,16 @@ namespace PWC.Subvenciones.PortalApi.Acciones
 
                 if (transaccionExitosa)
                 {
-                    HistorialPago pagoExitoso = respuestConsultaPago.payment.history.Where(x => x.state == 1).FirstOrDefault();
-                    transaccionPagoActualizar.Attributes["crcd6_codigoestado"] = pagoExitoso != null ? pagoExitoso.state : 0;
-                    transaccionPagoActualizar.Attributes["crcd6_nombreestado"] = pagoExitoso != null ? pagoExitoso.stateName : string.Empty;
-                    transaccionPagoActualizar.Attributes["crcd6_fechatransaccionpago"] = pagoExitoso != null ? DateTime.ParseExact(pagoExitoso.timestamp, "yyyyMMddHHmmss", null) : DateTime.UtcNow;
-
-                    if (pagoExitoso != null)
-                    {
-                        ActualizacionEstadoSolicitudPendientePago(transaccionPago);
-                    }
+                    transaccionPagoActualizar.Attributes["crcd6_codigoestado"] = 1;
+                    transaccionPagoActualizar.Attributes["crcd6_nombreestado"] = "Completo";
+                    transaccionPagoActualizar.Attributes["crcd6_fechatransaccionpago"] = DateTime.UtcNow;
+                    ActualizacionEstadoSolicitudPendientePago(transaccionPago);
                 }
                 else
                 {
-                    HistorialPago pagoFallido = respuestConsultaPago.payment.history.Where(x => x.state == 0).FirstOrDefault();
-                    transaccionPagoActualizar.Attributes["crcd6_codigoestado"] = pagoFallido != null ? pagoFallido.state : 0;
-                    transaccionPagoActualizar.Attributes["crcd6_nombreestado"] = pagoFallido != null ? pagoFallido.stateName : string.Empty;
-                    transaccionPagoActualizar.Attributes["crcd6_fechatransaccionpago"] = pagoFallido != null ? DateTime.ParseExact(pagoFallido.timestamp, "yyyyMMddHHmmss", null) : DateTime.UtcNow;
+                    transaccionPagoActualizar.Attributes["crcd6_codigoestado"] = 0;
+                    transaccionPagoActualizar.Attributes["crcd6_nombreestado"] = "Fallido";
+                    transaccionPagoActualizar.Attributes["crcd6_fechatransaccionpago"] = DateTime.UtcNow;
                 }
 
                 Service.Update(transaccionPagoActualizar);

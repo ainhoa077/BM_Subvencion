@@ -15,7 +15,7 @@ namespace PWC.Subvenciones.PortalApi.Acciones
 {
     public class AccionGenerarUrlPago : AccionRedsysBase
     {
-        private const string SIGLASORDEN = "PWC-";
+        private const string SIGLASORDEN = "0{0}";
         private readonly IOrganizationService ServicioCRM;
 
         public AccionGenerarUrlPago(IOrganizationService service, IPluginExecutionContext contextoEjecucion) : base(service, contextoEjecucion)
@@ -38,8 +38,9 @@ namespace PWC.Subvenciones.PortalApi.Acciones
                 string urlOK = BuscarParametro(parametrosPaycomet, "REDSYS-URLOK");
                 string urlKO = BuscarParametro(parametrosPaycomet, "REDSYS-URLKO");
                 string url = BuscarParametro(parametrosPaycomet, "REDSYS-URL-PAGO");
-                string transaccionPagoId = CrearTransaccionPago(solicitud);
-                return ConsumoApiRedsys(url, tokenApi, terminal, urlOK, urlKO, solicitud, transaccionPagoId, merchantCode, merchantUrl);
+                string siglaOrder = SIGLASORDEN.Replace("{0}", DateTime.Now.ToString("ss"));
+                string transaccionPagoId = CrearTransaccionPago(solicitud, siglaOrder);
+                return ConsumoApiRedsys(url, tokenApi, terminal, urlOK, urlKO, solicitud, transaccionPagoId, merchantCode, merchantUrl, siglaOrder);
             }
             else
             {
@@ -61,10 +62,10 @@ namespace PWC.Subvenciones.PortalApi.Acciones
             Service.Update(transaccionPagoActualizar);
         }
 
-        private string CrearTransaccionPago(Entity solicitud)
+        private string CrearTransaccionPago(Entity solicitud, string siglaOrder)
         {
             Entity transaccionPago = new Entity("crcd6_transaccionespagos");
-            transaccionPago.Attributes["crcd6_nombre"] = $"{SIGLASORDEN}{solicitud.Attributes["crcd6_solicitud"].ToString()}";
+            transaccionPago.Attributes["crcd6_nombre"] = $"{siglaOrder}{solicitud.Attributes["crcd6_solicitud"].ToString()}";
             transaccionPago.Attributes["crcd6_solicitudid"] = new EntityReference("crcd6_solicitudsub", solicitud.Id);
             Guid transaccionesPagoId = Service.Create(transaccionPago);
             return transaccionesPagoId.ToString();
@@ -87,7 +88,7 @@ namespace PWC.Subvenciones.PortalApi.Acciones
             return entidadSolcitud;
         }
 
-        private string ConsumoApiRedsys(string url, string tokenApi, string terminal, string urlOK, string urlKO, Entity solicitud, string transaccionPagoId, string merchantCode, string merchantUrl)
+        private string ConsumoApiRedsys(string url, string tokenApi, string terminal, string urlOK, string urlKO, Entity solicitud, string transaccionPagoId, string merchantCode, string merchantUrl, string siglaOrder)
         {
             if (solicitud != null)
             {
@@ -96,7 +97,8 @@ namespace PWC.Subvenciones.PortalApi.Acciones
                 int totalAmount = Decimal.ToInt32(((Money)solicitud.Attributes["crcd6_importepresupuestado"]).Value * 100);
                 RedsysAPI api = new RedsysAPI();
                 string key = tokenApi;
-                string order = SIGLASORDEN + solicitud.Attributes["crcd6_solicitud"].ToString();
+                string order = $"{siglaOrder}{solicitud.Attributes["crcd6_solicitud"].ToString()}";
+                order = order.Replace("{0}", DateTime.Now.ToString("tt"));
                 api.SetParameter("DS_MERCHANT_AMOUNT", totalAmount.ToString());
                 api.SetParameter("DS_MERCHANT_ORDER", order.Replace("-", ""));
                 api.SetParameter("DS_MERCHANT_MERCHANTCODE", merchantCode);
@@ -115,9 +117,6 @@ namespace PWC.Subvenciones.PortalApi.Acciones
                 respuestaUrlPago.errorCode = 0;
                 respuestaUrlPago.messageError = string.Empty;
                 ActualizacionUrlPagoTransaccionPago(transaccionPagoId, url, api.ToJson(api.m_keyvalues), urlOK, urlKO);
-                Entity motivo = new Entity("crcd6_motivollamada");
-                motivo.Attributes["crcd6_comentarios"] = api.ToJson(api.m_keyvalues);
-                Service.Create(motivo);
                 return JsonConvert.SerializeObject(respuestaUrlPago, Formatting.None);
             }
             else
