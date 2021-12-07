@@ -19,7 +19,8 @@ namespace PWC.Subvenciones.PortalApi.Utilidades
                 {
                     if (!string.IsNullOrEmpty(token))
                     {
-                        httpClient.DefaultRequestHeaders.Add("PAYCOMET-API-TOKEN", token);
+                        httpClient.DefaultRequestHeaders.Add("Cookie", "csrftoken=AObtlIXSAQpV2WZfurP3LJnMdey9UdXsRmbtEJC4Btbfg8fRw2VisA9qGdz4");
+                        httpClient.DefaultRequestHeaders.Add("F1MN", "sessionid=686jjtdqp46fzsd2hn77l1e9a8ipqnky");
                     }
 
                     using (var response = httpClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json")).Result)

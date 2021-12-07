@@ -65,7 +65,6 @@
     })();
 const PagoExitoso = {
     ValidarPago: function(transaccionPagoId){
-        debugger;
         let resultado = PortalApi.Api("AccionConsultarPago", {
 								"transaccionPagoId": transaccionPagoId,
                                 "transaccionExitosa": true,
