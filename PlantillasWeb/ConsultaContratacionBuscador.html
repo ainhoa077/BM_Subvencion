@@ -1,0 +1,32 @@
+{% assign idContacto = params.idContacto %}
+{% fetchxml ServicioBuscadorContratado %}  
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+    <entity name="crcd6_solicitudsub">
+        <attribute name="crcd6_solicitud"></attribute>
+        <attribute name="crcd6_solicitudsubid"></attribute>
+        <order attribute="crcd6_solicitud" descending="false"></order>
+        <filter type="and">
+            <condition attribute="crcd6_fechacontratacionsuscripcionbuscador" operator="on-or-before" value="2021-12-08"></condition>
+            <condition attribute="crcd6_fechaexpiracionsuscripcionbuscador" operator="on-or-after" value="2021-12-08"></condition>
+        </filter>
+        <link-entity name="crcd6_servicioofertado" from="crcd6_servicioofertadoid" to="crcd6_serviciosofertados" link-type="inner" alias="ag">
+            <filter type="and">
+                <condition attribute="crcd6_codigo" operator="eq" value="522960007"></condition>
+            </filter>
+        </link-entity>
+        <link-entity name="crcd6_cliente" from="crcd6_clienteid" to="crcd6_cliente" link-type="inner" alias="ah">
+            <link-entity name="contact" from="contactid" to="crcd6_contactoid" link-type="inner" alias="ai">
+                <filter type="and">
+                <condition attribute="contactid" operator="eq" uitype="contact" alue="{{ idContacto | xml_escape }}"></condition>
+                </filter>
+            </link-entity>
+        </link-entity>
+    </entity>
+</fetch>
+{% endfetchxml %}
+{
+"results": [
+{% for result in DataList.results.entities %}
+{{ result['crcd6_solicitud'] |  }}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]}
