@@ -1,4 +1,5 @@
 {% assign idUser = user.id %}
+{% assign currentDate = now | date_add_hours: 1 | date: 'yyyy/MM/dd HH:mm'  %}
 {% fetchxml solicitudesResultado %}
 <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
   <entity name="crcd6_solicitudsub">
@@ -30,8 +31,8 @@
         <attribute name="crcd6_solicitudsubid"></attribute>
         <order attribute="crcd6_solicitud" descending="false"></order>
         <filter type="and">
-            <condition attribute="crcd6_fechacontratacionsuscripcionbuscador" operator="on-or-before" value="2021-12-08"></condition>
-            <condition attribute="crcd6_fechaexpiracionsuscripcionbuscador" operator="on-or-after" value="2021-12-08"></condition>
+            <condition attribute="crcd6_fechacontratacionsuscripcionbuscador" operator="on-or-before" value="{{ currentDate }}"></condition>
+            <condition attribute="crcd6_fechaexpiracionsuscripcionbuscador" operator="on-or-after" value="{{ currentDate }}"></condition>
         </filter>
         <link-entity name="crcd6_servicioofertado" from="crcd6_servicioofertadoid" to="crcd6_serviciosofertados" link-type="inner" alias="ag">
             <filter type="and">
@@ -41,7 +42,7 @@
         <link-entity name="crcd6_cliente" from="crcd6_clienteid" to="crcd6_cliente" link-type="inner" alias="ah">
             <link-entity name="contact" from="contactid" to="crcd6_contactoid" link-type="inner" alias="ai">
                 <filter type="and">
-                <condition attribute="contactid" operator="eq" uitype="contact" alue="{{ idUser | xml_escape }}"></condition>
+                  <condition attribute="contactid" operator="eq" uitype="contact" value="{{ idUser | xml_escape }}"></condition>
                 </filter>
             </link-entity>
         </link-entity>
@@ -63,9 +64,7 @@
     </div>
     <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
       <p class="offers__subtitle">
-        Por ultimo, necesitamos que nos facilites un documento para verificar 
-        que eres el representante legal de la empresa.
-        Haz clic en el botón inferior para adjuntarlo.
+        Necesitamos que nos facilites un documento para verificar que eres el representante legal de la empresa. Haz clic en el botón inferior para adjuntarlo. Si no lo tienes a mano, no te preocupes, podrás facilitárnoslo más tarde.
       </p>
     </div>
     <div class="col-md-2 columnBlockLayout"></div>
@@ -77,12 +76,9 @@
     <div class="col-md-2 columnBlockLayout"></div>
   </div>
 </div>
-{% if ServicioBuscadorContratado.results.entities.size >= 0 %}
+{% if ServicioBuscadorContratado.results.entities.size > 0 %}
 <div id="buscador" class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; text-align: center; min-height: 150px;">
   <div class="container" style="display: flex; flex-wrap: wrap; border-top:none;">
-    <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
-      <h5 class="modal-title">¡Ya casi está!</h5>
-    </div>
     <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
       <p class="offers__subtitle">
         Recuerda que tienes contratado el servicio anual de buscador de ayudas de PwC. Para acceder, haz click en el siguiente enlace:
@@ -90,7 +86,7 @@
     </div>
     <div class="col-md-2 columnBlockLayout"></div>
     <div class="col-md-8 columnBlockLayout" style="display: flex; flex-direction: column; margin-bottom: 20px;">
-      <button type="button" onclick="" class="pwc-btn pwc-btn--primary">
+      <button type="button" onclick="MisSolicitudes.ObtenerBuscador(); return false;" class="pwc-btn pwc-btn--primary">
         Buscador de ayudas PwC
       </button>
     </div>
@@ -123,12 +119,12 @@
     <div class="col-md-12 columnBlockLayout">
       <br><br>
       <center>
-        <h3>¡Bienvenido!</h3>
+        <h3>¡Bienvenido/a!</h3>
       </center>
       <br><br>
       <p class="offers__subtitle">Ya puedes empezar con el proceso de contratación.</p>
-      <p class="offers__subtitle">El primer paso consiste en crear una solicitud, mediante un breve cuestionario, para recomendarte el servicio personalizado según tus necesidades y ofrecerte un presupuesto ajustado.</p>
-      <p class="offers__subtitle">Haz click en el botón "Crear" y te iremos guiando durante el proceso. Esto no te llevará más de 5 minutos.</p>
+      <p class="offers__subtitle">El primer paso consiste en crear una solicitud mediante un breve cuestionario, para recomendarte el servicio adecuado según tus necesidades y ofrecerte un presupuesto ajustado.</p>
+      <p class="offers__subtitle">Haz clic en el botón "Crear" y te iremos guiando durante el proceso. Esto no te llevará más de 5 minutos.</p>
       <br><br>
       <center>
         <button onclick="window.location.href='/creacion-solicitud-presupuestacion/'" class="pwc-btn pwc-btn--primary"><span class="pwc-btn_label">Crear</span></button>
@@ -138,6 +134,7 @@
   </div>
 </div>
 {% endif %}
+<script type="text/javascript" src="~/portalApi.js"></script>
 <script language="javascript">
   $(document).ready(function () {
     $(".breadcrumb").remove();
@@ -188,6 +185,19 @@
             lineaActual.cells[3].innerHTML = "En evaluación";
         }
       }
-    }
+    },
+    ObtenerBuscador: function(contactoId){
+      debugger;
+        let resultado = PortalApi.Api("AccionSesionFandit", {
+								"contactId": "{{ idUser }}",
+								"Random": Math.random()
+							}, ["crcd6_respuesta"], "AccionSesionFandit");
+
+        resultado = resultado && resultado[0] && resultado[0].crcd6_respuesta ? JSON.parse(resultado[0].crcd6_respuesta) : null;
+        
+        if(resultado.ErrorCode === 0){
+          window.open(resultado.UrlFandit, '_blank');
+        }
+    },
   }
 </script>

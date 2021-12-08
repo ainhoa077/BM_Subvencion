@@ -38,6 +38,7 @@ namespace PWC.Subvenciones.PortalApi.Acciones
 
                     if (!string.IsNullOrEmpty(urlSessionFandit))
                     {
+                        parametroSalidaBuscador.ErrorCode = 0;
                         parametroSalidaBuscador.UrlFandit = urlSessionFandit;
                     }
                     else
