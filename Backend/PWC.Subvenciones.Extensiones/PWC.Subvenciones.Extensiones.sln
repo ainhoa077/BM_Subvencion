@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cwa-Plugins", "Cwa-Plugins"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWC.Subvenciones.PortalApi", "CWA-Plugins\Plugins\PWC.Subvenciones.PortalApi\PWC.Subvenciones.PortalApi.csproj", "{4E4FF76F-6D7B-485A-8485-D137645ADAA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWC.Subvenciones.Buscador", "CWA-Plugins\Plugins\PWC.Subvenciones.Buscador\PWC.Subvenciones.Buscador.csproj", "{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,21 @@ Global
 		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Release|x64.ActiveCfg = Release|x64
 		{4E4FF76F-6D7B-485A-8485-D137645ADAA3}.Release|x64.Build.0 = Release|x64
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Debug|x64.Build.0 = Debug|Any CPU
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Release|x64.ActiveCfg = Release|x64
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4E4FF76F-6D7B-485A-8485-D137645ADAA3} = {3CE67192-E9D8-4300-87B1-79746F06E4A0}
+		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14} = {3CE67192-E9D8-4300-87B1-79746F06E4A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49FE18F7-66B5-49C3-AD4A-0F94075FCFE0}

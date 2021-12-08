@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PWC.Subvenciones.PortalApi.Acciones
 {
-    public class AccionSesionFandit : AccionRedsysBase
+    public class AccionSesionFandit
     {
     }
 }

@@ -41,6 +41,16 @@
 </div>  
 
 <script>
+	const ServiciosOfertados = {
+		SeguimientoJustificacion: "522960002",
+		ServicioPremiunBasico: "522960001",
+		ServicioPremiumComplejo: "522960003",
+		TramitacionAyudas: "522960000",
+		ServicioAsesoramientoSimple: "522960004",
+		ServicioAsesoramientoPremium: "522960005",
+		ServicioElegibilidad: "522960006",
+		ServicioSuscripcionBuscadorAnual: "522960007"
+	}
 	const InformacionEmpresa = {
 		FormatoNumero: function(valor)
 		{
@@ -49,10 +59,21 @@
 			return formato;
 		},
 		EventosOnLoad: function() {
-			InformacionEmpresa.ModificarLookups();
-			$(window).resize(function() {
-				InformacionEmpresa.ModificarLookups();
-			});
+			debugger;
+			const idSolicitud = InformacionEmpresa.ObtenerParametroUrl('id');
+			let servicioOfertadosSolicitud = InformacionEmpresa.ConsultarServicioSolicitud(idSolicitud);
+
+			if(servicioOfertadosSolicitud.length > 0){
+				if(servicioOfertadosSolicitud[0].codigo !== ServiciosOfertados.ServicioSuscripcionBuscadorAnual){
+					InformacionEmpresa.ModificarLookups();
+					$(window).resize(function() {
+						InformacionEmpresa.ModificarLookups();
+					});
+				} 
+				else{
+					window.location.href = "/solicitud-exitosa?id" + idSolicitud;
+				}
+			}
 		},
 		ModificarLookups: function(){
 			$('button.btn.btn-default.launchentitylookup').css("padding-left",$("#crcd6_cnae_name").width());
@@ -67,7 +88,32 @@
     
                     return false;   
 			});
-		}
+		},
+		ConsultarServicioSolicitud: function (idSolicitud) {
+			let resultado = [];
+			$.ajax({
+					method: 'GET',
+					dataType: 'json',
+					async: false,
+					url: "/servicio-solicitud?idSolicitud=" + idSolicitud
+				}).done(function(data) {
+					resultado = data.results;
+				});
+			
+			return resultado;
+		},
+		ObtenerParametroUrl: function(sParam){
+			var sPageURL = window.location.search.substring(1);
+			var sURLVariables = sPageURL.split('&');
+			for (var i = 0; i < sURLVariables.length; i++) 
+			{
+				var sParameterName = sURLVariables[i].split('=');
+				if (sParameterName[0] == sParam) 
+				{
+					return sParameterName[1];
+				}
+			}
+		},
 	}
 	$(document).ready(function () {
 		InformacionEmpresa.EventosOnLoad();
