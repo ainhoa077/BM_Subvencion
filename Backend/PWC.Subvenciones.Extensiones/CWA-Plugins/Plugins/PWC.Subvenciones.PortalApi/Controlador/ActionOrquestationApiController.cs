@@ -26,6 +26,7 @@ namespace PWC.Subvenciones.Extensiones.Controlador
             {
                 { "AccionGenerarUrlPago", new AccionGenerarUrlPago(service, contextoEjecucion).Ejecutar },
                 { "AccionConsultarPago", new AccionConsultarPago(service, contextoEjecucion).Ejecutar },
+                { "AccionSesionFandit", new AccionSesionFandit(service, contextoEjecucion).Ejecutar },
             };
         }
         public void EjecutarControlador()

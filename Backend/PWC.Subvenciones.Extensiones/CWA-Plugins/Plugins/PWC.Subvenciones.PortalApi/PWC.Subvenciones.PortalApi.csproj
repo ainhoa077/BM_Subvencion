@@ -100,13 +100,16 @@
     <Compile Include="Interfaces\IActionOrquestationApi.cs" />
     <Compile Include="Modelos\ConsultaPago.cs" />
     <Compile Include="Modelos\ConsultaPagoDetalle.cs" />
+    <Compile Include="Modelos\ContactoModelo.cs" />
     <Compile Include="Modelos\HistorialPago.cs" />
     <Compile Include="Modelos\PagoConsulta.cs" />
     <Compile Include="Modelos\Pago.cs" />
     <Compile Include="Modelos\PagoPaycomet.cs" />
     <Compile Include="Modelos\ConsultaPagoPaycomet.cs" />
     <Compile Include="Modelos\ParametroEntradaConsultaPago.cs" />
+    <Compile Include="Modelos\ParametroEntradaBuscador.cs" />
     <Compile Include="Modelos\ParametroEntradaPago.cs" />
+    <Compile Include="Modelos\ParametroSalidaBuscador.cs" />
     <Compile Include="Modelos\ParametrosSalidaConsultaPago.cs" />
     <Compile Include="Modelos\ParametrosSalidaGenerarUrlPago.cs" />
     <Compile Include="PortalApi.cs" />

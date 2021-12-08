@@ -85,6 +85,10 @@ namespace PWC.Subvenciones.Buscador.Controlador
                 contactoModelo.CorreoElectronico = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.emailaddress1").Value.ToString();
                 contactoModelo.Username = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.adx_identity_username").Value.ToString();
             }
+            else
+            {
+                contactoModelo = null;
+            }
 
             return contactoModelo;
         }
