@@ -42,6 +42,7 @@ namespace PWC.Subvenciones.Buscador.Controlador
             string urlRegistration = BuscarParametro(parametrosFandit, "FANDIT-URL-REGISTRATION");
             string cookie = BuscarParametro(parametrosFandit, "FANDIT-COOKIE");
             string session = BuscarParametro(parametrosFandit, "FANDIT-F1MN");
+            string platForm = BuscarParametro(parametrosFandit, "FANDIT-PLATFORM");
 
             var client = new HttpClient();
             var requestContent = new MultipartFormDataContent();
@@ -53,6 +54,7 @@ namespace PWC.Subvenciones.Buscador.Controlador
                 { "first_name", contacto.NombresApellidos },
                 { "password1", $"{contacto.Username}-{PASSWORD_SEED}" },
                 { "password2", $"{contacto.Username}-{PASSWORD_SEED}" },
+                { "platform", platForm },
             };
 
             foreach (var keyValuePair in values)
