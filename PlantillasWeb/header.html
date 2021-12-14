@@ -183,6 +183,7 @@
 </div>
 <script type="text/javascript">
   window.onload = function() {
+	setActiveLink();
     checkCookie_eu();
     if (window.navigator.appName == "Microsoft Internet Explorer" || window.navigator.userAgent.indexOf("Trident") > 0) {
       var searchElement = document.getElementById("search");
@@ -194,6 +195,17 @@
       } 
     }
   };
+  function setActiveLink() {
+		var pathUrl = window.location.pathname;
+		var urls = ["about-us", "servicios-ofertados", "noticias-relevantes", "faqs", "solicitud-presupuestacion"];
+		urls.forEach(url => {
+			if (pathUrl.includes(url)) {
+				var el = document.querySelector(".weblinks [href*=" + url + "]");
+				el.classList.add("selected");
+			}
+		});
+	}
+	
   function setHeight() {
     var windowHeight = window.innerHeight - 140;
     var navbar = document.getElementById("navbar");
