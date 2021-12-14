@@ -1,0 +1,12 @@
+{
+  "General": {
+    "OutputFile": "$(TargetDir)\\Merge\\PWC.Subvenciones.ApiGmailAutomate.dll",
+    "TargetPlatform": "v4,C:\\Program Files (x86)\\Reference Assemblies\\Microsoft\\Framework\\.NETFramework\\v4.6.2",
+    "InputAssemblies": [
+      "$(TargetDir)Newtonsoft.Json.dll"
+    ]
+  },
+  "Advanced": {
+    "Closed": true
+  }
+}

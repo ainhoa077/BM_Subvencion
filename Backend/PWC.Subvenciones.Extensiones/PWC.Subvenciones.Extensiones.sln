@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWC.Subvenciones.PortalApi"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWC.Subvenciones.Buscador", "CWA-Plugins\Plugins\PWC.Subvenciones.Buscador\PWC.Subvenciones.Buscador.csproj", "{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWC.Subvenciones.ApiGmailAutomate", "CWA-Plugins\Cwa\PWC.Subvenciones.ApiGmailAutomate\PWC.Subvenciones.ApiGmailAutomate.csproj", "{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWC.Subvenciones.MensajeriaSolicitud", "CWA-Plugins\Plugins\PWC.Subvenciones.MensajeriaSolicitud\PWC.Subvenciones.MensajeriaSolicitud.csproj", "{A39A721F-F954-4933-9C5D-23820ECF0B6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,22 @@ Global
 		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Release|Any CPU.Build.0 = Release|Any CPU
 		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Release|x64.ActiveCfg = Release|x64
 		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14}.Release|x64.Build.0 = Release|x64
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}.Debug|x64.Build.0 = Debug|Any CPU
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}.Release|x64.ActiveCfg = Release|Any CPU
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE}.Release|x64.Build.0 = Release|Any CPU
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F}.Debug|x64.Build.0 = Debug|Any CPU
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F}.Release|x64.ActiveCfg = Release|Any CPU
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +60,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4E4FF76F-6D7B-485A-8485-D137645ADAA3} = {3CE67192-E9D8-4300-87B1-79746F06E4A0}
 		{08B7F3E8-7339-4F39-AFF4-5279BC2DAD14} = {3CE67192-E9D8-4300-87B1-79746F06E4A0}
+		{E65BFB92-8DC4-4E7D-99B8-9F87258B1AEE} = {3CE67192-E9D8-4300-87B1-79746F06E4A0}
+		{A39A721F-F954-4933-9C5D-23820ECF0B6F} = {3CE67192-E9D8-4300-87B1-79746F06E4A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49FE18F7-66B5-49C3-AD4A-0F94075FCFE0}
