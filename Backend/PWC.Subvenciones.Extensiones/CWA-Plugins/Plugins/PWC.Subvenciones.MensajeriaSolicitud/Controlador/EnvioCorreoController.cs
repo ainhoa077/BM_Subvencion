@@ -66,9 +66,7 @@ namespace PWC.Subvenciones.MensajeriaSolicitud.Controlador
         private void EnviarCorreoElectronico(SolicitudModelo solicitud, Entity notas)
         {
             string mensaje = notas.Attributes["notetext"].ToString().Replace("*WEB*", "");
-            // = Regex.Replace(mensaje, "<.*?>", String.Empty);
-            //mensaje = mensaje.Substring(1, mensaje.Length - 2);
-            string numeroSolicitud = notas.Attributes["notetext"].ToString().Replace("*WEB*", "");
+            mensaje = ConvertirHtmlAPlano.Convertir(mensaje);
             EntityCollection parametrosTwilio = ObtenerParametrosGmailApi();
             string automateUrl = BuscarParametro(parametrosTwilio, "GMAIL-AUTOMATEURL");
             string asunto = BuscarParametro(parametrosTwilio, "GMAIL-ASUNTOMENSAJERIAGESTOR");
@@ -83,7 +81,7 @@ namespace PWC.Subvenciones.MensajeriaSolicitud.Controlador
             peticion.emailaddress = solicitud.CorreoElectronico;
             peticion.emailSubject = asunto;
             peticion.emailBody = cuerpo;
-            string parametroEntrada = JsonConvert.SerializeObject(peticion).Replace(@"\", "");
+            string parametroEntrada = JsonConvert.SerializeObject(peticion);
             string respuesta = ConsumoAPI.EjecutarAPI(automateUrl, parametroEntrada);
         }
 
