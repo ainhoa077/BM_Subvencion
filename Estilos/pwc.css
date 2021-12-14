@@ -1190,13 +1190,11 @@ h2 {
   border-radius: 50px;
   height: 36px;
   padding: 0 20px; }
-
-.crmEntityFormView .actions .btn {
-  margin-right: 5px;
-  border-radius: 50px;
-  height: 36px;
-  padding: 0 20px; }
-
+  .crmEntityFormView .actions .btn {
+    margin-right: 5px;
+    border-radius: 50px;
+    height: 36px;
+    padding: 0 20px; }
 #ctl00_ContentContainer_EntityFormControl_fd68d6a229f1eb11bacb0022489c57a5_EntityFormControl_fd68d6a229f1eb11bacb0022489c57a5_EntityFormView_captcha_CaptchaLinkButton {
   font-size: 14px;
   text-decoration: underline; }
@@ -1470,12 +1468,15 @@ body {
   background-color: #7D7D7D;
   color: white;
   margin-bottom: -15px;
-  padding: 2em;
+  padding: 3.5em 2em;
+  min-height: 535px !important;
+  height: auto !important;
 }
 .offers__container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 2em;
 }
 .offers__option {
   max-width: 260px;
@@ -1593,24 +1594,27 @@ body {
   .offers {
       margin-bottom: 0px;
   }
-  .offers__img {
-      margin-bottom: 15px;
+  .offers__img { 
+    margin-bottom: 15px;
   }
   .offers .offers__text {
       margin-top: 0 !important;
       font-size: 1.7em;
       text-align: left;
+      padding-left: 20px;
   }
   .container.main-page{
       padding: 0;
   }
   .header__banner {
-    max-width: 90%;
+      max-width: 90%;
   }
-  .offers-text__option {
-    min-width: 100%;
-    padding: 0;
-    margin-bottom: 50px;
+  .offers__option {
+      min-width: 100%;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      margin-bottom: 50px;
   }
   .offers-text__option:nth-child(1)::after, .offers-text__option:nth-child(2)::after {
     display: none;
@@ -1621,18 +1625,6 @@ body {
   }
   .home-button-custom {
       font-size: 22px;
-  }
-  .offers__option {
-    max-width: 100%;
-  }
-  .offers__img {
-    max-height: 150px;
-  }
-  .offers__bodytitle br {
-    display: none;
-  }
-  .offers__bodytitle {
-    min-height: auto;
   }
 }
 
@@ -1688,7 +1680,7 @@ body {
 
 .help-options__tittle {
   background-color: white;
-  font-size: 22px;
+  font-size: 20px;
   padding: 0.3em 2.5em;
   clip-path: polygon(95.3% 0, 99.7% 50%, 95.3% 100%, 0 100%, 0 0);
 }
@@ -1892,9 +1884,9 @@ h2, .h2 {
 }
 
 .pwc-sobre-nosotros {
-  filter: brightness(1.1);
-  mix-blend-mode: multiply;
-  width: 100%;
+ filter: brightness(1.1);
+ mix-blend-mode: multiply;
+ width: 100%;
 }
 
 .pwc-sobre-nosotros-titulo {
@@ -1910,9 +1902,9 @@ h2, .h2 {
 }
 
 .pwc-nuestro-objetivo {
-  filter: brightness(1.1);
-  mix-blend-mode: multiply;
-  width: 100%;
+ filter: brightness(1.1);
+ mix-blend-mode: multiply;
+ width: 100%;
 }
 
 .pwc-nuestro-objetivo-titulo {
@@ -1928,9 +1920,9 @@ h2, .h2 {
 }
 
 .pwc-que-ofrecemos {
-  filter: brightness(1.1);
-  mix-blend-mode: multiply;
-  width: 100%;
+ filter: brightness(1.1);
+ mix-blend-mode: multiply;
+ width: 100%;
 }
 
 .pwc-que-ofrecemos-titulo {
