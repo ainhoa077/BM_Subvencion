@@ -227,10 +227,12 @@ const SolicitudPresupuestacion = {
 	ValidacionElegibilidad: function(){
 		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
-		
 		if(preguntaInicial === PreguntaInicial.NecesitoElegibilidad){
 			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioElegibilidad);
-			$(':input[id="NextButton"]').prop('disabled', false);
+			$('#crcd6_previocuartapregunta').parent().parent().show();
+			$('#crcd6_previocuartapregunta_0').parent().parent().show();
+			$('#crcd6_previocuartapregunta_1').parent().parent().show();
+			$('#crcd6_previocuartapregunta_label').parent().parent().show();
 		}
 	},
 	ValidacionNecesitoElaboracionOTramite: function(){
@@ -310,8 +312,13 @@ const SolicitudPresupuestacion = {
 	},
 	ConocesProyecto: function(){
 		valorConocesProyecto = $("#crcd6_previocuartapregunta").find(":radio:checked").first().attr('value');
-		
-		if(valorConocesProyecto === RespuestaPregunta.Si){
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
+
+		if(preguntaInicial == PreguntaInicial.NecesitoElegibilidad){
+			$(':input[id="NextButton"]').prop('disabled', false);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioElegibilidad);
+		}
+		else if(valorConocesProyecto === RespuestaPregunta.Si){
 			$(':input[id="NextButton"]').prop('disabled', true);
 			$('#crcd6_previoprimerapregunta').parent().parent().show();
 			$('#crcd6_previoprimerapregunta_0').parent().parent().show();
