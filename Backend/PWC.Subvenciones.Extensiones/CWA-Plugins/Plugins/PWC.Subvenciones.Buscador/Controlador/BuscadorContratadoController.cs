@@ -13,7 +13,6 @@ namespace PWC.Subvenciones.Buscador.Controlador
 {
     public class BuscadorContratadoController : IBuscadorContratado
     {
-        private const string PASSWORD_SEED = "PWC-2021";
         private const string SERVICIOANUALBUSCADOR = "522960007";
         public IOrganizationService Service { get; set; }
         public IPluginExecutionContext ContextoEjecucion { get; set; }
@@ -32,11 +31,21 @@ namespace PWC.Subvenciones.Buscador.Controlador
             {
                 ActualizarFechasContratacionBuscador(solicitud);
                 EntityCollection parametrosFandit = ObtenerParametrosFandit();
-                CrearUsuarioFandit(contacto, parametrosFandit);
+                string contrasenaFandit = $"{contacto.Username}-´{Guid.NewGuid()}";
+                ActualizaContrasenaContacto(contacto.ContactoId, contrasenaFandit);
+                CrearUsuarioFandit(contacto, parametrosFandit, contrasenaFandit);
             }
         }
 
-        private void CrearUsuarioFandit(ContactoModelo contacto, EntityCollection parametrosFandit)
+        private void ActualizaContrasenaContacto(string contactoId, string contrasenaFandit)
+        {
+            Entity contacto = new Entity("contact");
+            contacto.Id = Guid.Parse(contactoId);
+            contacto.Attributes["crcd6_contrasenafandit"] = contrasenaFandit;
+            Service.Update(contacto);
+        }
+
+        private void CrearUsuarioFandit(ContactoModelo contacto, EntityCollection parametrosFandit, string contrasenaFandit)
         {
             string urlLogin = BuscarParametro(parametrosFandit, "FANDIT-URL-LOGIN");
             string urlRegistration = BuscarParametro(parametrosFandit, "FANDIT-URL-REGISTRATION");
@@ -48,12 +57,13 @@ namespace PWC.Subvenciones.Buscador.Controlador
             var requestContent = new MultipartFormDataContent();
             client.DefaultRequestHeaders.Add("Cookie", cookie);
             client.DefaultRequestHeaders.Add("F1MN", session);
+
             var values = new Dictionary<string, string>
             {
                 { "email", contacto.CorreoElectronico },
                 { "first_name", contacto.NombresApellidos },
-                { "password1", $"{contacto.Username}-{PASSWORD_SEED}" },
-                { "password2", $"{contacto.Username}-{PASSWORD_SEED}" },
+                { "password1", contrasenaFandit },
+                { "password2", contrasenaFandit },
                 { "platform", platForm },
             };
 
@@ -86,6 +96,7 @@ namespace PWC.Subvenciones.Buscador.Controlador
                 contactoModelo.NombresApellidos = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.fullname").Value.ToString();
                 contactoModelo.CorreoElectronico = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.emailaddress1").Value.ToString();
                 contactoModelo.Username = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.adx_identity_username").Value.ToString();
+                contactoModelo.Username = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.contactid").Value.ToString();
             }
             else
             {
@@ -130,7 +141,7 @@ namespace PWC.Subvenciones.Buscador.Controlador
                 EntityAlias = "Contacto"
             };
 
-            joinContact.Columns = new ColumnSet("emailaddress1", "fullname", "adx_identity_username");
+            joinContact.Columns = new ColumnSet("emailaddress1", "fullname", "adx_identity_username", "contacid");
 
             return joinContact;
         }

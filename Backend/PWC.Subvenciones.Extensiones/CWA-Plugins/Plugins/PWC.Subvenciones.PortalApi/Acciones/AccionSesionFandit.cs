@@ -13,7 +13,6 @@ namespace PWC.Subvenciones.PortalApi.Acciones
     public class AccionSesionFandit
     {
         private readonly IOrganizationService ServicioCRM;
-        private const string PASSWORD_SEED = "PWC-2021";
         private const string SERVICIOANUALBUSCADOR = "522960007";
 
         public AccionSesionFandit(IOrganizationService service, IPluginExecutionContext contextoEjecucion)
@@ -72,7 +71,7 @@ namespace PWC.Subvenciones.PortalApi.Acciones
             var values = new Dictionary<string, string>
             {
                 { "email", contacto.CorreoElectronico },
-                { "password", $"{contacto.Username}-{PASSWORD_SEED}" },
+                { "password", contacto.ContrasenaFandit },
             };
 
             foreach (var keyValuePair in values)
@@ -112,6 +111,8 @@ namespace PWC.Subvenciones.PortalApi.Acciones
                 contactoModelo.NombresApellidos = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.fullname").Value.ToString();
                 contactoModelo.CorreoElectronico = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.emailaddress1").Value.ToString();
                 contactoModelo.Username = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.adx_identity_username").Value.ToString();
+                contactoModelo.ContactoId = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.contactid").Value.ToString();
+                contactoModelo.ContrasenaFandit = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.crcd6_contrasenafandit").Value.ToString();
             }
             else
             {
@@ -156,7 +157,7 @@ namespace PWC.Subvenciones.PortalApi.Acciones
                 EntityAlias = "Contacto"
             };
 
-            joinContact.Columns = new ColumnSet("emailaddress1", "fullname", "adx_identity_username");
+            joinContact.Columns = new ColumnSet("emailaddress1", "fullname", "adx_identity_username", "crcd6_contrasenafandit", "contacid");
             joinContact.LinkCriteria = new FilterExpression();
             joinContact.LinkCriteria.FilterOperator = LogicalOperator.And;
             joinContact.LinkCriteria.AddCondition("contactid", ConditionOperator.Equal, contactId);

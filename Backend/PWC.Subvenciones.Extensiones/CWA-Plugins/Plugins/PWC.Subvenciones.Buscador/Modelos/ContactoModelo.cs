@@ -11,5 +11,7 @@ namespace PWC.Subvenciones.Buscador.Modelos
         public string CorreoElectronico { get; set; }
         public string  NombresApellidos { get; set; }
         public string Username { get; set; }
+        public string ContactoId { get; set; }
+        public string ContrasenaFandir { get; set; }
     }
 }
