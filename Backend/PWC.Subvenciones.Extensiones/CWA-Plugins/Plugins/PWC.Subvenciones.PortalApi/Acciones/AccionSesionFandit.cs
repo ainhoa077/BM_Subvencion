@@ -157,7 +157,7 @@ namespace PWC.Subvenciones.PortalApi.Acciones
                 EntityAlias = "Contacto"
             };
 
-            joinContact.Columns = new ColumnSet("emailaddress1", "fullname", "adx_identity_username", "crcd6_contrasenafandit", "contacid");
+            joinContact.Columns = new ColumnSet("emailaddress1", "fullname", "adx_identity_username", "crcd6_contrasenafandit", "contactid");
             joinContact.LinkCriteria = new FilterExpression();
             joinContact.LinkCriteria.FilterOperator = LogicalOperator.And;
             joinContact.LinkCriteria.AddCondition("contactid", ConditionOperator.Equal, contactId);

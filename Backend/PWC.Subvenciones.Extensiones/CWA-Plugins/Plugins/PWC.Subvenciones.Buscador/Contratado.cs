@@ -25,7 +25,6 @@ namespace PWC.Subvenciones.Buscador
             }
             catch (Exception ex)
             {
-                
             }
         }
     }

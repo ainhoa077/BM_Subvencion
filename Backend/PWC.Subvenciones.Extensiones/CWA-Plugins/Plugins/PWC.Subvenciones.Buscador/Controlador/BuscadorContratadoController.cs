@@ -31,7 +31,7 @@ namespace PWC.Subvenciones.Buscador.Controlador
             {
                 ActualizarFechasContratacionBuscador(solicitud);
                 EntityCollection parametrosFandit = ObtenerParametrosFandit();
-                string contrasenaFandit = $"{contacto.Username}-´{Guid.NewGuid()}";
+                string contrasenaFandit = $"{contacto.Username}-{Guid.NewGuid()}";
                 ActualizaContrasenaContacto(contacto.ContactoId, contrasenaFandit);
                 CrearUsuarioFandit(contacto, parametrosFandit, contrasenaFandit);
             }
@@ -96,7 +96,7 @@ namespace PWC.Subvenciones.Buscador.Controlador
                 contactoModelo.NombresApellidos = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.fullname").Value.ToString();
                 contactoModelo.CorreoElectronico = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.emailaddress1").Value.ToString();
                 contactoModelo.Username = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.adx_identity_username").Value.ToString();
-                contactoModelo.Username = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.contactid").Value.ToString();
+                contactoModelo.ContactoId = entidadSolcitud.GetAttributeValue<AliasedValue>("Contacto.contactid").Value.ToString();
             }
             else
             {
@@ -141,7 +141,7 @@ namespace PWC.Subvenciones.Buscador.Controlador
                 EntityAlias = "Contacto"
             };
 
-            joinContact.Columns = new ColumnSet("emailaddress1", "fullname", "adx_identity_username", "contacid");
+            joinContact.Columns = new ColumnSet("emailaddress1", "fullname", "adx_identity_username", "contactid");
 
             return joinContact;
         }
