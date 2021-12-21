@@ -5,7 +5,8 @@ const PreguntaInicial = {
 	NecesitoTramite: "522960003",
 	Otros: "522960004",
 	NecesitoSeguimiento: "522960005",
-	NecesitoElegibilidad: "522960006"
+	NecesitoElegibilidad: "522960006",
+	SuscripcionBuscadorAnual: "522960007"
 }
 
 const ServiciosOfertados = {
@@ -15,7 +16,8 @@ const ServiciosOfertados = {
 	TramitacionAyudas: "522960000",
 	ServicioAsesoramientoSimple: "522960004",
 	ServicioAsesoramientoPremium: "522960005",
-	ServicioElegibilidad: "522960006"
+	ServicioElegibilidad: "522960006",
+	ServicioSuscripcionBuscadorAnual: "522960007"
 }
 
 const RespuestaPregunta = {
@@ -70,6 +72,10 @@ const SolicitudPresupuestacion = {
 		$('#crcd6_serviciosofertados_name').parent().parent().hide();
 		$('#crcd6_serviciosofertados').parent().parent().hide();
 		$('#crcd6_serviciosofertados_entityname').parent().parent().hide();
+		$('#crcd6_solicitudcompleta_label').parent().parent().hide();
+		$('#crcd6_solicitudcompleta').parent().parent().hide();
+		$('#crcd6_solicitudcompleta_0').parent().parent().hide();
+		$('#crcd6_solicitudcompleta_1').parent().parent().hide();
 	},
 	DeseleccionarCampos: function(){
 		$("#crcd6_previotercerapregunta_0").prop('checked', false);
@@ -95,6 +101,7 @@ const SolicitudPresupuestacion = {
 			SolicitudPresupuestacion.ValidacionOtros();
 			SolicitudPresupuestacion.ValidarSeguimiento();
 			SolicitudPresupuestacion.ValidacionElegibilidad();
+			SolicitudPresupuestacion.ValidarSuscripcionAnual();
 		});
 		
 		$("#crcd6_previoprimerapregunta").change(function () {
@@ -182,6 +189,15 @@ const SolicitudPresupuestacion = {
 			$('#crcd6_previocuartapregunta_1').parent().parent().hide();
 			SolicitudPresupuestacion.QuieroElegibilidad();
 		});
+	},
+	ValidarSuscripcionAnual: function(){
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
+		
+		if(preguntaInicial === PreguntaInicial.SuscripcionBuscadorAnual){
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioSuscripcionBuscadorAnual);
+			SolicitudPresupuestacion.SetearSolucionCompleta();
+			$(':input[id="NextButton"]').prop('disabled', false);
+		}
 	},
 	ValidarSeguimiento: function(){
 		var preguntaInicial = $("#cr908_preguntaprincipal").val();
@@ -365,6 +381,10 @@ const SolicitudPresupuestacion = {
 		$("#crcd6_serviciosofertados").val('');
 		$("#crcd6_serviciosofertados_name").val('');
 		$("#crcd6_serviciosofertados_entityname").val("crcd6_servicioofertado");
+	},
+	SetearSolucionCompleta: function(){
+		$("#crcd6_solicitudcompleta_0").prop('checked', false);
+		$("#crcd6_solicitudcompleta_1").prop('checked', true);
 	},
 	ConsultarClientePorContacto: function (idContacto) {
         let resultado = [];
