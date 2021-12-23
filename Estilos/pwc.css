@@ -28,7 +28,7 @@ body {
   font-size: 16px;
   min-height: 100%;
   margin: 0;
-  font-family: "Helvetica Neue"; }
+  font-family: "Helvetica Neue",Arial,Sans-Serif; }
 
 main {
   display: block; }
@@ -178,7 +178,7 @@ table {
   src: URL('ITCCharterCom-Regular.ttf') format('truetype');
 }
 .pwc-subtitle {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 20px;
   color: #04223a;
   display: inline-block;
@@ -197,14 +197,14 @@ table {
     left: 0; }
 
 .pwc-title {
-  font-family: "ITCCharter";
+  font-family: "ITCCharter",Georgia,Serif;
   font-size: 30px;
   color: #222222;
   line-height: 1.2em;
   margin: 20px 0; }
 
 .pwc-text {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
   color: #7d7d7d; 
   font-weight: normal;
@@ -279,14 +279,14 @@ table {
     margin-bottom: 20px; }
   .pwc-card--services .pwc-card p {
     color: #5b5b5b;
-    font-family: "Helvetica Neue";
+    font-family: "Helvetica Neue",Arial,Sans-Serif;
     text-align: center;
     font-size: 12px; }
   .pwc-card--services .pwc-card:hover {
     border: 1px solid #e0301e; }
 
 .pwc-btn {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -309,7 +309,7 @@ table {
 a.pwc-btn,
 button.pwc-btn,
 input.pwc-btn {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   padding: 0 20px;
   text-decoration: none; }
 
@@ -360,14 +360,14 @@ fieldset[disabled] .btn-primary.focus {
   height: 40px; 
   padding-left: 12px !important;
   font-size: 18px !important;
-  font-family: "Helvetica Neue"; 
+  font-family: "Helvetica Neue",Arial,Sans-Serif; 
 }
   .form-control:focus {
     border-color: #7d7d7d; }
 
 .form-group label {
   color: #7d7d7d;
-  font-family: "Helvetica Neue"; }
+  font-family: "Helvetica Neue",Arial,Sans-Serif; }
 
 form .pwc-icon {
   position: relative; }
@@ -703,7 +703,7 @@ h2 {
 .panel-default > .panel-heading a[aria-expanded="true"] {
   background-color: #e0301e;
   color: #fff; 
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
 }
   .panel-default > .panel-heading a[aria-expanded="true"]:after {
@@ -877,7 +877,7 @@ h2 {
       .pwc-panel_info.pwc-info.selected {
         display: flex; }
     .pwc-panel_info .pwc-text {
-      font-family: "Helvetica Neue";
+      font-family: "Helvetica Neue",Arial,Sans-Serif;
       font-size: 20px;
       color: #04223a;
       font-size: 22px; }
@@ -968,7 +968,7 @@ h2 {
       .pwc-news_info.pwc-new.selected {
         display: flex; }
     .pwc-news_info .pwc-text {
-      font-family: "Helvetica Neue";
+      font-family: "Helvetica Neue",Arial,Sans-Serif;
       font-size: 20px;
       color: #04223a;
       font-size: 22px; }
@@ -985,7 +985,7 @@ h2 {
       width: 100%;
       height: 150px; }
     .pwc-news_container p.pwc-text {
-      font-family: "Helvetica Neue";
+      font-family: "Helvetica Neue",Arial,Sans-Serif;
       font-size: 18px;
       margin: 20px 0;
       color: #5b5b5b; }
@@ -1023,7 +1023,7 @@ h2 {
   -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
   -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
   box-shadow: 0px 5px 26px -3px #e0e0e0;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 16px;
   color: #04223a; }
   #content_form .well img {
@@ -1051,7 +1051,7 @@ h2 {
   #content_form #mainContent fieldset legend span.xrm-attribute-value {
     display: flex;
     padding-top: 0px;
-    font-family: "Helvetica Neue";
+    font-family: "Helvetica Neue",Arial,Sans-Serif;
     color: #04223a;
     font-size: 22px; }
   #content_form #mainContent fieldset legend .crmEntityFormView {
@@ -1071,7 +1071,7 @@ h2 {
   font-style: italic; }
 #content_form .crmEntityFormView .cell .field-label {
   color: #7d7d7d;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-weight: 100; }
 #content_form .actions {
   display: flex;
@@ -1088,7 +1088,7 @@ h2 {
   margin-bottom: 21px;
   border: 1px solid transparent;
   border-radius: 0;
-  font-family: "Helvetica Neue"; }
+  font-family: "Helvetica Neue",Arial,Sans-Serif; }
   .alert.alert-info {
     background-color: #bce8f1;
     border-color: transparent;
@@ -1102,7 +1102,7 @@ h2 {
 .page-header h1 {
   font-size: 26px;
   color: #04223a;
-  font-family: "Helvetica Neue"; }
+  font-family: "Helvetica Neue",Arial,Sans-Serif; }
 
 .panel.panel-default.nav-profile {
   border-color: #e0301e !important; }
@@ -1126,7 +1126,7 @@ h2 {
   float: left;
   display: inline;
   color: #7d7d7d !important;
-  font-family: "Helvetica Neue" !important;
+  font-family: "Helvetica Neue",Arial,Sans-Serif !important;
   font-weight: 100 !important; }
 
 .crmEntityFormView .cell input[type="text"],
@@ -1280,7 +1280,7 @@ h2.tab-title {
   -ms-box-shadow: 0px 5px 26px -3px #e0e0e0;
   -o-box-shadow: 0px 5px 26px -3px #e0e0e0;
   box-shadow: 0px 5px 26px -3px #e0e0e0;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 16px;
   color: #04223a; }
   .well img {
@@ -1365,7 +1365,7 @@ table.pwc-table {
     font-size: 18px !important;
     font-weight: 900;
     color: #e0301e;
-    font-family: "Helvetica Neue";
+    font-family: "Helvetica Neue",Arial,Sans-Serif;
     font-size: 14px; }
     table.pwc-table th.pwc-text--center {
       text-align: center; }
@@ -1457,11 +1457,11 @@ body {
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 0.6em;
-  font-family: "ITCCharter";
+  font-family: "ITCCharter",Georgia,Serif;
   color: white;
 }
 .header__secondary-text {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
 }
 .offers {
@@ -1515,7 +1515,6 @@ body {
 }
 .offers-text__option-text {
   font-size: 18px !important;
-  font-weight: bold;
 }
 .pwc-btn-custom {
   min-width: 40%;
@@ -1538,7 +1537,7 @@ body {
   object-fit: cover;
 }
 .offers__title, .offers__subsubtitle, .offers__text{
-  font-family: "ITCCharter";
+  font-family: "ITCCharter",Georgia,Serif;
   font-size: 30px;
 }
 .offers__text {
@@ -1552,16 +1551,16 @@ body {
   font-weight: bold;
 }
 .offers__subtitle_servicios {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
   color: #ffffff;
 }
 .offers__subtitle {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 .offers__bodytitle {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
   min-height: 3em;
 }
@@ -1629,7 +1628,7 @@ body {
 }
 
 .solutions-title {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-weight: bold;
   margin-top: 2em;
   font-size: 32px;
@@ -1764,46 +1763,46 @@ body {
 }
 
 h3, .h3 {
-  font-family: "ITCCharter" !important;
+  font-family: "ITCCharter",Georgia,Serif !important;
   font-size: 30px !important;
   font-weight: bold;
 }
 
 h2, .h2 {
-  font-family: "ITCCharter" !important;
+  font-family: "ITCCharter",Georgia,Serif !important;
   font-size: 30px !important;
   font-weight: bold;
 }
 
 .faqs_text {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px;
   text-align: justify;
 }
 
 .faqs_text-table {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px;
   color: #7d7d7d; }
 
 .faqs_text-table--center {
   text-align: center; 
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px;
 }
 
 .motivo_text {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px;
 }
 
 .modal-title {
-  font-family: "ITCCharter";
+  font-family: "ITCCharter",Georgia,Serif;
   font-size: 30px;
 }
 
 .btn-primary {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -1817,7 +1816,7 @@ h2, .h2 {
 }
 
 .btn-primary.action {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -1832,7 +1831,7 @@ h2, .h2 {
 }
 
 .btn-callme-primary {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -1844,42 +1843,42 @@ h2, .h2 {
 }
 
 .alert-info {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 
 .field-label {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 
 .nav-tabs>li>a {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 
 .detalle-text {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 
 .table>thead>tr>th {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 
 .table>tbody>tr>td {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 
 .weblink-name {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 
 .xrm-attribute-value-encoded {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 18px !important;
 }
 
@@ -1891,13 +1890,13 @@ h2, .h2 {
 
 .pwc-sobre-nosotros-titulo {
   color:#000000;
-  font-family: "ITCCharter";
+  font-family: "ITCCharter",Georgia,Serif;
   font-size: 30px;
 }
 
 .pwc-sobre-nosotros-texto {
   color:#000000;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
 }
 
@@ -1909,13 +1908,13 @@ h2, .h2 {
 
 .pwc-nuestro-objetivo-titulo {
   color:#000000;
-  font-family: "ITCCharter";
+  font-family: "ITCCharter",Georgia,Serif;
   font-size: 30px;
 }
 
 .pwc-nuestro-objetivo-texto {
   color:#000000;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
 }
 
@@ -1927,13 +1926,13 @@ h2, .h2 {
 
 .pwc-que-ofrecemos-titulo {
   color:#000000;
-  font-family: "ITCCharter";
+  font-family: "ITCCharter",Georgia,Serif;
   font-size: 30px;
 }
 
 .pwc-que-ofrecemos-texto {
   color:#000000;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
 }
 
@@ -1945,13 +1944,13 @@ h2, .h2 {
 
 .pwc-nuestros-profesionales-titulo {
   color:#000000;
-  font-family: "ITCCharter";
+  font-family: "ITCCharter",Georgia,Serif;
   font-size: 30px;
 }
 
 .pwc-nuestros-profesionales-texto {
   color:#000000;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
 }
 
@@ -1969,7 +1968,7 @@ h2, .h2 {
 
 .pwc-servicios-personalizados-texto {
   color:#000000;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
   font-size: 22px;
 }
 
