@@ -125,17 +125,17 @@
 		CerrarModal: function(divId, indice) {
 			var volver = indice;
 			if(volver == 1) {
-					$(divId).modal("hide");
+				$(divId).modal("hide");
 			} else {
-					$(divId).modal("hide");
-					InformacionProyecto.VolverAtras();
-				}  
+				$(divId).modal("hide");
+				InformacionProyecto.VolverAtras();
+			}  
 		},
 		AbrirModal: function() {
 			$("#modalAvisoDatos").modal("toggle");
 			$("#modalAvisoDatos").modal("show");
 			$("#modalAvisoDatos").modal({
-					backdrop: "static",
+				backdrop: "static",
 			});
 		},
 		VolverAtras: function() {
@@ -148,7 +148,7 @@
 			} else {
 				window.location.href='/informacion-ayuda-proyecto/?id=' + idAtras + '&esFormularioProyecto=' + esFormularioProyecto + '&complejo=' + esComplejo;
 			}
-    },
+    	},
 	};
   $(document).ready(function(){
 	InformacionProyecto.EventosOnload();
