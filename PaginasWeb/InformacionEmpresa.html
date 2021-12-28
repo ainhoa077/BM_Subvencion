@@ -24,7 +24,7 @@
 <div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px;">
 	<div class="container" style="display: flex; flex-wrap: wrap;">
 		<div class="col-md-12 columnBlockLayout" style="font-size: 24px;">
-			<h3>Solicita tu servicio personalizado (2/3)</h3>
+			<h3 id="titulo">Solicita tu servicio personalizado</h3>
 		</div>
 		<div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
 			<div class="alert alert-info" role="alert">
@@ -39,8 +39,39 @@
 		<div class="col-md-12 columnBlockLayout">{% entityform name: 'Información general de la empresa' %}</div>
 		</div>
 </div>  
-
+<div id="modalAvisoDatos" class="modal fade" tabindex="-1" role="dialog" style="display: none">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Aviso</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+            Si sales del formulario actual, se perderán los datos que has cumplimentado en esta pantalla.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="pwc-btn pwc-btn--primary" onclick="InformacionEmpresa.CerrarModal('#modalAvisoDatos', 1);return false;">
+          Cancelar
+        </button>
+        <button class="pwc-btn pwc-btn--primary" onclick="InformacionEmpresa.CerrarModal('#modalAvisoDatos', 0);return false;">
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
+	const ServiciosOfertados = {
+		SeguimientoJustificacion: "522960002",
+		ServicioPremiunBasico: "522960001",
+		ServicioPremiumComplejo: "522960003",
+		TramitacionAyudas: "522960000",
+		ServicioAsesoramientoSimple: "522960004",
+		ServicioAsesoramientoPremium: "522960005",
+		ServicioElegibilidad: "522960006",
+		ServicioSuscripcionBuscadorAnual: "522960007"
+	}
 	const InformacionEmpresa = {
 		FormatoNumero: function(valor)
 		{
@@ -49,11 +80,44 @@
 			return formato;
 		},
 		EventosOnLoad: function() {
-			InformacionEmpresa.ModificarLookups();
-			$(window).resize(function() {
-				InformacionEmpresa.ModificarLookups();
-			});
+			const idSolicitud = InformacionEmpresa.ObtenerParametroUrl('id');
+			let servicioOfertadosSolicitud = InformacionEmpresa.ConsultarServicioSolicitud(idSolicitud);
+
+			if(servicioOfertadosSolicitud.length > 0){
+				if(servicioOfertadosSolicitud[0].codigo !== ServiciosOfertados.ServicioSuscripcionBuscadorAnual){
+					$('#titulo').text("Solicita tu servicio personalizado (2/3)");
+					InformacionEmpresa.ModificarLookups();
+					$(window).resize(function() {
+						InformacionEmpresa.ModificarLookups();
+					});
+					if (servicioOfertadosSolicitud[0].codigo === ServiciosOfertados.ServicioElegibilidad && servicioOfertadosSolicitud[0].pregunta === "true") {
+						$('#titulo').text("Solicita tu servicio personalizado (2/4)");
+					}
+				} 
+				else{
+					window.location.href = "/solicitud-exitosa?id" + idSolicitud;
+				}
+			}
 		},
+		CerrarModal: function(divId, indice) {
+            var volver = indice;
+            if(volver == 1) {
+                $(divId).modal("hide");
+            } else {
+                $(divId).modal("hide");
+                InformacionEmpresa.VolverAtras();
+            }  
+        },
+        AbrirModal: function() {
+            $("#modalAvisoDatos").modal("toggle");
+            $("#modalAvisoDatos").modal("show");
+            $("#modalAvisoDatos").modal({
+                backdrop: "static",
+            });
+        },
+        VolverAtras: function() {
+            window.location.href='/creacion-solicitud-presupuestacion';
+        },
 		ModificarLookups: function(){
 			$('button.btn.btn-default.launchentitylookup').css("padding-left",$("#crcd6_cnae_name").width());
 			$('button.btn.btn-default.clearlookupfield').css("z-index",1);
@@ -67,10 +131,36 @@
     
                     return false;   
 			});
-		}
+		},
+		ConsultarServicioSolicitud: function (idSolicitud) {
+			let resultado = [];
+			$.ajax({
+					method: 'GET',
+					dataType: 'json',
+					async: false,
+					url: "/servicio-solicitud?idSolicitud=" + idSolicitud
+				}).done(function(data) {
+					resultado = data.results;
+				});
+			
+			return resultado;
+		},
+		ObtenerParametroUrl: function(sParam){
+			var sPageURL = window.location.search.substring(1);
+			var sURLVariables = sPageURL.split('&');
+			for (var i = 0; i < sURLVariables.length; i++) 
+			{
+				var sParameterName = sURLVariables[i].split('=');
+				if (sParameterName[0] == sParam) 
+				{
+					return sParameterName[1];
+				}
+			}
+		},
 	}
 	$(document).ready(function () {
 		InformacionEmpresa.EventosOnLoad();
+		$("#UpdateButton").before('<input type="button" class="submit-btn btn btn-primary form-action-container-left" onClick="InformacionEmpresa.AbrirModal();" style="margin-right:10px;" id="volver" value="Atrás">');
 		InformacionEmpresa.EventosOnChange();
 	});
 </script>
