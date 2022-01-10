@@ -11,11 +11,9 @@ const PreguntaInicial = {
 
 const ServiciosOfertados = {
 	SeguimientoJustificacion: "522960002",
-	ServicioPremiunBasico: "522960001",
-	ServicioPremiumComplejo: "522960003",
-	TramitacionAyudas: "522960000",
-	ServicioAsesoramientoSimple: "522960004",
-	ServicioAsesoramientoPremium: "522960005",
+	TramitacionPremium: "522960003",
+	Tramitacion: "522960000",
+	ServicioAsesoramiento: "522960005",
 	ServicioElegibilidad: "522960006",
 	ServicioSuscripcionBuscadorAnual: "522960007"
 }
@@ -211,7 +209,7 @@ const SolicitudPresupuestacion = {
 		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
 		if(preguntaInicial === PreguntaInicial.IdeaProyecto){
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramiento);
 			$(':input[id="NextButton"]').prop('disabled', false);
 		}
 	},
@@ -220,7 +218,7 @@ const SolicitudPresupuestacion = {
 		
 		
 		if(preguntaInicial === PreguntaInicial.ProyectoPropio){
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramiento);
 			$(':input[id="NextButton"]').prop('disabled', false);
 		}
 	},
@@ -260,7 +258,7 @@ const SolicitudPresupuestacion = {
 		valorRedactarMemoria = $("#crcd6_previoprimerapregunta").find(":radio:checked").first().attr('value');
 		
 		if(valorRedactarMemoria === RespuestaPregunta.Si){
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.TramitacionAyudas);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.Tramitacion);
 			$(':input[id="NextButton"]').prop('disabled', false);
 			$('#crcd6_previosegundapregunta').parent().parent().hide();
 			$('#crcd6_previosegundapregunta_0').parent().parent().hide();
@@ -279,11 +277,11 @@ const SolicitudPresupuestacion = {
 		valorAyudaRedaccion = $("#crcd6_previosegundapregunta").find(":radio:checked").first().attr('value');
 		
 		if(valorAyudaRedaccion === RespuestaPregunta.Si){
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioPremiunBasico);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.TramitacionPremium);
 
 		}
 		else{
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.TramitacionAyudas);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.Tramitacion);
 		}
 		
 		$(':input[id="NextButton"]').prop('disabled', false);
@@ -300,7 +298,7 @@ const SolicitudPresupuestacion = {
 		}
 		else{
 			$(':input[id="NextButton"]').prop('disabled', false);
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramiento);
 			$('#cr908_previoquintapregunta').parent().parent().hide();
 			$('#cr908_previoquintapregunta_0').parent().parent().hide();
 			$('#cr908_previoquintapregunta_1').parent().parent().hide();
@@ -327,7 +325,7 @@ const SolicitudPresupuestacion = {
 		}
 		else{
 			$(':input[id="NextButton"]').prop('disabled', false);
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioPremiumComplejo);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.TramitacionPremium);
 			$('#crcd6_previoprimerapregunta').parent().parent().hide();
 			$('#crcd6_previoprimerapregunta_0').parent().parent().hide();
 			$('#crcd6_previoprimerapregunta_1').parent().parent().hide();
@@ -351,7 +349,7 @@ const SolicitudPresupuestacion = {
 		}
 		else{
 			$(':input[id="NextButton"]').prop('disabled', true);
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramiento);
 			$('#crcd6_descripcionproyecto_label').text("Indicanos por que motivo quieres solicitar la ayuda").val();
 			$('#crcd6_descripcionproyecto_label').show();
 			$('#crcd6_descripcionproyecto').show();

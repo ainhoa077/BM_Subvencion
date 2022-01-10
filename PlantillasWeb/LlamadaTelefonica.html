@@ -134,17 +134,29 @@
         },
         AgregarMotivoLlamada: function () {
             var showError = true;
+            var politicaElegida = document.getElementsByName('radioPoliticaPrivacidad');
+            let politicaAceptada = "0";
+            for (let i of politicaElegida) {
+                if (i.checked) {
+                    politicaAceptada = i.value;
+                }
+            }
+
             if (($('#motivo').val() !== "" && $('#motivo').val() !== undefined) &&
                 ($('#nombre').val() !== "" && $('#nombre').val() !== undefined) &&
-                (($('#telefono').val() !== "" && $('#telefono').val() !== undefined))) {
-                showError = false;
-            }
+                (politicaAceptada !== "0") &&
+                ($('#telefono').val() !== "" && $('#telefono').val() !== undefined)
+                && ($('#email').val() !== "" && $('#email').val() !== undefined) &&
+                ($('#comentarios').val() !== "" && $('#comentarios').val() !== undefined)) {
+                    showError = false;
+             }
 
             if (!showError) {
                 var recordObj = {
                     "crcd6_motivollamada": $('#motivo').val(),
                     "crcd6_nombre": $('#nombre').val(),
                     "crcd6_telefono": $('#telefono').val(),
+                    "crcd6_email": $('#email').val(),
                     "crcd6_comentarios": $('#comentarios').val()
                 };
                 FormularioMotivoLlamada.AppAjax('Enviando información...', {
@@ -158,6 +170,7 @@
                         $('#motivo').val('');
                         $('#nombre').val('');
                         $('#telefono').val('');
+                        $('#email').val(''),
                         $('#comentarios').val('');
                     }
                 });
