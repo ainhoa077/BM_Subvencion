@@ -64,11 +64,9 @@
 <script language="javascript">
 	const ServiciosOfertados = {
 		SeguimientoJustificacion: "522960002",
-		ServicioPremiunBasico: "522960001",
-		ServicioPremiumComplejo: "522960003",
-		TramitacionAyudas: "522960000",
-		ServicioAsesoramientoSimple: "522960004",
-		ServicioAsesoramientoPremium: "522960005",
+		TramitacionPremium: "522960003",
+		Tramitacion: "522960000",
+		ServicioAsesoramiento: "522960005",
 		ServicioElegibilidad: "522960006",
 		ServicioSuscripcionBuscadorAnual: "522960007"
 	}
@@ -153,8 +151,8 @@
         },
 		VolverAtras: function() {
             //window.history.go(-1);
-			idAtras = FormularioAyudaSolicitud.ObtenerParametroUrl('id');
-			window.location.href='/informacion-general-empresa/?id=' + idAtras;
+						idAtras = FormularioAyudaSolicitud.ObtenerParametroUrl('id');
+						window.location.href='/informacion-general-empresa/?id=' + idAtras;
         },
 		EventosOnChange: function(){
 			$("#crcd6_subvencionpresentada").change(function () {

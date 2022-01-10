@@ -5,17 +5,17 @@ const PreguntaInicial = {
 	NecesitoTramite: "522960003",
 	Otros: "522960004",
 	NecesitoSeguimiento: "522960005",
-	NecesitoElegibilidad: "522960006"
+	NecesitoElegibilidad: "522960006",
+	SuscripcionBuscadorAnual: "522960007"
 }
 
 const ServiciosOfertados = {
 	SeguimientoJustificacion: "522960002",
-	ServicioPremiunBasico: "522960001",
-	ServicioPremiumComplejo: "522960003",
-	TramitacionAyudas: "522960000",
-	ServicioAsesoramientoSimple: "522960004",
-	ServicioAsesoramientoPremium: "522960005",
-	ServicioElegibilidad: "522960006"
+	TramitacionPremium: "522960003",
+	Tramitacion: "522960000",
+	ServicioAsesoramiento: "522960005",
+	ServicioElegibilidad: "522960006",
+	ServicioSuscripcionBuscadorAnual: "522960007"
 }
 
 const RespuestaPregunta = {
@@ -70,6 +70,10 @@ const SolicitudPresupuestacion = {
 		$('#crcd6_serviciosofertados_name').parent().parent().hide();
 		$('#crcd6_serviciosofertados').parent().parent().hide();
 		$('#crcd6_serviciosofertados_entityname').parent().parent().hide();
+		$('#crcd6_solicitudcompleta_label').parent().parent().hide();
+		$('#crcd6_solicitudcompleta').parent().parent().hide();
+		$('#crcd6_solicitudcompleta_0').parent().parent().hide();
+		$('#crcd6_solicitudcompleta_1').parent().parent().hide();
 	},
 	DeseleccionarCampos: function(){
 		$("#crcd6_previotercerapregunta_0").prop('checked', false);
@@ -95,6 +99,7 @@ const SolicitudPresupuestacion = {
 			SolicitudPresupuestacion.ValidacionOtros();
 			SolicitudPresupuestacion.ValidarSeguimiento();
 			SolicitudPresupuestacion.ValidacionElegibilidad();
+			SolicitudPresupuestacion.ValidarSuscripcionAnual();
 		});
 		
 		$("#crcd6_previoprimerapregunta").change(function () {
@@ -183,6 +188,15 @@ const SolicitudPresupuestacion = {
 			SolicitudPresupuestacion.QuieroElegibilidad();
 		});
 	},
+	ValidarSuscripcionAnual: function(){
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
+		
+		if(preguntaInicial === PreguntaInicial.SuscripcionBuscadorAnual){
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioSuscripcionBuscadorAnual);
+			SolicitudPresupuestacion.SetearSolucionCompleta();
+			$(':input[id="NextButton"]').prop('disabled', false);
+		}
+	},
 	ValidarSeguimiento: function(){
 		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
@@ -195,7 +209,7 @@ const SolicitudPresupuestacion = {
 		var preguntaInicial = $("#cr908_preguntaprincipal").val();
 		
 		if(preguntaInicial === PreguntaInicial.IdeaProyecto){
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramiento);
 			$(':input[id="NextButton"]').prop('disabled', false);
 		}
 	},
@@ -204,7 +218,7 @@ const SolicitudPresupuestacion = {
 		
 		
 		if(preguntaInicial === PreguntaInicial.ProyectoPropio){
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramiento);
 			$(':input[id="NextButton"]').prop('disabled', false);
 		}
 	},
@@ -244,7 +258,7 @@ const SolicitudPresupuestacion = {
 		valorRedactarMemoria = $("#crcd6_previoprimerapregunta").find(":radio:checked").first().attr('value');
 		
 		if(valorRedactarMemoria === RespuestaPregunta.Si){
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.TramitacionAyudas);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.Tramitacion);
 			$(':input[id="NextButton"]').prop('disabled', false);
 			$('#crcd6_previosegundapregunta').parent().parent().hide();
 			$('#crcd6_previosegundapregunta_0').parent().parent().hide();
@@ -263,11 +277,11 @@ const SolicitudPresupuestacion = {
 		valorAyudaRedaccion = $("#crcd6_previosegundapregunta").find(":radio:checked").first().attr('value');
 		
 		if(valorAyudaRedaccion === RespuestaPregunta.Si){
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioPremiunBasico);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.TramitacionPremium);
 
 		}
 		else{
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.TramitacionAyudas);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.Tramitacion);
 		}
 		
 		$(':input[id="NextButton"]').prop('disabled', false);
@@ -284,7 +298,7 @@ const SolicitudPresupuestacion = {
 		}
 		else{
 			$(':input[id="NextButton"]').prop('disabled', false);
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramiento);
 			$('#cr908_previoquintapregunta').parent().parent().hide();
 			$('#cr908_previoquintapregunta_0').parent().parent().hide();
 			$('#cr908_previoquintapregunta_1').parent().parent().hide();
@@ -311,7 +325,7 @@ const SolicitudPresupuestacion = {
 		}
 		else{
 			$(':input[id="NextButton"]').prop('disabled', false);
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioPremiumComplejo);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.TramitacionPremium);
 			$('#crcd6_previoprimerapregunta').parent().parent().hide();
 			$('#crcd6_previoprimerapregunta_0').parent().parent().hide();
 			$('#crcd6_previoprimerapregunta_1').parent().parent().hide();
@@ -335,7 +349,7 @@ const SolicitudPresupuestacion = {
 		}
 		else{
 			$(':input[id="NextButton"]').prop('disabled', true);
-			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramientoPremium);
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioAsesoramiento);
 			$('#crcd6_descripcionproyecto_label').text("Indicanos por que motivo quieres solicitar la ayuda").val();
 			$('#crcd6_descripcionproyecto_label').show();
 			$('#crcd6_descripcionproyecto').show();
@@ -365,6 +379,10 @@ const SolicitudPresupuestacion = {
 		$("#crcd6_serviciosofertados").val('');
 		$("#crcd6_serviciosofertados_name").val('');
 		$("#crcd6_serviciosofertados_entityname").val("crcd6_servicioofertado");
+	},
+	SetearSolucionCompleta: function(){
+		$("#crcd6_solicitudcompleta_0").prop('checked', false);
+		$("#crcd6_solicitudcompleta_1").prop('checked', true);
 	},
 	ConsultarClientePorContacto: function (idContacto) {
         let resultado = [];

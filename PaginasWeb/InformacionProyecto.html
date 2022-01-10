@@ -63,11 +63,9 @@
 <script language="javascript">
 	const ServiciosOfertados = {
 		SeguimientoJustificacion: "522960002",
-		ServicioPremiunBasico: "522960001",
-		ServicioPremiumComplejo: "522960003",
-		TramitacionAyudas: "522960000",
-		ServicioAsesoramientoSimple: "522960004",
-		ServicioAsesoramientoPremium: "522960005",
+		TramitacionPremium: "522960003",
+		Tramitacion: "522960000",
+		ServicioAsesoramiento: "522960005",
 		ServicioElegibilidad: "522960006",
 		ServicioSuscripcionBuscadorAnual: "522960007"
 	}
@@ -125,17 +123,17 @@
 		CerrarModal: function(divId, indice) {
 			var volver = indice;
 			if(volver == 1) {
-				$(divId).modal("hide");
+					$(divId).modal("hide");
 			} else {
-				$(divId).modal("hide");
-				InformacionProyecto.VolverAtras();
-			}  
+					$(divId).modal("hide");
+					InformacionProyecto.VolverAtras();
+				}  
 		},
 		AbrirModal: function() {
 			$("#modalAvisoDatos").modal("toggle");
 			$("#modalAvisoDatos").modal("show");
 			$("#modalAvisoDatos").modal({
-				backdrop: "static",
+					backdrop: "static",
 			});
 		},
 		VolverAtras: function() {
@@ -148,16 +146,16 @@
 			} else {
 				window.location.href='/informacion-ayuda-proyecto/?id=' + idAtras + '&esFormularioProyecto=' + esFormularioProyecto + '&complejo=' + esComplejo;
 			}
-    	},
+    },
 	};
   $(document).ready(function(){
-	InformacionProyecto.EventosOnload();
-	InformacionProyecto.EventosOnChange();
-	$("#UpdateButton").before('<input type="button" class="submit-btn btn btn-primary form-action-container-left" onClick="InformacionProyecto.AbrirModal()" style="margin-right:10px;" id="volver" value="Atrás">');
+		InformacionProyecto.EventosOnload();
+		InformacionProyecto.EventosOnChange();
+		$("#UpdateButton").before('<input type="button" class="submit-btn btn btn-primary form-action-container-left" onClick="InformacionProyecto.AbrirModal()" style="margin-right:10px;" id="volver" value="Atrás">');
     $('#crcd6_presupuestoproyecto').before('<div class="input-group" id="divisa">'); 
     $('#crcd6_presupuestoproyecto').after('<span id="divisaSpan" class="input-group-addon">€</span><div/>'); 
     $('#crcd6_presupuestoproyecto').detach().appendTo('#divisa');
     $('#divisaSpan').detach().appendTo('#divisa');
-	$("#UpdateButton").attr('value', 'Finalizar');
+		$("#UpdateButton").attr('value', 'Finalizar');
   });
 </script>
