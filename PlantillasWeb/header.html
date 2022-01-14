@@ -97,10 +97,10 @@
           {% endif %}
           {% if user %}
           <li class="dropdown" role="none">
-            {% assign username=user.fullname | escape %}
+            {% assign username=user.firstname | escape %}
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-            <a href="#" class="dropdown-toggle" title="{{user.fullname | escape | default: resx['Default_Profile_name'] }}" data-toggle="dropdown" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            <span class="username">{{ user.fullname | escape | default: resx['Default_Profile_name'] }}</span>
+            <a href="#" class="dropdown-toggle" title="{{user.firstname | escape | default: resx['Default_Profile_name'] }}" data-toggle="dropdown" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            <span class="username">{{ user.firstname | escape | default: resx['Default_Profile_name'] }}</span>
             <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
