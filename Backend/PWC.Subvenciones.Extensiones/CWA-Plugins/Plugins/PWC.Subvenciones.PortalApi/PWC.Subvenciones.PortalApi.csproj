@@ -114,7 +114,6 @@
     <Compile Include="Modelos\ParametrosSalidaGenerarUrlPago.cs" />
     <Compile Include="PortalApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilidades\ConsumoAPI.cs" />
     <Compile Include="Utilidades\Cryptogra.cs" />
     <Compile Include="Utilidades\JsonSerializer.cs" />
   </ItemGroup>
