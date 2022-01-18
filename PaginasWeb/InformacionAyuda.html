@@ -25,7 +25,7 @@
 <div class="row sectionBlockLayout" style="text-align: left; min-height: 100px; padding: 8px; margin: 0px; font-size: 24px;">
   <div class="container" style="display: flex; flex-wrap: wrap;">
     <div class="col-md-12 columnBlockLayout">
-      <p><b>Solicitud presupuestación: paso 3/3</b></p>
+      <h3 id="titulo">Solicita tu servicio personalizado</h3>
     </div>
 	<div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column; font-size: 14px;">
 		<div class="alert alert-info" role="alert">
@@ -39,12 +39,50 @@
     <div class="col-md-12 columnBlockLayout">{% entityform name: 'información de la ayuda / proyecto ' %}</div>
   </div>
 </div>
+<div id="modalAvisoDatos" class="modal fade" tabindex="-1" role="dialog" style="display: none">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Aviso</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+			Si sales del formulario actual, se perderán los datos que has cumplimentado en esta pantalla.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="pwc-btn pwc-btn--primary" onclick="FormularioAyudaSolicitud.CerrarModal('#modalAvisoDatos', 1);return false;">
+          Cancelar
+        </button>
+        <button class="pwc-btn pwc-btn--primary" onclick="FormularioAyudaSolicitud.CerrarModal('#modalAvisoDatos', 0);return false;">
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <script language="javascript">
+	const ServiciosOfertados = {
+		SeguimientoJustificacion: "522960002",
+		TramitacionPremium: "522960003",
+		Tramitacion: "522960000",
+		ServicioAsesoramiento: "522960005",
+		ServicioElegibilidad: "522960006",
+		ServicioSuscripcionBuscadorAnual: "522960007"
+	}
 	const FormularioAyudaSolicitud = {
 		EventosOnload: function(contactoId){
 			FormularioAyudaSolicitud.OcultarCampoAyuda();
 			FormularioAyudaSolicitud.LimpiarCampoAyuda();
 			FormularioAyudaSolicitud.EventosOnChange();
+			const idSolicitud = FormularioAyudaSolicitud.ObtenerParametroUrl('id');
+			let servicioOfertadosSolicitud = FormularioAyudaSolicitud.ConsultarServicioSolicitud(idSolicitud);
+			if (servicioOfertadosSolicitud[0].codigo === ServiciosOfertados.ServicioElegibilidad && servicioOfertadosSolicitud[0].pregunta === "true") {
+				$('#titulo').text("Solicita tu servicio personalizado (3/4)");
+			} else {
+				$('#titulo').text("Solicita tu servicio personalizado (3/3)");
+				$("#UpdateButton").attr('value', 'Finalizar');
+			}
 			FormularioAyudaSolicitud.ModificarLookups();
 			$(window).resize(function() {
 				FormularioAyudaSolicitud.ModificarLookups();
@@ -95,6 +133,27 @@
 			$('#crcd6_ayudaotros_label').parent().parent().show();
 			$('#crcd6_ayudaotros').parent().parent().show();
 		},
+		CerrarModal: function(divId, indice) {
+            var volver = indice;
+            if(volver == 1) {
+                $(divId).modal("hide");
+            } else {
+                $(divId).modal("hide");
+                FormularioAyudaSolicitud.VolverAtras();
+            }  
+        },
+        AbrirModal: function() {
+            $("#modalAvisoDatos").modal("toggle");
+            $("#modalAvisoDatos").modal("show");
+            $("#modalAvisoDatos").modal({
+                backdrop: "static",
+            });
+        },
+		VolverAtras: function() {
+            //window.history.go(-1);
+						idAtras = FormularioAyudaSolicitud.ObtenerParametroUrl('id');
+						window.location.href='/informacion-general-empresa/?id=' + idAtras;
+        },
 		EventosOnChange: function(){
 			$("#crcd6_subvencionpresentada").change(function () {
 				var ayuda = $("#crcd6_subvencionpresentada_name").val();
@@ -107,13 +166,39 @@
 					FormularioAyudaSolicitud.OcultarCampoAyuda();
 				}
 			});
-		}
+		},
+		ConsultarServicioSolicitud: function (idSolicitud) {
+			let resultado = [];
+			$.ajax({
+					method: 'GET',
+					dataType: 'json',
+					async: false,
+					url: "/servicio-solicitud?idSolicitud=" + idSolicitud
+				}).done(function(data) {
+					resultado = data.results;
+				});
+			
+			return resultado;
+		},
+		ObtenerParametroUrl: function(sParam){
+			var sPageURL = window.location.search.substring(1);
+			var sURLVariables = sPageURL.split('&');
+			for (var i = 0; i < sURLVariables.length; i++) 
+			{
+				var sParameterName = sURLVariables[i].split('=');
+				if (sParameterName[0] == sParam) 
+				{
+					return sParameterName[1];
+				}
+			}
+		},
 	}
 	
 	if (window.jQuery) {
 	   (function ($) {
 			$(document).ready(function () {
 				FormularioAyudaSolicitud.EventosOnload();
+				$("#UpdateButton").before('<input type="button" class="submit-btn btn btn-primary form-action-container-left" onClick="FormularioAyudaSolicitud.AbrirModal()" style="margin-right:10px;" id="volver" value="Atrás">');
 			});
 		}(window.jQuery));
 	}

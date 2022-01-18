@@ -128,12 +128,14 @@
                   politicaAceptada = i.value;
                 }
               }
+              
               if (($('#motivo').val() !== "" && $('#motivo').val() !== undefined) &&
-                  ($('#nombre').val() !== "" && $('#nombre').val() !== undefined) &&
-                  (politicaAceptada !== "0") &&
-                  (($('#telefono').val() !== "" && $('#telefono').val() !== undefined)
-                  || ($('#email').val() !== "" && $('#email').val() !== undefined))) {
-                     showError = false;
+                ($('#nombre').val() !== "" && $('#nombre').val() !== undefined) &&
+                (politicaAceptada !== "0") &&
+                ($('#telefono').val() !== "" && $('#telefono').val() !== undefined)
+                && ($('#email').val() !== "" && $('#email').val() !== undefined) &&
+                ($('#comentarios').val() !== "" && $('#comentarios').val() !== undefined)) {
+                    showError = false;
              }
 			 
 			 if (!showError) {
