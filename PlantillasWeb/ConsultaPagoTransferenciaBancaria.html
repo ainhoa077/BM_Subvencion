@@ -1,0 +1,25 @@
+{% assign idSolicitud = params.idSolicitud %}
+{% fetchxml DataList %}    
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="crcd6_solicitudsub">
+    <attribute name="crcd6_solicitud" />
+    <attribute name="crcd6_solicitudsubid" />
+    <attribute name="crcd6_pagorecibidofraccionado" />
+    <attribute name="crcd6_pagorecibido" />
+    <attribute name="crcd6_justificanteadjuntado" />
+    <order attribute="crcd6_solicitud" descending="false" />
+    <filter type="and">
+      <condition attribute="crcd6_solicitudsubid" operator="eq" uitype="crcd6_solicitudsub" value="{{ idSolicitud | xml_escape }}" />
+    </filter>
+    <link-entity name="crcd6_servicioofertado" from="crcd6_servicioofertadoid" to="crcd6_serviciosofertados" link-type="inner" alias="servicio">
+      <attribute name="crcd6_codigo" />
+    </link-entity>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{
+"results": [
+{% for result in DataList.results.entities %}
+{"justificanteAdjuntado": "{{ result.crcd6_justificanteadjuntado | boolean }}", "pagoRecibido": "{{ result.crcd6_pagorecibido  | boolean }}", "pagoRecibidoFraccionado": "{{ result.crcd6_pagorecibidofraccionado  | boolean }}" , "codigoServicio": "{{ result['servicio.crcd6_codigo'] | escape }}"}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]}

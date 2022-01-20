@@ -35,6 +35,8 @@
 	<attribute name="crcd6_subvencionpresentada"></attribute>
 	<attribute name="crcd6_transferencias"></attribute>
 	<attribute name="crcd6_importepresupuestado"></attribute>
+	<attribute name="crcd6_importepresupuestadohito2"></attribute>
+	<attribute name="crcd6_pagorecibido"></attribute>
     <order attribute="crcd6_solicitud" descending="false"></order>
     <filter type="and">
       <condition attribute="crcd6_solicitudsubid" operator="eq" uitype="crcd6_solicitudsub" value="{{ idSolicitud | xml_escape }}"></condition>
@@ -46,6 +48,8 @@
     <link-entity name="crcd6_servicioofertado" from="crcd6_servicioofertadoid" to="crcd6_serviciosofertados" link-type="inner" alias="servicio">
       <attribute name="crcd6_descripcion"></attribute>
       <attribute name="crcd6_coste"></attribute>
+	  <attribute name="crcd6_hito1"></attribute>
+	  <attribute name="crcd6_hito2"></attribute>
     </link-entity>
 	<link-entity name="crcd6_subvencion" from="crcd6_subvencionid" to="crcd6_subvencionpresentada" link-type="inner" alias="subvencion">
       <attribute name="crcd6_subvencion">
@@ -65,19 +69,20 @@
 {% assign servicio = registroSolicitud['crcd6_servicio'].label %}
 {% assign servicioOfertado = registroSolicitud.crcd6_serviciosofertados.name %}
 {% assign coste = registroSolicitud['servicio.crcd6_coste'] %}
+{% assign hito1 = registroSolicitud['servicio.crcd6_hito1'] %}
+{% assign hito2 = registroSolicitud['servicio.crcd6_hito2'] %}
 {% assign descripcionServicio = registroSolicitud['servicio.crcd6_descripcion'] %}
 {% assign nombreSubvencion = registroSolicitud['subvencion.crcd6_subvencion'] %}
 {% assign importePresupuestado = registroSolicitud.crcd6_importepresupuestado %}
-<!-- NUEVO -->
-{% assign esTransferencia = registroSolicitud.crcd6_transferencias %}}
-<!-- FIN NUEVO -->
+{% assign importePresupuestadohito2 = registroSolicitud.crcd6_importepresupuestadohito2 %}
+{% assign pagoRecibido = registroSolicitud.crcd6_pagorecibido %}
+{% assign esTransferencia = registroSolicitud.crcd6_transferencias %}
 {% endfor %}
 
 {% assign estadoAceptacionPresupuesto = 3 %}
-<!-- NUEVO -->
 {% assign estadoPendientePago = 4 %}
-<!-- FIN NUEVO -->
 {% assign estadoSubidaArchivos = 5 %}
+{% assign estadoPendientePagoFraccionado = 15 %}
 
 {% if solicitudResultado.results.entities.size &gt;= 0 %}
 	<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
@@ -197,7 +202,7 @@
 						<p class="detalle-text">Se realizan las acciones de: <b>{{ descripcionServicio }}</b></p>
 					</div>
 					<div class="col-md-12 columnBlockLayout">
-						<p class="detalle-text">El coste del servicio es de : <b>{{ coste | round: 2 }}€</b> (IVA no incluido)</p>
+						<p class="detalle-text">El coste del servicio es de : <b>{{ hito1 | round: 2 }}€</b> (IVA no incluido)</p>
 					</div>			
 					<div class="col-md-12 text-center columnBlockLayout">
 						<br>
@@ -235,9 +240,35 @@
 				</div>
 			</div>
 			{% endif %}
-			<!-- NUEVO -->
+			{% if codigoEstado == estadoPendientePagoFraccionado %}
+			<div id="contratacionOnlineFraccionado" class="row sectionBlockLayout">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
+						<h3 style="color: #e0301e;">Acciones a realizar</h3>
+						<p class="detalle-text">Por favor, elige un metodo de pago de entre los indicados.</p>
+					</div>
+					<div class="col-md-12 columnBlockLayout">
+						<p class="detalle-text">A continuación se va a proceder al cobro del importe restante del servicio.</p>
+						<p class="detalle-text">El coste del servicio es de : <b>{{ hito2 | round: 2 }}€</b> (IVA no incluido)</p>
+					</div>	
+					<div class="col-md-12 text-center columnBlockLayout">
+						<br>
+						<br>
+					</div>
+					<div class="col-md-6 text-center columnBlockLayout">
+					<button type="button" onclick="FormularioDetalleSolicitud.AbrirPopUp('modalTransferenciaBancariaSegundoPago'); return false;" class="btn btn-primary action create-action">Transferencia bancaria</button>
+					</div>
+					<div class="col-md-6 text-center columnBlockLayout">
+						<button type="button" onclick="FormularioDetalleSolicitud.PagarOnline()" class="btn btn-primary action create-action">Pago TPV virtual</button>
+					</div>
+					<div class="col-md-12 text-center columnBlockLayout">
+						<br>
+					</div>
+				</div>
+			</div>
+			{% endif %}
 			{% if codigoEstado == estadoPendientePago %}
-			<div id="estadoPendientePago" style="display: none;" class="row sectionBlockLayout">
+			<div id="estadoPendientePago" style="display: block;" class="row sectionBlockLayout">
 				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
 					<div class="col-md-12 columnBlockLayout">
 						<h3 style="color: #e0301e;">Acciones a realizar</h3>
@@ -248,13 +279,18 @@
 						<p class="detalle-text">CUENTA: ES65 0061 0380 3801 3859 0117</p>
 						<p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
 						<p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
+						{% if pagoRecibido == 'false' %}
 						<p class="detalle-text">IMPORTE (con impuesto incluído): {{importePresupuestado | round: 2 }}€</p>
+						{% endif %}
+						{% if pagoRecibido == 'true' %}
+						<p class="detalle-text">IMPORTE (con impuesto incluído): {{importePresupuestadoHito2 | round: 2 }}€</p>
+						{% endif %}
 						<br>
 						<br>
 					</div>
 					{% endif %}
 					<div class="col-md-6 text-center columnBlockLayout">
-					<button type="button" onclick="FormularioDetalleSolicitud.AbrirPopUp('modalTransferenciaBancaria')" class="btn btn-primary action create-action">Transferencia bancaria</button>
+					<!-- <button type="button" onclick="FormularioDetalleSolicitud.AbrirPopUp('modalTransferenciaBancaria')" class="btn btn-primary action create-action">Transferencia bancaria</button> -->
 					</div>
 					<div class="col-md-12 text-center columnBlockLayout">
 						<br>
@@ -262,7 +298,6 @@
 				</div>
 			</div>
 			{% endif %}
-			<!-- FIN NUEVO -->
 			{% if codigoEstado == estadoSubidaArchivos %}
 			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
 				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
@@ -308,6 +343,14 @@
 			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
 				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
 					<div class="col-md-12 columnBlockLayout">
+						<h3 style="color: #e0301e;">Descripción</h3>
+						<p class="detalle-text">Para poder consultar el documento de tu presupuesto, por favor, haz clic en la flecha desplegable que aparece a la derecha y, a continuación, en "Editar". De esa forma, podrás abrir o descargar el documento haciendo clic en el enlace.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row sectionBlockLayout" style="text-align: left; min-height: 20px; padding: 3px; margin: 0px;">
+				<div class="container" style="display: flex; flex-wrap: wrap; border-top:none; padding-top:10px;">
+					<div class="col-md-12 columnBlockLayout">
 						{%  entityform name: 'Formulario justificantes de solicitud' %}
 					</div>
 				</div>
@@ -334,7 +377,7 @@
           <h5 class="modal-title">Información importante!</h5>
         </div>
         <div class="modal-body">
-		  <p class="detalle-text">CUENTA: ES65 0061 0380 3801 3859 0117</p>
+          <p class="detalle-text">CUENTA: ES65 0061 0380 3801 3859 0117</p>
 		  <p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
 		  <p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
 		  <p class="detalle-text">IMPORTE (con impuesto incluído): {{importePresupuestado | round: 2 }}€</p>
@@ -346,18 +389,37 @@
       </div>
     </div>
 </div>
+<div id="modalTransferenciaBancariaSegundoPago" class="modal fade" tabindex="-1" role="dialog" style="display:none">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Información importante!</h5>
+        </div>
+        <div class="modal-body">
+          <p class="detalle-text">CUENTA: ES25 0081 5136 7900 0124 5235</p>
+		  <p class="detalle-text">DESTINATARIO: PWC ASESORES DE NEGOCIO</p>
+		  <p class="detalle-text">CONCEPTO: {{ servicioOfertado }}-{{ numeroSolicitud }}</p>
+		  <p class="detalle-text">IMPORTE (con impuesto incluído): {{importePresupuestadohito2 | round: 2 }}€</p>
+        </div>
+        <div class="modal-footer">
+			<button type="button" onclick="FormularioDetalleSolicitud.CerrarModal('#modalTransferenciaBancariaSegundoPago');return false;" class="pwc-btn pwc-btn--primary">Prefiero pagar más tarde</button>
+          	<button type="button" onclick="FormularioDetalleSolicitud.PagarTransferencia()" class="pwc-btn pwc-btn--primary">Voy a pagar ahora</button>
+        </div>
+      </div>
+    </div>
+</div>
 <div id="modalMotivoRechazo" class="modal fade" tabindex="-1" role="dialog" style="display:none">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-					<div id="errorMsgMotivoRechazo" style="display:none" role="alert" class="alert alert-danger">
-					El campo motivo de rechazo es obligatorio.
-					</div>
-					{% entityform name: 'Motivos de rechazo' %}
-				</div>
+			<div id="errorMsgMotivoRechazo" style="display:none" role="alert" class="alert alert-danger">
+				El campo motivo de rechazo es obligatorio.
+			</div>
+			{% entityform name: 'Motivos de rechazo' %}
+		</div>
         <div class="modal-footer">
 		  <button type="button" onclick="FormularioDetalleSolicitud.CerrarModal('#modalMotivoRechazo');return false;" class="pwc-btn pwc-btn--primary">Cancelar</button>
-		  <button type="button" onclick="FormularioDetalleSolicitud.MotivoRechazo()" class="pwc-btn pwc-btn--primary">Enviar</button>
+		  <button type="button" id="botonRechazo" onclick="FormularioDetalleSolicitud.MotivoRechazo()" class="pwc-btn pwc-btn--primary">Enviar</button>
         </div>
       </div>
     </div>
@@ -449,6 +511,20 @@
 					}
 				  }).always(notificationMsg.hide);
 			},
+			NotificacionTransferencia: function() {
+				var recordObj = {
+					"crcd6_notificaciontransferencia": true
+				};
+				FormularioDetalleSolicitud.AppAjax('Enviando información...', {
+					  type: "PATCH",
+					  url: "/_api/crcd6_solicitudsubs(" + FormularioDetalleSolicitud.ObtenerParametroUrl('id') + ")",
+					  contentType: "application/json",
+					  async: false,
+					  data: JSON.stringify(recordObj),
+					  success: function (res, status, xhr) {
+					  }
+				  });
+			},
 			ConsultarEstado: function(codigo) {
 			  let resultado = [];
 			  $.ajax({
@@ -495,7 +571,6 @@
 				  });
 			},
 			CambiarEstadoPago: function(estado, esTransferencia) {
-				debugger;
 				const estadoContratadoId = FormularioDetalleSolicitud.ConsultarEstado(estado);
 				 
 				var recordObj = {
@@ -563,10 +638,14 @@
 				$('#contratacionOnline').show();
 			},
 			PagarTransferencia: function(){
+				/*if(idDiv === "modalTransferenciaBancaria" ||
+				   idDiv === "modalTransferenciaBancariaSegundoPago"){
+					FormularioDetalleSolicitud.NotificacionTransferencia();
+				}*/
+				FormularioDetalleSolicitud.NotificacionTransferencia();
 				FormularioDetalleSolicitud.CambiarEstadoPago("4", true);
 			},
 			PagarOnline: function(){
-				debugger;
 				const solicitudId = '{{ idSolicitud }}';
 				const codigoEstado = '{{ codigoEstado }}';
 				const estadoAceptacionPresupuesto = '{{ estadoAceptacionPresupuesto }}';
@@ -614,9 +693,9 @@
 			},
 			MotivoRechazo: function(){
 				if ($('#crcd6_motivosderechazo').val() !== "522960004" && $('#crcd6_motivosderechazo').val() !== undefined) {
+					$("#botonRechazo").prop("disabled", true);
 					if ($('#crcd6_motivosderechazo').val() == "522960000") {
 						FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", descripcionRechazo.Descripcion522960000);
-						//FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", 522960000);
 					}
 					if ($('#crcd6_motivosderechazo').val() == "522960001") {
 						FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", descripcionRechazo.Descripcion522960001);
@@ -627,8 +706,12 @@
 					if ($('#crcd6_motivosderechazo').val() == "522960003") {
 						FormularioDetalleSolicitud.CambiarEstadoYMotivoRechazo("10", descripcionRechazo.Descripcion522960003);
 					}
+					if ($('#crcd6_motivosderechazo').val() == "") {
+						$("#botonRechazo").prop("disabled", false);
+					}
 				}
 				else{
+					$("#botonRechazo").prop("disabled", false);
 					$('#errorMsgMotivoRechazo').show();
 				}
 			},
