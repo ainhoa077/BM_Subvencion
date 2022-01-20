@@ -1,0 +1,92 @@
+<div class="container pwc-formulario_container" role="main">
+    <div id="justificacionPago" style="display:none">
+        <div id="mensajeAyuda" class="alert alert-info" role="alert">
+            Por favor, necesitamos que adjuntes el justificante de pago de la transferencia bancaria
+            <br>
+        </div>  
+        {% entityform name: 'Formulario pago transferencia bancaria' %}
+    </div>
+    <!--<div id="justificacionAdjuntada" class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; text-align: left; min-height: 100px;">-->
+        <div id="justificacionAdjuntada" class="container" style="display: flex; flex-wrap: wrap;">
+            <div class="col-md-12 columnBlockLayout" style="display: flex; flex-direction: column;">
+                <div class="jumbotron" style="font-size: 18px; background-color: white;">
+                    <h3 style="text-align: center;">¡Muchas gracias por tu tiempo!</h3>
+                    <p class="offers__subtitle">Ya has adjuntado el justificante de la transferencia. Tu gestor esta comprobando el pago en estos momentos. Se te notificara cuando el pago este comprobado.</p><br>
+                    <p class="offers__subtitle" style="text-align: center;"><button onclick="window.location.href='/solicitud-presupuestacion';return false;" class="pwc-btn pwc-btn--primary"><span class="pwc-btn_label">Regresar a mis solicitudes</span></button></p>
+                </div>
+            </div>
+        </div>
+    <!--</div>-->
+    <!--
+    <div id="justificacionAdjuntada" style="display:none">
+        <div id="mensajeAyuda" class="alert alert-danger" role="alert">
+            El justificante del pago ya fué adjuntado
+        </div>  
+    </div>
+    -->
+</div>
+
+<script language="javascript">
+    const FormularioPagoTransferencia = {
+        EventosOnload: function () {
+            $('#crcd6_pagorecibido').hide();
+            $('#crcd6_pagorecibido_label').hide();
+            $('#crcd6_pagorecibidofraccionado').hide();
+            $('#crcd6_pagorecibidofraccionado_label').hide();
+            $('#crcd6_justificanteadjuntado').hide();
+            $('#crcd6_justificanteadjuntado_label').hide();
+            $('#notescontrol').hide();
+        },
+        ConsultarPagosTransferencia: function() {
+            let resultado = [];
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                async: false,
+                url: "/consulta-pagos-transferencia-bancaria?idsolicitud=" + FormularioPagoTransferencia.ObtenerParametroUrl('id')
+            }).done(function(data) {
+                resultado = data.results;
+            });
+            return resultado;
+        },
+        ValidarPagoTranferencia: function(){
+            const pagosTransferencia = FormularioPagoTransferencia.ConsultarPagosTransferencia(); 
+            $("#justificacionPago").hide();
+            $("#justificacionAdjuntada").hide();
+
+            if(pagosTransferencia === null || pagosTransferencia === undefined){
+                $("#justificacionAdjuntada").show();
+            }
+            else if(pagosTransferencia !== null && pagosTransferencia.length > 0){
+				if(pagosTransferencia[0].codigoServicio !== ServiciosOfertados.TramitacionPremium && 
+                   pagosTransferencia[0].pagoRecibido == "false" && pagosTransferencia[0].justificanteAdjuntado == "false"){
+                    $("#justificacionPago").show();
+                }
+                else if(pagosTransferencia[0].codigoServicio === ServiciosOfertados.TramitacionPremium && pagosTransferencia[0].justificanteAdjuntado == "false" &&
+                   (pagosTransferencia[0].pagoRecibido == "false" || pagosTransferencia[0].pagoRecibidoFraccionado == "false")){
+                    $("#justificacionPago").show();
+                }
+                else{
+                    $("#justificacionAdjuntada").show();
+                }
+			}
+        },
+        ObtenerParametroUrl: function(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) 
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) 
+                {
+                    return sParameterName[1];
+                }
+            }
+        },
+    };
+
+    $(document).ready(function () {
+        FormularioPagoTransferencia.EventosOnload();
+        FormularioPagoTransferencia.ValidarPagoTranferencia();
+    });
+</script>
