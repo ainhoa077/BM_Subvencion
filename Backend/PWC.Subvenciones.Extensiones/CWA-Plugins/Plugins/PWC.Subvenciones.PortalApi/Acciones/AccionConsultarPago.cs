@@ -94,9 +94,19 @@ namespace PWC.Subvenciones.PortalApi.Acciones
         private void ActualizacionEstadoSolicitudPendientePago(Entity transaccionPago)
         {
             Entity estado = ConsultarIdEstadoSolicitud(ESTAOPENDIENTEPAGO);
+            string HITO2 = "h2";
+            string hito = transaccionPago.Attributes["crcd6_nombre"].ToString();
+            string hitoReducido = hito.Substring(10, 2);
             Entity solicitudActualiza = new Entity("crcd6_solicitudsub");
             solicitudActualiza.Id = ((EntityReference)transaccionPago.Attributes["crcd6_solicitudid"]).Id;
             solicitudActualiza.Attributes["crcd6_estado"] = new EntityReference("crcd6_estado", estado.Id);
+            if (hitoReducido == HITO2)
+            {
+                solicitudActualiza.Attributes["crcd6_pagorecibidofraccionado"] = true;
+            } else
+            {
+                solicitudActualiza.Attributes["crcd6_pagorecibido"] = true;
+            }
             Service.Update(solicitudActualiza);
         }
 

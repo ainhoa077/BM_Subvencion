@@ -1,0 +1,31 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "3ce67192-e9d8-4300-87b1-79746f06e4a0": {
+      "ProjectGuid": "3ce67192-e9d8-4300-87b1-79746f06e4a0",
+      "DisplayName": "Cwa-Plugins",
+      "ColorIndex": 0
+    },
+    "4e4ff76f-6d7b-485a-8485-d137645adaa3": {
+      "ProjectGuid": "4e4ff76f-6d7b-485a-8485-d137645adaa3",
+      "DisplayName": "PWC.Subvenciones.PortalApi",
+      "ColorIndex": 1
+    },
+    "a39a721f-f954-4933-9c5d-23820ecf0b6f": {
+      "ProjectGuid": "a39a721f-f954-4933-9c5d-23820ecf0b6f",
+      "DisplayName": "PWC.Subvenciones.MensajeriaSolicitud",
+      "ColorIndex": 2
+    },
+    "08b7f3e8-7339-4f39-aff4-5279bc2dad14": {
+      "ProjectGuid": "08b7f3e8-7339-4f39-aff4-5279bc2dad14",
+      "DisplayName": "PWC.Subvenciones.Buscador",
+      "ColorIndex": 3
+    },
+    "e65bfb92-8dc4-4e7d-99b8-9f87258b1aee": {
+      "ProjectGuid": "e65bfb92-8dc4-4e7d-99b8-9f87258b1aee",
+      "DisplayName": "PWC.Subvenciones.ApiGmailAutomate",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}

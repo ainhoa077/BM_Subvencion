@@ -16,6 +16,7 @@ namespace PWC.Subvenciones.PortalApi.Acciones
     public class AccionGenerarUrlPago : AccionRedsysBase
     {
         private const string SIGLASORDEN = "0{0}";
+        private const string ESTADOPARAHITO2 = "15";
         private readonly IOrganizationService ServicioCRM;
 
         public AccionGenerarUrlPago(IOrganizationService service, IPluginExecutionContext contextoEjecucion) : base(service, contextoEjecucion)
@@ -65,7 +66,15 @@ namespace PWC.Subvenciones.PortalApi.Acciones
         private string CrearTransaccionPago(Entity solicitud, string siglaOrder)
         {
             Entity transaccionPago = new Entity("crcd6_transaccionespagos");
-            transaccionPago.Attributes["crcd6_nombre"] = $"{siglaOrder}{solicitud.Attributes["crcd6_solicitud"].ToString()}";
+            Entity estado = ConsultarIdEstadoSolicitud(((EntityReference)solicitud.Attributes["crcd6_estado"]).Id.ToString());
+            string cadenaSolicitud = solicitud.Attributes["crcd6_solicitud"].ToString();
+            string cadenaSolicitudReducida = cadenaSolicitud.Substring(0, 7);
+            string estadoHito = estado.Attributes["crcd6_codigo"].ToString() == ESTADOPARAHITO2 ? "h2" :  "h1";
+            string order = $"{siglaOrder}{cadenaSolicitudReducida}{cadenaSolicitud.Substring(9, 2)}{estadoHito}";
+            order = order.Replace("{0}", DateTime.Now.ToString("tt"));
+            order = order.Replace("-", "");
+            transaccionPago.Attributes["crcd6_nombre"] = order;
+            //transaccionPago.Attributes["crcd6_nombre"] = $"{siglaOrder}{solicitud.Attributes["crcd6_solicitud"].ToString()}";
             transaccionPago.Attributes["crcd6_solicitudid"] = new EntityReference("crcd6_solicitudsub", solicitud.Id);
             Guid transaccionesPagoId = Service.Create(transaccionPago);
             return transaccionesPagoId.ToString();
@@ -76,7 +85,7 @@ namespace PWC.Subvenciones.PortalApi.Acciones
             Entity entidadSolcitud = null;
             QueryExpression solicitud = new QueryExpression("crcd6_solicitudsub");
             solicitud.NoLock = true;
-            solicitud.ColumnSet = new ColumnSet("crcd6_solicitud", "crcd6_importepresupuestado");
+            solicitud.ColumnSet = new ColumnSet("crcd6_solicitud", "crcd6_importepresupuestado", "crcd6_estado", "crcd6_importepresupuestadohito2");
             solicitud.Criteria.AddCondition("crcd6_solicitudsubid", ConditionOperator.Equal, parametrosEntradaPagoPaycomet.solicitudid);
             EntityCollection respuesta = Service.RetrieveMultiple(solicitud);
 
@@ -88,19 +97,41 @@ namespace PWC.Subvenciones.PortalApi.Acciones
             return entidadSolcitud;
         }
 
+        private Entity ConsultarIdEstadoSolicitud(string estadoId)
+        {
+            Entity entidadEstado = null;
+            QueryExpression estado = new QueryExpression("crcd6_estado");
+            estado.NoLock = true;
+            estado.ColumnSet = new ColumnSet("crcd6_codigo");
+            estado.Criteria.AddCondition("crcd6_estadoid", ConditionOperator.Equal, estadoId);
+            EntityCollection respuesta = Service.RetrieveMultiple(estado);
+
+            if (respuesta != null && respuesta.Entities.Count > 0)
+            {
+                entidadEstado = respuesta.Entities[0];
+            }
+
+            return entidadEstado;
+        }
+
         private string ConsumoApiRedsys(string url, string tokenApi, string terminal, string urlOK, string urlKO, Entity solicitud, string transaccionPagoId, string merchantCode, string merchantUrl, string siglaOrder)
         {
             if (solicitud != null)
             {
+                Entity estado = ConsultarIdEstadoSolicitud(((EntityReference)solicitud.Attributes["crcd6_estado"]).Id.ToString());
                 urlOK = $"{urlOK}?transaccionId={transaccionPagoId}&solicitudId={solicitud.Id.ToString()}";
                 urlKO = $"{urlKO}?transaccionId={transaccionPagoId}";
-                int totalAmount = Decimal.ToInt32(((Money)solicitud.Attributes["crcd6_importepresupuestado"]).Value * 100);
+                int totalAmount = estado.Attributes["crcd6_codigo"].ToString() == ESTADOPARAHITO2 ? Decimal.ToInt32(((Money)solicitud.Attributes["crcd6_importepresupuestadohito2"]).Value * 100) : Decimal.ToInt32(((Money)solicitud.Attributes["crcd6_importepresupuestado"]).Value * 100);
                 RedsysAPI api = new RedsysAPI();
                 string key = tokenApi;
-                string order = $"{siglaOrder}{solicitud.Attributes["crcd6_solicitud"].ToString()}";
+                string cadenaSolicitud = solicitud.Attributes["crcd6_solicitud"].ToString();
+                string cadenaSolicitudReducida = cadenaSolicitud.Substring(0, 7);
+                string estadoHito = estado.Attributes["crcd6_codigo"].ToString() == ESTADOPARAHITO2 ? "h2" :  "h1";
+                string order = $"{siglaOrder}{cadenaSolicitudReducida}{cadenaSolicitud.Substring(9, 2)}{estadoHito}";
                 order = order.Replace("{0}", DateTime.Now.ToString("tt"));
+                order = order.Replace("-", "");
                 api.SetParameter("DS_MERCHANT_AMOUNT", totalAmount.ToString());
-                api.SetParameter("DS_MERCHANT_ORDER", order.Replace("-", ""));
+                api.SetParameter("DS_MERCHANT_ORDER", order);
                 api.SetParameter("DS_MERCHANT_MERCHANTCODE", merchantCode);
                 api.SetParameter("DS_MERCHANT_CURRENCY", "978");
                 api.SetParameter("DS_MERCHANT_TRANSACTIONTYPE", "0");
