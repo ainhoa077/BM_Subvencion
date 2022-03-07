@@ -399,8 +399,28 @@ form .pwc-icon {
   flex-direction: column;
   width: 100%; }
 
-header .pwc-logo {
-  width: 60px; }
+/*
+.pwc-logo {
+  width: 70px;
+  height: 53px; 
+  margin-top: 50px; 
+  margin-left: -50px; }
+  */
+@media (max-width: 1199.20px) {
+  .pwc-logo {
+    width: 70px;
+    height: 53px; 
+    margin-left: 0px;
+  }
+}
+  @media (min-width: 1199.21px) {
+  .pwc-logo {
+    width: 70px;
+    height: 53px; 
+    margin-top: 50px;
+    margin-left: -10px;
+  }
+}
 header .pwc-navbar a {
   color: #7d7d7d; }
   header .pwc-navbar a:hover {
@@ -1222,6 +1242,7 @@ h4 .xrm-attribute-value-encoded.xrm-attribute-value {
   border-radius: 50px !important; }
 
 .login-heading-section {
+  padding: 0 20px 0;
   color: unset;
   font-size: 20px;
   border: 0 !important; }
@@ -1515,6 +1536,10 @@ body {
 }
 .offers-text__option-text {
   font-size: 18px !important;
+}
+.offers-text__option-text-banner {
+  font-size: 20px !important;
+  font-family: "Helvetica Neue",Arial,Sans-Serif;
 }
 .pwc-btn-custom {
   min-width: 40%;
@@ -1997,4 +2022,57 @@ h2, .h2 {
     color: white !important;
 }
 
+#ContentContainer_MainContent_MainContent_ShowEmail {
+  padding: 0 20px 0;
+}
+
+#ContentContainer_MainContent_MainContent_ShowUserName {
+  padding: 0 20px 0;
+}
+
+#ContentContainer_MainContent_MainContent_ConfirmPasswordLabel {
+  text-align: left;
+}
+
+#ContentContainer_MainContent_MainContent_EmailLabel {
+  text-align: left;
+}
+
+#ContentContainer_MainContent_MainContent_UsernameLabel {
+  text-align: left;
+}
+.imgKitDigital {
+  width: 20%;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.imagenFondo {
+  background-image: url("~/Mis-solicitudes.jpg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: 100%;
+}
+@media (max-width: 994px) {
+  .imagenFondo {
+    display: none;
+  }
+  @media (min-width: 995px) {
+  .imagenFondo {
+    display: block;
+  }
+}
+
+.imagenBonoKitDigital {
+  background-image: url("~/bono-kit-digital.jpg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: 100%;
+}
 /*# sourceMappingURL=pwc.css.map */

@@ -68,7 +68,8 @@
 		Tramitacion: "522960000",
 		ServicioAsesoramiento: "522960005",
 		ServicioElegibilidad: "522960006",
-		ServicioSuscripcionBuscadorAnual: "522960007"
+		ServicioSuscripcionBuscadorAnual: "522960007",
+		ServicioKitDigital: "522960008"
 	}
 	const FormularioAyudaSolicitud = {
 		EventosOnload: function(contactoId){
@@ -82,6 +83,11 @@
 			} else {
 				$('#titulo').text("Solicita tu servicio personalizado (3/3)");
 				$("#UpdateButton").attr('value', 'Finalizar');
+			}
+			if (servicioOfertadosSolicitud[0].codigo === ServiciosOfertados.ServicioKitDigital) {
+				FormularioAyudaSolicitud.OcultarCamposAyudaKitDigital();
+			} else {
+				FormularioAyudaSolicitud.LimpiarCampoAyuda();
 			}
 			FormularioAyudaSolicitud.ModificarLookups();
 			$(window).resize(function() {
@@ -121,6 +127,34 @@
 
 			 $("a[href='#crcd6_subvencionpresentada']").on("click", function () { scrollToAndFocus('crcd6_ayudaotros','crcd6_ayudaotros'); });
 		},
+		ValidacionCamposKitDigital: function(){
+			if (typeof (Page_Validators) == 'undefined') return;
+			 var newValidator = document.createElement('span');
+			 newValidator.style.display = "none";
+			 newValidator.id = "Ayuda2Validator";
+			 newValidator.controltovalidate = "crcd6_subvencionpresentada";
+			 newValidator.errormessage = "<a href='#crcd6_subvencionpresentada'>El campo ayuda del usuario es requerido.</a>";
+			 newValidator.validationGroup = ""; 
+			 newValidator.initialvalue = "";
+			 newValidator.evaluationfunction = function () {
+				var ayuda = $("#crcd6_subvencionpresentada").val();
+				if (ayuda == ""){
+					return false;
+				} else {
+					return true;
+				}
+			 };
+			 
+			 Page_Validators.push(newValidator);
+
+			 //$("a[href='#crcd6_subvencionpresentada']").on("click", function () { scrollToAndFocus('crcd6_ayudaotros','crcd6_ayudaotros'); });
+		},
+		OcultarCamposAyudaKitDigital: function() {
+			$('#crcd6_subvencionpresentada').prop('required', false);
+			$('#crcd6_subvencionpresentada_label').parent().parent().hide();
+			$('#crcd6_subvencionpresentada').parent().parent().hide();
+			$("#ayuda").text("Selecciona tu comunidad autónoma.");
+		},
 		OcultarCampoAyuda: function(){
 			$('#crcd6_ayudaotros_label').parent().parent().hide();
 			$('#crcd6_ayudaotros').parent().parent().hide();
@@ -155,6 +189,14 @@
 						window.location.href='/informacion-general-empresa/?id=' + idAtras;
         },
 		EventosOnChange: function(){
+			$("#crcd6_comunidadautonoma").change(function () {
+			const idSolicitud2 = FormularioAyudaSolicitud.ObtenerParametroUrl('id');
+			let servicioOfertadosSolicitud2 = FormularioAyudaSolicitud.ConsultarServicioSolicitud(idSolicitud2);
+
+			if (servicioOfertadosSolicitud2[0].codigo !== ServiciosOfertados.ServicioKitDigital){
+				FormularioAyudaSolicitud.ValidacionCamposKitDigital();
+			}
+			});
 			$("#crcd6_subvencionpresentada").change(function () {
 				var ayuda = $("#crcd6_subvencionpresentada_name").val();
 				

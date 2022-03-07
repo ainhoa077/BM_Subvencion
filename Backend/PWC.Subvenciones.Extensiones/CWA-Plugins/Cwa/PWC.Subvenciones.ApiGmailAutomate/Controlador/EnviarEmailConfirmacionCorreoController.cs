@@ -29,6 +29,8 @@ namespace PWC.Subvenciones.ApiGmailAutomate.Controlador
                 peticion.emailSubject = asunto;
                 peticion.emailBody = cuerpo;
                 string parametroEntrada = JsonConvert.SerializeObject(peticion).Replace(@"\", "");
+                string respuesta = ConsumoAPI.EjecutarAPI(automateUrl, parametroEntrada);
+                /*
                 Entity motivo = new Entity("crcd6_motivollamada");
                 motivo.Attributes["crcd6_comentarios"] = parametroEntrada;
                 Service.Create(motivo);
@@ -36,6 +38,7 @@ namespace PWC.Subvenciones.ApiGmailAutomate.Controlador
                 Entity motivo1 = new Entity("crcd6_motivollamada");
                 motivo1.Attributes["crcd6_comentarios"] = respuesta;
                 Service.Create(motivo1);
+                */
             }
         }
     }

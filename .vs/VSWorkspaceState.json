@@ -6,8 +6,9 @@
     "\\Backend\\PWC.Subvenciones.Extensiones\\CWA-Plugins",
     "\\Backend\\PWC.Subvenciones.Extensiones\\CWA-Plugins\\Plugins",
     "\\Backend\\PWC.Subvenciones.Extensiones\\CWA-Plugins\\Plugins\\PWC.Subvenciones.PortalApi",
-    "\\Backend\\PWC.Subvenciones.Extensiones\\CWA-Plugins\\Plugins\\PWC.Subvenciones.PortalApi\\Acciones"
+    "\\Backend\\PWC.Subvenciones.Extensiones\\CWA-Plugins\\Plugins\\PWC.Subvenciones.PortalApi\\Acciones",
+    "\\Backend\\PWC.Subvenciones.Extensiones\\CWA-Plugins\\Plugins\\PWC.Subvenciones.PortalApi\\Modelos"
   ],
-  "SelectedNode": "\\Backend\\PWC.Subvenciones.Extensiones\\PWC.Subvenciones.Extensiones.sln",
+  "SelectedNode": "\\Backend\\PWC.Subvenciones.Extensiones\\CWA-Plugins\\Plugins\\PWC.Subvenciones.PortalApi\\Acciones\\AccionGenerarUrlPago.cs",
   "PreviewInSolutionExplorer": false
 }

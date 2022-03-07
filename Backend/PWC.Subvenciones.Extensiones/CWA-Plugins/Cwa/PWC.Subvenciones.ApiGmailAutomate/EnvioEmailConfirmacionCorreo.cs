@@ -33,9 +33,7 @@ namespace PWC.Subvenciones.ApiGmailAutomate
             }
             catch (Exception ex)
             {
-                Entity motivo = new Entity("crcd6_motivollamada");
-                motivo.Attributes["crcd6_comentarios"] = ex.Message;
-                servicioCrm.Create(motivo);
+                
             }
         }        
     }

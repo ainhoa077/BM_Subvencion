@@ -6,7 +6,8 @@ const PreguntaInicial = {
 	Otros: "522960004",
 	NecesitoSeguimiento: "522960005",
 	NecesitoElegibilidad: "522960006",
-	SuscripcionBuscadorAnual: "522960007"
+	SuscripcionBuscadorAnual: "522960007",
+	NecesitoKitDigital: "522960008"
 }
 
 const ServiciosOfertados = {
@@ -15,7 +16,8 @@ const ServiciosOfertados = {
 	Tramitacion: "522960000",
 	ServicioAsesoramiento: "522960005",
 	ServicioElegibilidad: "522960006",
-	ServicioSuscripcionBuscadorAnual: "522960007"
+	ServicioSuscripcionBuscadorAnual: "522960007",
+	ServicioKitDigital: "522960008"
 }
 
 const RespuestaPregunta = {
@@ -100,6 +102,7 @@ const SolicitudPresupuestacion = {
 			SolicitudPresupuestacion.ValidarSeguimiento();
 			SolicitudPresupuestacion.ValidacionElegibilidad();
 			SolicitudPresupuestacion.ValidarSuscripcionAnual();
+			SolicitudPresupuestacion.ValidarKitDigital();
 		});
 		
 		$("#crcd6_previoprimerapregunta").change(function () {
@@ -242,6 +245,37 @@ const SolicitudPresupuestacion = {
 			$('#crcd6_previoprimerapregunta_0').parent().parent().show();
 			$('#crcd6_previoprimerapregunta_1').parent().parent().show();
 			$('#crcd6_previoprimerapregunta_label').parent().parent().show();
+		}
+	},
+	ValidarKitDigital: function(){
+		var preguntaInicial = $("#cr908_preguntaprincipal").val();
+		
+		if(preguntaInicial === PreguntaInicial.NecesitoKitDigital){
+			SolicitudPresupuestacion.SetearServicioOfertado(ServiciosOfertados.ServicioKitDigital);
+			/*
+			$('#crcd6_primerapregkitdigital_label').parent().parent().show();
+			$('#crcd6_primerapregkitdigital').parent().parent().show();
+			$('#crcd6_primerapregkitdigital_0').parent().parent().show();
+			$('#crcd6_primerapregkitdigital_1').parent().parent().show();
+			$('#crcd6_primerapregkitdigital_label').parent().parent().show();
+			$('#crcd6_segundapregkitdigital').parent().parent().show();
+			$('#crcd6_segundapregkitdigital_0').parent().parent().show();
+			$('#crcd6_segundapregkitdigital_1').parent().parent().show();
+			$('#crcd6_segundapregkitdigital_label').parent().parent().show();
+			$('#crcd6_tercerapregkitdigital').parent().parent().show();
+			$('#crcd6_tercerapregkitdigital_0').parent().parent().show();
+			$('#crcd6_tercerapregkitdigital_1').parent().parent().show();
+			$('#crcd6_descripcionprimerapregkitdigital').text(DescripcionPreguntas.DescPrimeraPreg);
+			$('#crcd6_descripcionsegundapregkitdigital').text(DescripcionPreguntas.DescSengundaPreg);
+			$('#crcd6_descripciontercerapregkitdigital').text(DescripcionPreguntas.DescTerceraPreg);
+			$('#crcd6_descripcionprimerapregkitdigital_label').parent().parent().show();
+			$('#crcd6_descripcionprimerapregkitdigital').parent().parent().show();
+			$('#crcd6_descripcionsegundapregkitdigital_label').parent().parent().show();
+			$('#crcd6_descripcionsegundapregkitdigital').parent().parent().show();
+			$('#crcd6_descripciontercerapregkitdigital_label').parent().parent().show();
+			$('#crcd6_descripciontercerapregkitdigital').parent().parent().show();
+			*/
+			$(':input[id="NextButton"]').prop('disabled', false);	
 		}
 	},
 	ValidacionOtros: function(){

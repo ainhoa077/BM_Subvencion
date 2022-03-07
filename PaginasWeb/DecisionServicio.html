@@ -5,7 +5,8 @@
 		Tramitacion: "522960000",
 		ServicioAsesoramiento: "522960005",
 		NecesitoElegibilidad: "522960006",
-		ServicioSuscripcionBuscadorAnual: "522960007"
+		ServicioSuscripcionBuscadorAnual: "522960007",
+		ServicioKitDigital: "522960008"
 	}
 	const DecisionServicio = {
 		ConsultarServicioSolicitud: function (idSolicitud) {
@@ -32,7 +33,7 @@
 				if ( respuesta[0].codigo === ServiciosOfertados.NecesitoElegibilidad && respuesta[0].pregunta === "true" ){
 					window.location.href = "/informacion-ayuda-proyecto?id=" + id + "&esFormularioProyecto=true&complejo=0";
 
-				}else if( respuesta[0].codigo === ServiciosOfertados.NecesitoElegibilidad || respuesta[0].codigo === ServiciosOfertados.SeguimientoJustificacion || respuesta[0].codigo === ServiciosOfertados.TramitacionPremium || respuesta[0].codigo === ServiciosOfertados.Tramitacion){
+				}else if( respuesta[0].codigo === ServiciosOfertados.NecesitoElegibilidad || respuesta[0].codigo === ServiciosOfertados.ServicioKitDigital || respuesta[0].codigo === ServiciosOfertados.SeguimientoJustificacion || respuesta[0].codigo === ServiciosOfertados.TramitacionPremium || respuesta[0].codigo === ServiciosOfertados.Tramitacion){
 					window.location.href = "/informacion-ayuda-proyecto?id=" + id + "&esFormularioProyecto=false";
 				}
 				else{
